@@ -27,7 +27,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background
 /* LOGIN */
 #login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--side);padding:16px}
 .login-card{background:#fff;border-radius:16px;padding:36px 32px 26px;width:min(380px,100%);box-shadow:0 20px 60px rgba(0,0,0,.35)}
-.login-logo-img{height:30px;display:block;margin:0 auto}
+.login-logo{background:var(--side);border-radius:12px;padding:18px 0}.login-logo-img{height:28px;display:block;margin:0 auto}
 .login-sub{text-align:center;font-size:10.5px;color:var(--text3);letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:10px 0 26px}
 .login-card label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px}
 .login-card input{width:100%;background:#fff;border:1px solid var(--border);border-radius:8px;padding:11px 12px;color:var(--text);font-size:14px;margin-bottom:16px;transition:border-color .15s,box-shadow .15s}
@@ -365,7 +365,7 @@ const Remote={on:()=>!CFG.DEMO&&!!CFG.SUPABASE_URL,snap:new Map(),chain:Promise.
   add('file',DB.files);add('request',DB.requests);add('sub',DB.subs);add('log',DB.logs);add('sched',DB.sched);return m},
  build(rows){const g=k=>rows.filter(r=>r.kind===k).map(r=>r.data),fo=g('folder').sort((a,b)=>a.ord-b.ord).map(f=>f.name);
   return {hosts:g('host'),projects:g('project'),accounts:g('account'),sponsors:g('sponsor'),folders:fo.length?fo:DEF_FOLDERS.slice(),files:g('file'),requests:g('request'),subs:g('sub'),logs:g('log'),sched:g('sched')}},
- async pull(){let rows=[],off=0;for(;;){const r=await fetch(this.url('?select=kind,id,data&order=kind,id'),{headers:this.hdr({'Range-Unit':'items',Range:off+'-'+(off+999)})});if(!r.ok)throw new Error(r.status===404?'테이블 없음':'pull '+r.status);const a=await r.json();rows=rows.concat(a);if(a.length<1000)break;off+=1000}
+ async pull(){let rows=[],off=0;for(;;){const r=await fetch(this.url('?select=kind,id,data&order=kind,id'),{headers:this.hdr({'Range-Unit':'items',Range:off+'-'+(off+999)})});if(!r.ok)throw new Error(r.status===404?'테이블 없음':(r.status===401||r.status===403)?'권한 없음':'pull '+r.status);const a=await r.json();rows=rows.concat(a);if(a.length<1000)break;off+=1000}
   this.snap=new Map(rows.map(r=>[r.kind+'|'+r.id,canon(r.data)]));return this.build(rows)},
  async push(){const cur=this.flat(),up=[],del=[];
   cur.forEach((r,k)=>{const c=canon(r.data);if(this.snap.get(k)!==c)up.push([k,r,c])});
@@ -446,7 +446,7 @@ const genSvg=name=>{const h=[...name].reduce((a,c)=>a+c.charCodeAt(0),0)%360;ret
 
 /* ---------- login ---------- */
 function renderLogin(err){
- $('#root').innerHTML=`<div id="login-page"><form class="login-card" id="lf"><img class="login-logo-img" src="${LOGO}" alt="marple"><div class="login-sub">Event Resource Center</div>
+ $('#root').innerHTML=`<div id="login-page"><form class="login-card" id="lf"><div class="login-logo"><img class="login-logo-img" src="${LOGO}" alt="marple"></div><div class="login-sub">Event Resource Center</div>
  <label>아이디</label><input id="lid" autocomplete="username" autofocus><label>비밀번호</label><input id="lpw" type="password" autocomplete="current-password">
  <button class="btn-login" type="submit">로그인</button><div class="login-err" id="lerr">${esc(err||'')}</div>
  ${CFG.DEMO?`<div class="demo-box"><p>시안 확인용 — 계정을 눌러 바로 들어가 보세요</p><div class="row"><button type="button" class="btn btn-sm" data-act="quick" data-id="marple">마플 관리자</button><button type="button" class="btn btn-sm" data-act="quick" data-id="megazone">주관사</button><button type="button" class="btn btn-sm" data-act="quick" data-id="cloudworks">스폰서 A</button><button type="button" class="btn btn-sm" data-act="quick" data-id="securenet">스폰서 B</button></div></div>`:''}
@@ -760,7 +760,7 @@ function poll(){if(!Remote.on()||!S.user||busyUi())return;Remote.pull().then(d=>
 function boot(){const had=Store.load();
  if(!Remote.on()){if(!had)seedDB();renderLogin();return}
  if(!had)DB=emptyDB();Remote.ready=had;renderLogin();
- Remote.pull().then(d=>{DB=d;Remote.ready=true;Store.persist();if(S.user)reconcile();else renderLogin()}).catch(e=>{if(!had)renderLogin(String(e.message).includes('테이블')?'Supabase에 erc_records 테이블이 없습니다. supabase_schema.sql을 먼저 실행해 주세요.':'서버에 연결하지 못했습니다. 새로고침해 주세요. ('+e.message+')')});
+ Remote.pull().then(d=>{DB=d;Remote.ready=true;Store.persist();if(S.user)reconcile();else renderLogin()}).catch(e=>{if(!had)renderLogin(String(e.message).includes('테이블')?'Supabase에 erc_records 테이블이 없습니다. supabase_schema.sql을 먼저 실행해 주세요.':String(e.message).includes('권한')?'Supabase 접근이 거부되었습니다(401). SQL의 GRANT 문을 실행했는지, 키가 맞는지 확인해 주세요.':'서버에 연결하지 못했습니다. 새로고침해 주세요. ('+e.message+')')});
  setInterval(poll,CFG.POLL_MS)}
 boot();
 </script>

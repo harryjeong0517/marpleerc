@@ -376,6 +376,68 @@ textarea.gi{min-height:34px;height:34px}textarea.gi:focus{field-sizing:content;h
 .kvh-act{position:absolute;top:12px;right:12px;display:flex;gap:6px;opacity:0;transition:opacity .15s}.kvh:hover .kvh-act{opacity:1}.kvh-act .btn{background:rgba(15,23,42,.6);color:#fff;border-color:rgba(255,255,255,.25)}
 .kvh.over{box-shadow:0 0 0 3px var(--marple)}
 .proj-head.kvz{cursor:default;text-align:left;border-style:solid}.proj-head .kv-add{margin-top:12px}.kv-hint{font-size:11.5px;color:var(--text3);margin-left:8px}
+/* ===== 아젠다 ICON 스타일 ===== */
+.btn-dark{background:#111;color:#fff;border-color:#111;font-weight:800}.btn-dark:hover{background:#000;color:#fff}
+.ag-col{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--border);border-radius:8px;padding:3px 6px 3px 8px;color:#64748b;cursor:pointer}.ag-col input{width:26px;height:22px;border:0;padding:0;background:none;cursor:pointer}
+.ic{--ag:#7850ff;background:#f7f7f7;border-radius:16px;padding:26px 26px 18px;margin-bottom:18px}
+.ic-tabs{display:grid;gap:0;margin-bottom:18px}
+.ic-tab{border:0;background:#ddd;color:#888;font-family:inherit;font-size:17px;font-weight:800;padding:14px 12px;cursor:pointer;line-height:1.3;transition:background .15s,color .15s}.ic-tab+.ic-tab{margin-left:6px}
+.ic-tab small{display:block;font-size:11.5px;font-weight:600;opacity:.75;margin-top:2px}.ic-tab:hover{background:#d2d2d2;color:#555}.ic-tab.on{background:var(--ag);color:#fff}
+.ic-desc{text-align:center;font-size:16px;font-weight:700;color:#111;margin:0 0 22px;min-height:22px}.ic-desc.can{cursor:pointer}.ic-desc.can:hover{text-decoration:underline dotted #aaa}
+.ic-desc.ed{display:flex;gap:6px;max-width:640px;margin:0 auto 22px}.ic-desc.ed .gi{border-color:#ddd;background:#fff;text-align:center;font-size:14px}
+.ic-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ic-it{display:grid;grid-template-columns:200px 1fr;background:#fff;cursor:pointer;position:relative;transition:box-shadow .15s,transform .15s}.ic-it:hover{box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.ic-it .ic-tm{background:#000;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 10px;text-align:center}.ic-it .ic-tm b{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}.ic-it .ic-tm span{font-size:11px;color:#aaa;margin-top:4px}
+.ic-tx{padding:20px 56px 20px 28px}.ic-tx strong{display:block;color:var(--ag);font-size:16.5px;font-weight:900;margin-bottom:8px;letter-spacing:-.01em}
+.ic-tx p{margin:0 0 8px;font-size:16.5px;font-weight:700;color:#111;line-height:1.5;letter-spacing:-.02em;word-break:keep-all}
+.ic-pf{display:flex;flex-direction:column;gap:3px}.ic-nm{font-size:14.5px;color:#111}.ic-nm em{font-style:normal;color:#777;padding-left:10px;font-size:14px}
+.ic-meta{display:flex;gap:6px;align-items:center;margin-top:10px}.ic-meta>span:not(.pill){font-size:11px;font-weight:700;color:#999;background:#f3f3f3;border-radius:4px;padding:1px 6px}
+.ic-go{position:absolute;right:22px;top:18px;font-style:normal;font-size:20px;color:#111;transition:transform .15s}.ic-it:hover .ic-go{transform:translate(2px,-2px);color:var(--ag)}
+.ic-it.tbc .ic-tx p{color:#aaa}.ic-it.tbc .ic-tm{background:#555}
+.ic-brk{display:grid;grid-template-columns:200px 1fr auto;align-items:center;color:#999;font-size:13px;font-weight:700;position:relative}
+.ic-brk .ic-tm{text-align:center;font-variant-numeric:tabular-nums;color:#aaa;font-size:13px}.ic-brk .ic-bx{padding:8px 28px;border-top:1px dashed #d6d6d6;border-bottom:1px dashed #d6d6d6}.ic-brk em{font-style:normal;font-weight:500;color:#bbb;margin-left:8px}
+.ic-ed{border:0;background:none;color:#aaa;cursor:pointer;padding:6px 10px}.ic-ed:hover{color:var(--ag)}
+.ic-empty{padding:30px;text-align:center;color:#999;background:#fff}
+.ic-add{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}.ic-add .sub{font-size:12px}
+.ic-note{font-size:12.5px;color:#888;margin:16px 0 0}
+.modal.ic-modal{width:min(900px,95vw);border-radius:0;padding:34px 34px 24px}.modal.ic-modal .modal-title:empty{display:none}
+.ic-chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:22px}.ic-chips span,.ic-chips a{font-size:14px;font-weight:800;padding:9px 14px;line-height:1}
+.c-tm{background:#000;color:#fff;font-variant-numeric:tabular-nums}.c-tag{background:var(--ag);color:#fff}.c-tr{background:#eee;color:#333}.c-lk{background:#dcff00;color:#111;text-decoration:none}
+.ic-pop h3{margin:0 0 14px;font-size:20px;font-weight:900;letter-spacing:-.02em;line-height:1.45}.ic-ab{font-size:14px;line-height:1.8;color:#666}
+.ic-prof{display:grid;gap:10px;margin-top:22px}.ic-pc{display:grid;grid-template-columns:92px 1fr;gap:22px;align-items:center;background:#f5f5f5;padding:20px 24px}
+.ic-pc img,.ic-av{width:92px;height:92px;border-radius:50%;object-fit:cover;background:#ddd}.ic-av{display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--ag),#111)}
+.ic-pc b{display:block;font-size:17px;font-weight:900;color:#111}.ic-pc span{display:block;font-size:14px;color:#333;margin-top:4px}.ic-pc p{margin:8px 0 0;font-size:13px;line-height:1.7;color:#777}
+@media(max-width:760px){.ic{padding:16px 12px}.ic-tabs{grid-template-columns:1fr!important;gap:4px}.ic-tab+.ic-tab{margin-left:0}.ic-tab{font-size:14.5px;padding:11px}.ic-it{grid-template-columns:1fr}.ic-it .ic-tm{flex-direction:row;gap:8px;justify-content:flex-start;padding:9px 16px}.ic-tx{padding:14px 44px 16px 16px}.ic-tx p,.ic-tx strong{font-size:15px}.ic-brk{grid-template-columns:90px 1fr auto}.ic-pc{grid-template-columns:64px 1fr;padding:14px}.ic-pc img,.ic-av{width:64px;height:64px}}
+/* ===== 보기 (슬라이드) ===== */
+#agshow{position:fixed;inset:0;z-index:600;display:none;background:#05060a}#agshow.open{display:block}
+.sh-sl{position:absolute;inset:0;padding:5vh 6vw 9vh;color:#fff;display:flex;flex-direction:column;background:radial-gradient(70vw 50vh at 100% 0%,color-mix(in srgb,var(--ag) 40%,transparent),transparent),radial-gradient(60vw 50vh at 0% 100%,rgba(0,157,223,.18),transparent),#05060a;overflow:hidden}
+.sh-top{display:flex;align-items:center;gap:14px;font-size:clamp(12px,1vw,15px);color:#8b93a6;font-weight:700;letter-spacing:.06em}.sh-top b{color:#fff;letter-spacing:0}
+.sh-x{width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.1);color:#ddd;font-size:22px;cursor:pointer}
+.sh-body{flex:1;display:flex;flex-direction:column;min-height:0}
+.sh-sl h2{margin:3vh 0 .6vh;font-size:clamp(28px,3vw,48px);font-weight:900;letter-spacing:-.03em}.sh-sl h2 small{font-size:.5em;color:#6b7280}
+.sh-rg{font-size:clamp(14px,1.3vw,20px);color:var(--ag);filter:brightness(1.5);font-weight:800;margin-bottom:2.6vh;font-variant-numeric:tabular-nums}
+.sh-rows{display:flex;flex-direction:column;gap:1.2vh}
+.sh-r{display:grid;grid-template-columns:clamp(110px,10vw,160px) 1fr;gap:22px;align-items:center;padding:1.5vh 22px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)}
+.sh-r .tm,.sh-g .tm{font-size:clamp(18px,1.7vw,28px);font-weight:900;font-variant-numeric:tabular-nums}.sh-r .tm span,.sh-g .tm span{display:block;font-size:.55em;color:#6b7280}
+.sh-r .tg{font-size:clamp(11px,.85vw,13px);font-weight:900;letter-spacing:.1em;color:var(--ag);filter:brightness(1.7);text-transform:uppercase}
+.sh-r .tt{font-size:clamp(17px,1.55vw,25px);font-weight:800;line-height:1.35;letter-spacing:-.02em;word-break:keep-all}.sh-r .sp,.sh-c .sp{font-size:clamp(12px,1vw,16px);color:#9aa3b5;margin-top:5px}
+.sh-r.key{background:linear-gradient(110deg,color-mix(in srgb,var(--ag) 38%,transparent),rgba(255,255,255,.04));border-color:color-mix(in srgb,var(--ag) 50%,transparent)}
+.sh-r.brk{background:none;border:1px dashed rgba(148,163,184,.25);padding:.8vh 22px}.sh-r.brk .tm{font-size:clamp(14px,1.2vw,18px);color:#6b7280}.sh-r.brk .tt{font-size:clamp(13px,1.1vw,17px);color:#8b93a6;font-weight:700}
+.sh-g{display:grid;gap:1.2vh 16px;align-items:stretch}.sh-g .tm{padding-top:1.4vh}.sh-g .tm.sm{font-size:clamp(13px,1.1vw,16px);color:#6b7280;padding-top:0}
+.sh-th{font-size:clamp(14px,1.2vw,18px);font-weight:800;padding:1.2vh 18px;border-radius:12px;background:rgba(255,255,255,.06);box-shadow:inset 0 3px 0 var(--c)}.sh-th small{display:block;font-size:.72em;color:#8b93a6;font-weight:600;margin-top:3px}
+.sh-c{padding:1.4vh 18px;border-radius:12px;background:rgba(255,255,255,.05);border-left:4px solid var(--c)}.sh-c .tt{font-size:clamp(14px,1.25vw,20px);font-weight:800;line-height:1.38;word-break:keep-all}
+.sh-bl{text-align:center;font-size:clamp(12px,1vw,15px);color:#6b7280;font-weight:700;border-top:1px dashed rgba(148,163,184,.25);padding-top:.8vh}
+.sh-cv{flex:1;display:flex;flex-direction:column;justify-content:center}.sh-k{font-size:clamp(13px,1.1vw,18px);color:var(--ag);filter:brightness(1.6);font-weight:900;letter-spacing:.24em}
+.sh-cv h1{font-size:clamp(48px,6.5vw,104px);font-weight:900;letter-spacing:-.04em;margin:1.5vh 0;line-height:1}
+.sh-bx{display:flex;flex-wrap:wrap;gap:14px;margin-top:3vh}.sh-bx div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 22px;font-size:14px;color:#8b93a6}.sh-bx b{display:block;color:#fff;font-size:clamp(15px,1.4vw,22px);margin-top:4px}
+.sh-foot{position:absolute;left:6vw;right:6vw;bottom:3.2vh;display:flex;align-items:center;gap:18px;color:#6b7280;font-size:13px;font-weight:700}
+.sh-dots{display:flex;gap:8px}.sh-dots i{width:9px;height:9px;border-radius:5px;background:rgba(255,255,255,.2);cursor:pointer;transition:width .2s}.sh-dots i.on{width:28px;background:var(--ag);filter:brightness(1.5)}
+.sh-ar{position:absolute;top:50%;width:54px;height:54px;margin-top:-27px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:#e5e7eb;font-size:28px;cursor:pointer}.sh-ar.l{left:1.4vw}.sh-ar.r{right:1.4vw}.sh-ar:disabled{opacity:.2;cursor:default}.sh-ar:not(:disabled):hover{background:rgba(255,255,255,.16)}
+@media(max-width:760px){.sh-sl{padding:4vh 5vw 10vh}.sh-r{grid-template-columns:76px 1fr;gap:12px;padding:10px 14px}.sh-g{grid-template-columns:64px 1fr 1fr!important}.sh-ar{display:none}.sh-foot span:last-child{display:none}}
+/* ===== 계정 ===== */
+.acc-sec{margin-bottom:26px}.acc-h{display:flex;align-items:flex-end;gap:12px;margin-bottom:10px;flex-wrap:wrap}.acc-h>div:first-child{flex:1}.acc-h b{font-size:16px;font-weight:800;display:block}.acc-h span{font-size:12.5px;color:var(--text3)}
+.gtbl.acct td{padding:10px 10px}.mchip{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;margin:1px 3px 1px 0;background:#f1f5f9;color:#475569}.mchip.host{background:#ede9fe;color:#6d28d9}.mchip.sponsor{background:#dcfce7;color:#15803d}
+.mlist{max-height:340px;overflow:auto;border:1px solid var(--border);border-radius:10px}.mrow{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-bottom:1px solid #f1f4f8;cursor:pointer}.mrow:hover{background:#f8fbfd}.mrow span{display:block;font-size:12px;color:var(--text3);margin-top:2px}.mrow input{margin-top:4px;accent-color:var(--marple)}
 </style>
 </head>
 <body>
@@ -607,7 +669,7 @@ const P=()=>DB.projects.find(p=>p.id===S.pid)||NOPJ;
 const isAdmin=()=>!!S.user&&S.user.role==='admin';
 const hostName=p=>{const h=DB.hosts.find(x=>x.id===p.hostId);return h?h.name:'-'};
 /* 마플=전체 · 주관사=자기 주관사의 프로젝트만 · 스폰서=자기 프로젝트 하나 */
-const myProjects=()=>!S.user?[]:S.user.role==='admin'?DB.projects:S.user.role==='host'?DB.projects.filter(p=>p.hostId===S.user.hid):DB.projects.filter(p=>p.id===S.user.pid);
+const myProjects=()=>!S.user?[]:memb(S.acct||S.user).map(m=>DB.projects.find(p=>p.id===m.pid)).filter(Boolean);
 const fixPid=()=>{const m=myProjects();if(!m.some(p=>p.id===S.pid))S.pid=m[0]?m[0].id:''};
 const canDelLib=f=>isAdmin()||(isStaff()&&f.by===S.user.org);
 const sponsors=()=>DB.sponsors.filter(s=>s.pid===S.pid);
@@ -655,7 +717,7 @@ function renderLogin(err){
 function login(id,pw,skip){if(Remote.on()&&!Remote.ready)return renderLogin('데이터를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.');const a=DB.accounts.find(x=>x.id===id);
  if(!a||(!skip&&a.pw!==pw))return renderLogin('아이디 또는 비밀번호가 올바르지 않습니다.');
  if(!a.on)return renderLogin('비활성화된 계정입니다. 담당자에게 문의해 주세요.');
- a.last=Date.now();S.user=a;S.folder='전체';S.q='';fixPid();S.view=(!S.pid&&a.role==='admin')?'projects':'dash';
+ a.last=Date.now();S.acct=a;S.user=a;S.folder='전체';S.q='';fixPid();effUser();S.view=(!S.pid&&a.role==='admin')?'projects':'dash';
  const go=()=>{if(S.pid)addLog('로그인','');Store.save('로그인');renderApp()},ks=Remote.on()?extraKinds():[];
  if(Remote.on()){const ok=BASE_KINDS.concat(ks);DB.rows=(DB.rows||[]).filter(r=>ok.includes(KR(r)));DB.logs=DB.logs.filter(l=>ok.includes(LK(l)))}
  if(!ks.length)return go();const le=$('#lerr');if(le)le.textContent='불러오는 중…';
@@ -667,7 +729,7 @@ let lastV='';
 function renderApp(){
  if(!S.user)return renderLogin();
  const sxs=[...document.querySelectorAll('.table-wrap')].map(e=>e.scrollLeft),sy=window.scrollY,keep=lastV===S.view;
- fixPid();if(!isStaff()&&['requests','status','accounts','projects'].includes(S.view))S.view='dash';if(isStaff()&&S.view==='submit')S.view='dash';if(!isAdmin()&&['accounts','projects'].includes(S.view))S.view='dash';if(isMod(S.view)&&!canView(S.view))S.view='dash';
+ fixPid();effUser();if(!isStaff()&&['requests','status','accounts','projects'].includes(S.view))S.view='dash';if(isStaff()&&S.view==='submit')S.view='dash';if(!isAdmin()&&['accounts','projects'].includes(S.view))S.view='dash';if(isMod(S.view)&&!canView(S.view))S.view='dash';
  const staff=isStaff(),pj=P();
  const pend=staff?DB.subs.filter(u=>u.status==='submitted'&&DB.requests.find(r=>r.id===u.rid&&r.pid===S.pid)).length:reqs().filter(r=>['none','rejected'].includes(stOf(r.id,mySid()))).length;
  const nav=[['dash','grid','대시보드'],['library','folder','자료실'],staff?['requests','inbox',isAdmin()?'자료 요청':'요청 현황']:['submit','upload','자료 제출',pend,''],staff?['status','check','제출 현황',pend,'b']:null,['schedule','cal','일정']].filter(Boolean);
@@ -675,7 +737,7 @@ function renderApp(){
  NAVB={nav,adm};const item=n=>`<div class="nav-item ${S.view===n[0]?'active':''}" data-act="nav" data-v="${n[0]}">${ico(n[1])}${n[2]}${n[3]?`<span class="nav-badge ${n[4]||''}">${n[3]}</span>`:''}</div>`;
  const demo=CFG.DEMO?`<select class="demo-sel" data-chg="demo" title="데모 계정 전환"><option value="">계정 전환 (데모)</option>${[['marple','마플 관리자'],['megazone','주관사 (메가존)'],['cloudworks','스폰서 · 클라우드웍스'],['securenet','스폰서 · 시큐어넷'],['ailabs','스폰서 · AI랩스'],['__reset','↺ 데모 데이터 초기화']].map(d=>`<option value="${d[0]}">${d[1]}</option>`).join('')}</select>`:'';
  $('#root').innerHTML=`<div id="app"><aside class="sidebar ${S.menu?'open':''}"><div class="sidebar-logo" data-act="nav" data-v="dash"><img src="${LOGO}" alt="marple"><small>MARPLE <b>RESOURCE</b></small></div>
- <div class="side-proj"><small>PROJECT</small>${myProjects().length>1?`<select data-chg="proj">${myProjects().map(p=>`<option value="${p.id}" ${p.id===S.pid?'selected':''}>${esc(p.name)}</option>`).join('')}</select>`:`<b>${esc(pj.name)}</b>`}<span>${fmtD(pj.date)} · ${esc(pj.venue.split(' ')[0])}</span>${isAdmin()?`<button class="side-proj-btn" data-act="projNew">+ 새 프로젝트</button>`:''}</div>
+ <div class="side-proj"><small>PROJECT</small>${myProjects().length>1?`<select data-chg="proj">${myProjects().map(p=>`<option value="${p.id}" ${p.id===S.pid?'selected':''}>${esc(p.name)}${roleIn(p.id)}</option>`).join('')}</select>`:`<b>${esc(pj.name)}</b>`}<span>${fmtD(pj.date)} · ${esc(pj.venue.split(' ')[0])}</span>${isAdmin()?`<button class="side-proj-btn" data-act="projNew">+ 새 프로젝트</button>`:''}</div>
  <nav>${navGroups()}</nav>
  <div class="sidebar-footer"><div class="user-info"><div class="user-avatar">${esc(S.user.org[0])}</div><div><div class="user-name">${esc(S.user.org)}</div><div class="user-role">${esc(S.user.name)} · ${ROLE[S.user.role]}</div></div></div><button class="btn-logout" data-act="pwMe" style="margin-bottom:6px">비밀번호 변경</button><button class="btn-logout" data-act="logout">로그아웃</button></div></aside>
  <div class="main"><div class="topbar"><button class="hamb" data-act="menu">${ico('menu',18)}</button><div class="topbar-title">${S.view==='requests'&&!isAdmin()?'요청 현황':TITLES[S.view]}</div>
@@ -1023,7 +1085,7 @@ function agLayout(rows){const c=CF_();let L=c.agL&&c.agL.length?JSON.parse(JSON.
  if(!L){const tk=[];rows.forEach(r=>{if(r.track!=='*'&&!tk.includes(r.track)&&agDur(r)<=150)tk.push(r.track)});L=[{id:'b1',name:'',tracks:(tk.length?tk:['메인']).map(n=>{const m=/^(.*?)\s*\(([^()]+)\)\s*$/.exec(n);return {name:n,room:'',disp:m?m[1]:n,dr:m?m[2]:''}}),note:rows.some(r=>r.note),derived:1}]}
  rows.forEach(r=>{if(!r.blk||!L.find(b=>b.id===r.blk))r.blk=L[0].id;const b=L.find(x=>x.id===r.blk);if(r.track!=='*'&&!b.tracks.find(t=>t.name===r.track)&&agDur(r)<=150)b.tracks.push({name:r.track,room:''})});
  return L}
-const agSave=L=>{ensureCfg().agL=L.map(b=>({id:b.id,name:b.name,tracks:b.tracks.map(t=>({name:t.name,room:t.room||''})),note:!!b.note,spkCol:!!b.spkCol}))};
+const agSave=L=>{ensureCfg().agL=L.map(b=>({id:b.id,name:b.name,tracks:b.tracks.map(t=>({name:t.name,room:t.room||'',desc:t.desc||''})),note:!!b.note,spkCol:!!b.spkCol,desc:b.desc||''}))};
 const agSlots=rows=>{const m=new Map();rows.forEach(r=>{const k=r.start||'';if(!m.has(k))m.set(k,{s:k,e:r.end||'',rows:[]});const x=m.get(k);x.rows.push(r);if((r.end||'')>x.e)x.e=r.end||''});return [...m.values()].sort((a,b)=>(mOf(a.s)??9999)-(mOf(b.s)??9999))};
 const ini=n=>{n=String(n||'').trim();return /[가-힣]/.test(n)?n[0]:(n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase())};
 function spkList(spks,cls){if(!spks||!spks.length)return '';return `<ul class="as-sp ${cls||''}">${spks.map(s=>`<li>${s.n?`<i>${esc(ini(s.n))}</i>`:'<i class="o">·</i>'}<div><b>${esc(s.n||s.o)}</b>${s.n&&(s.r||s.o)?`<span>${esc([s.r,s.o].filter(Boolean).join(' · '))}</span>`:(!s.n&&s.r?`<span>${esc(s.r)}</span>`:'')}</div></li>`).join('')}</ul>`}
@@ -1037,6 +1099,8 @@ function agEditor(r,b){const L=b.tracks;return `<div class="ag-ed" data-ed="${r.
  <div class="ag-ed-r"><label>시작<input class="gi" type="time" data-chg="agf" data-id="${r.id}" data-f="start" value="${esc(r.start||'')}"></label><label>종료<input class="gi" type="time" data-chg="agf" data-id="${r.id}" data-f="end" value="${esc(r.end||'')}"></label>
   <label>구분<select class="gi" data-chg="agf" data-id="${r.id}" data-f="kind">${KINDS.map(k=>`<option ${k===r.kind?'selected':''}>${k}</option>`).join('')}</select></label><label>상태<select class="gi" data-chg="agf" data-id="${r.id}" data-f="status">${OPT.ag.status.map(k=>`<option ${k===r.status?'selected':''}>${k}</option>`).join('')}</select></label></div>
  ${L.length>1?`<div class="ag-ed-r"><label style="flex:1">트랙<select class="gi" data-chg="agf" data-id="${r.id}" data-f="track"><option value="*" ${r.track==='*'?'selected':''}>전체 트랙 (가로로 합침)</option>${L.map(t=>`<option value="${esc(t.name)}" ${t.name===r.track?'selected':''}>${esc(t.disp||t.name)}</option>`).join('')}</select></label></div>`:''}
+ <textarea class="gi" rows="3" data-chg="agf" data-id="${r.id}" data-f="desc" placeholder="세션 소개 (상세 팝업에 표시)">${esc(r.desc||'')}</textarea>
+ <input class="gi" data-chg="agf" data-id="${r.id}" data-f="link" value="${esc(r.link||'')}" placeholder="영상 · 자료 링크 (선택)">
  <input class="gi" data-chg="agf" data-id="${r.id}" data-f="note" value="${esc(r.note||'')}" placeholder="비고 (운영 메모 · 스폰서에게는 보이지 않음)">
  <div class="ag-ed-f"><button class="btn btn-sm btn-danger-ghost" data-act="agDel" data-id="${r.id}">삭제</button><span class="sub">입력하면 바로 저장됩니다</span><button class="btn btn-sm btn-primary" data-act="agDone">완료</button></div></div>`}
 /* 한 블록 = 원본 표 하나 */
@@ -1454,7 +1518,7 @@ async function parseAgendaFile(file){const ext=extOf(file.name),buf=await file.a
 const A={
  close:()=>closeModal(),
  quick:d=>{closeModal();login(d.id,'',true)},
- logout:()=>{S.user=null;closeModal();renderLogin()},
+ logout:()=>{S.user=null;S.acct=null;closeModal();renderLogin()},
  menu:()=>{S.menu=!S.menu;renderApp()},
  nav:d=>{S.view=d.v;S.menu=false;renderApp();window.scrollTo(0,0)},
  folder:d=>{S.folder=d.f;renderView()},
@@ -1789,10 +1853,135 @@ document.addEventListener('dragenter',e=>{if(!e.dataTransfer||![...e.dataTransfe
 document.addEventListener('dragleave',e=>{const o=$('#dropov');if(!o)return;if(--dragN<=0||e.target===o&&!e.relatedTarget){dragN=0;o.classList.remove('show')}});
 document.addEventListener('drop',()=>{dragN=0;const o=$('#dropov');if(o)setTimeout(()=>o.classList.remove('show'),0)},true);
 function impBar(){if(!impOK()||S.view==='agenda')return '';const t=impTables()[0];return `<div class="imp-bar" data-drop="imp">${ico('upload',14)}<span><b>엑셀·CSV를 이 화면에 끌어다 놓으면</b> ${esc(t.label)} 표에 바로 추가됩니다</span><button class="btn btn-xs" data-act="impPick">파일 선택</button></div>`}
+/* ---------- 계정: 한 아이디가 프로젝트마다 다른 권한 (예: ICON 2027 스폰서 + Cloudflare ABM 주관사) ---------- */
+function memb(a){if(!a)return [];if(a.role==='admin')return DB.projects.map(p=>({pid:p.id,role:'admin'}));const out=[];
+ if(a.role==='host')DB.projects.filter(p=>p.hostId===a.hid).forEach(p=>out.push({pid:p.id,role:'host',hid:a.hid}));
+ if(a.role==='sponsor'&&a.pid&&DB.projects.some(p=>p.id===a.pid))out.push({pid:a.pid,role:'sponsor',sid:a.sid});
+ (a.extra||[]).forEach(x=>{const p=DB.projects.find(q=>q.id===x.pid);if(p&&!out.some(o=>o.pid===x.pid))out.push(x.role==='host'?{pid:x.pid,role:'host',hid:p.hostId,extra:1}:{pid:x.pid,role:'sponsor',sid:x.sid,extra:1})});return out}
+const ROLE_KO={admin:'마플',host:'주관사',sponsor:'스폰서'};
+function effUser(){const a=S.acct;if(!a||a.role==='admin'||!S.user)return;const m=memb(a).find(x=>x.pid===S.pid);if(!m){S.user=a;return}
+ const key=S.pid+'|'+m.role+'|'+(m.sid||m.hid||'');if(S.user.__k===key)return;
+ const ov={role:m.role,sid:m.role==='sponsor'?m.sid:undefined,pid:m.role==='sponsor'?m.pid:a.pid,hid:m.role==='host'?m.hid:a.hid};
+ S.user=new Proxy(a,{get:(t,k)=>k==='__k'?key:k==='__raw'?t:Object.prototype.hasOwnProperty.call(ov,k)?ov[k]:t[k],set:(t,k,v)=>{t[k]=v;return true}})}
+const roleIn=pid=>{const a=S.acct;if(!a||a.role==='admin')return '';const m=memb(a).find(x=>x.pid===pid);return m?' · '+ROLE_KO[m.role]:''};
+function projSwitch(){if(Remote.on()){const ok=BASE_KINDS.concat(extraKinds());DB.rows=(DB.rows||[]).filter(r=>ok.includes(KR(r)));DB.logs=DB.logs.filter(l=>ok.includes(LK(l)))}
+ renderApp();if(Remote.on()){const ks=extraKinds();if(ks.length)Remote.more(ks).then(()=>renderApp(),e=>toast('데이터를 불러오지 못했습니다 ('+e.message+')','error'))}}
+/* 계정 관리 — 현재 프로젝트 기준 */
+vAcc=function(v){const pj=P(),pid=S.pid;
+ const hosts=DB.accounts.filter(a=>a.role!=='admin'&&memb(a).some(m=>m.pid===pid&&m.role==='host')),spons=DB.accounts.filter(a=>a.role!=='admin'&&memb(a).some(m=>m.pid===pid&&m.role==='sponsor'));
+ const others=a=>memb(a).filter(m=>m.pid!==pid).map(m=>{const p=DB.projects.find(x=>x.id===m.pid);return p?`<span class="mchip ${m.role}">${esc(p.name)} · ${ROLE_KO[m.role]}</span>`:''}).join('')||'<span class="mute">—</span>';
+ const pw=a=>`<code>${S.showPw[a.id]?esc(a.pw):'••••••'}</code> <button class="btn btn-icon" style="width:26px;height:26px" data-act="pwShow" data-id="${a.id}">${ico('eye',13)}</button>`;
+ const acts=a=>{const m=memb(a).find(x=>x.pid===pid);return `<button class="btn btn-sm" data-act="accEdit" data-id="${a.id}">${ico('edit',13)}수정</button> <button class="btn btn-sm" data-act="pwReset" data-id="${a.id}">PW 재발급</button> <button class="btn btn-sm" data-act="accTog" data-id="${a.id}">${a.on?'비활성화':'활성화'}</button>${m&&m.extra?` <button class="btn btn-sm btn-danger-ghost" data-act="membDel" data-id="${a.id}">이 프로젝트에서 제외</button>`:''}`};
+ const st=a=>a.on?'<span class="pill t-g">사용중</span>':'<span class="pill t-n">비활성</span>',last=a=>a.last?fmtDT(a.last):'<span class="mute">미접속</span>';
+ const tbl=(rows,sp)=>rows.length?`<div class="card flush"><div class="table-wrap"><table class="gtbl acct"><thead><tr><th>${sp?'스폰서사':'회사'}</th>${sp?'<th>등급 · 부스</th>':''}<th>담당자</th><th>아이디</th><th>비밀번호</th><th>다른 프로젝트 권한</th><th>최근 접속</th><th>상태</th><th class="r">작업</th></tr></thead><tbody>${rows.map(a=>{const m=memb(a).find(x=>x.pid===pid),s=sp&&m?DB.sponsors.find(x=>x.id===m.sid):null;
+  return `<tr><td><b>${esc(s?s.name:a.org)}</b>${m&&m.extra?' <span class="pill t-b" style="font-size:10.5px">추가 권한</span>':''}</td>${sp?`<td class="sub">${s?esc([s.tier,s.floor,s.booth].filter(x=>x&&x!=='-').join(' · ')):'-'}</td>`:''}<td>${esc(a.name)}</td><td><code>${esc(a.id)}</code></td><td style="white-space:nowrap">${pw(a)}</td><td>${others(a)}</td><td class="sub" style="white-space:nowrap">${last(a)}</td><td>${st(a)}</td><td class="r" style="white-space:nowrap">${acts(a)}</td></tr>`}).join('')}</tbody></table></div></div>`:`<div class="card es" style="padding:26px"><b>아직 계정이 없습니다</b></div>`;
+ v.innerHTML=head('계정 관리 · '+esc(pj.name),'이 프로젝트에 접속할 수 있는 계정입니다. 다른 프로젝트에서 쓰던 아이디도 [기존 아이디 추가]로 이 프로젝트에 넣을 수 있고, 권한은 프로젝트마다 따로 적용됩니다.',`<button class="btn" data-act="diag">연결 점검</button>`)
+ +`<div class="acc-sec"><div class="acc-h"><div><b>주관사 계정</b><span>${esc(hostName(pj))} · 이 프로젝트의 주관사 권한</span></div><div class="hbtns">${pj.hostId?`<button class="btn" data-act="hostEdit" data-id="${pj.hostId}">주관사명 변경</button>`:''}<button class="btn" data-act="hostNew">${ico('plus',14)}주관사 추가</button><button class="btn" data-act="membAdd" data-r="host">${ico('users',14)}기존 아이디를 주관사로 추가</button>${pj.hostId?`<button class="btn btn-primary" data-act="hostAcc" data-id="${pj.hostId}">${ico('plus',14)}주관사 계정 발급</button>`:''}</div></div>${tbl(hosts,false)}</div>`
+ +`<div class="acc-sec"><div class="acc-h"><div><b>스폰서 계정</b><span>이 프로젝트의 스폰서 권한 · 본인 회사 자료만 봅니다</span></div><div class="hbtns"><button class="btn" data-act="membAdd" data-r="sponsor">${ico('users',14)}기존 아이디를 스폰서로 추가</button><button class="btn" data-act="accBulk">스폰서 일괄 등록</button><button class="btn btn-primary" data-act="accNew">${ico('plus',14)}스폰서 계정 발급</button></div></div>${tbl(spons,true)}</div>`
+ +`<div class="acc-sec"><div class="acc-h"><div><b>마플 관리자</b><span>모든 프로젝트 열람 · 관리</span></div></div><div class="card flush"><div class="table-wrap"><table class="gtbl acct"><tbody>${DB.accounts.filter(a=>a.role==='admin').map(a=>`<tr><td><b>${esc(a.name)}</b></td><td><code>${esc(a.id)}</code></td><td class="r"><button class="btn btn-sm" data-act="accEdit" data-id="${a.id}">${ico('edit',13)}아이디·비밀번호 변경</button></td></tr>`).join('')}</tbody></table></div></div></div>`};
+/* 프로젝트 — 삭제 버튼 */
+if(typeof vProj==='function'){const vProjBase=vProj;vProj=function(v){vProjBase(v);const cards=v.querySelectorAll('.grid3>.card');DB.projects.forEach((p,i)=>{const c=cards[i];if(c)c.insertAdjacentHTML('beforeend',`<button class="btn btn-sm btn-danger-ghost" style="margin-left:6px" data-act="projDel" data-id="${p.id}">${ico('trash',13)}삭제</button>`)})}}
+Object.assign(A,{
+ membAdd:d=>{const pid=S.pid,role=d.r,cand=DB.accounts.filter(a=>a.role!=='admin'&&!memb(a).some(m=>m.pid===pid));
+  modal(`기존 아이디를 ${ROLE_KO[role]}로 추가 · ${esc(P().name)}`,`<div class="sub" style="margin-bottom:10px">다른 프로젝트에서 발급한 아이디를 이 프로젝트의 <b>${ROLE_KO[role]}</b>로 등록합니다. 같은 아이디·비밀번호로 두 프로젝트 모두 접속하고, 왼쪽 위에서 프로젝트를 바꾸면 권한도 바뀝니다.</div>
+  ${cand.length?`<input class="form-input" id="mq" placeholder="회사명 · 아이디 · 담당자 검색" style="margin-bottom:8px"><div class="mlist" id="mlist">${cand.map(a=>`<label class="mrow" data-q="${esc((a.org+' '+a.id+' '+a.name).toLowerCase())}"><input type="radio" name="macc" value="${esc(a.id)}"><div><b>${esc(a.org)}</b> <code>${esc(a.id)}</code><span>${esc(a.name)} · ${memb(a).map(m=>{const p=DB.projects.find(x=>x.id===m.pid);return p?esc(p.name)+' '+ROLE_KO[m.role]:''}).filter(Boolean).join(', ')||'다른 프로젝트 없음'}</span></div></label>`).join('')}</div>`:'<div class="es" style="padding:20px">추가할 수 있는 다른 프로젝트 계정이 없습니다</div>'}
+  ${mfoot('<button class="btn" data-act="close">취소</button>',cand.length?`<button class="btn btn-primary" data-act="membSave" data-r="${role}">추가</button>`:'')}`);
+  const q=$('#mq');if(q)q.oninput=()=>{const t=q.value.toLowerCase();document.querySelectorAll('.mrow').forEach(r=>r.style.display=r.dataset.q.includes(t)?'':'none')}},
+ membSave:d=>{const id=(document.querySelector('input[name=macc]:checked')||{}).value;if(!id)return toast('아이디를 선택해 주세요','error');const a=DB.accounts.find(x=>x.id===id),pid=S.pid;if(!a)return;a.extra=a.extra||[];
+  if(d.r==='host')a.extra.push({pid,role:'host'});else{const sid=uid('s');DB.sponsors.push({id:sid,pid,name:a.org,tier:'Silver',floor:'1F',booth:'-'});a.extra.push({pid,role:'sponsor',sid})}
+  addLog('계정 권한 추가',`${a.org} (${a.id}) → ${P().name} ${ROLE_KO[d.r]}`);Store.save('계정 권한');closeModal();toast(`${a.org} 아이디로 이제 이 프로젝트에도 ${ROLE_KO[d.r]} 권한으로 접속합니다`,'success',5000);renderView()},
+ membDel:d=>{const a=DB.accounts.find(x=>x.id===d.id);if(!a)return;confirmBox(`<b>${esc(a.org)}</b> (${esc(a.id)})의 이 프로젝트 접속 권한을 없앨까요? 다른 프로젝트 권한은 그대로입니다.`,()=>{a.extra=(a.extra||[]).filter(x=>x.pid!==S.pid);addLog('계정 권한 제외',`${a.org} (${a.id}) · ${P().name}`);Store.save('계정 권한');closeModal();renderView()},'제외')},
+ projDel:d=>{const p=DB.projects.find(x=>x.id===d.id);if(!p)return;
+  modal('프로젝트 삭제',`<div class="note" style="background:#fef2f2;border-color:#fecaca;color:#991b1b"><b>되돌릴 수 없습니다.</b> 이 프로젝트의 자료실 파일 · 요청 항목 · 제출물 · 일정 · 아젠다 · 모든 표 · 변경 기록 · 이 프로젝트 전용 스폰서 계정이 함께 삭제됩니다. 다른 프로젝트에도 권한이 있는 아이디는 이 프로젝트 권한만 빠집니다.</div>
+  <div class="form-group" style="margin-top:14px"><label class="form-label">확인을 위해 프로젝트명 <b>${esc(p.name)}</b> 을(를) 그대로 입력해 주세요</label><input class="form-input" id="pdel" autocomplete="off"></div>${mfoot('<button class="btn" data-act="close">취소</button>',`<button class="btn btn-danger" data-act="projDelOk" data-id="${p.id}">영구 삭제</button>`)}`)},
+ projDelOk:d=>{const p=DB.projects.find(x=>x.id===d.id);if(!p)return;if(($('#pdel')||{}).value!==p.name)return toast('프로젝트명이 일치하지 않습니다','error');const pid=p.id,dr=f=>{if(f&&f.driveId&&Drive.on())Drive.del(f.driveId)};
+  DB.files.filter(f=>f.pid===pid).forEach(dr);const rids=DB.requests.filter(r=>r.pid===pid).map(r=>r.id);DB.subs.filter(u=>rids.includes(u.rid)).forEach(u=>(u.files||[]).forEach(dr));(DB.rows||[]).filter(r=>r.pid===pid).forEach(r=>rowFs(r).forEach(dr));
+  DB.files=DB.files.filter(f=>f.pid!==pid);DB.subs=DB.subs.filter(u=>!rids.includes(u.rid));DB.requests=DB.requests.filter(r=>r.pid!==pid);DB.sponsors=DB.sponsors.filter(s=>s.pid!==pid);DB.sched=DB.sched.filter(m=>m.pid!==pid);DB.rows=(DB.rows||[]).filter(r=>r.pid!==pid);DB.logs=DB.logs.filter(l=>l.pid!==pid);
+  DB.accounts.forEach(a=>{if(a.extra)a.extra=a.extra.filter(x=>x.pid!==pid)});
+  DB.accounts=DB.accounts.filter(a=>{if(a.role!=='sponsor'||a.pid!==pid)return true;const x=(a.extra||[])[0];if(!x)return false;a.extra=a.extra.slice(1);if(x.role==='host'){a.role='host';a.hid=(DB.projects.find(q=>q.id===x.pid)||{}).hostId;delete a.pid;delete a.sid}else{a.pid=x.pid;a.sid=x.sid}return true});
+  DB.projects=DB.projects.filter(x=>x.id!==pid);if(S.pid===pid)S.pid='';addLog('프로젝트 삭제',p.name);Store.save('프로젝트 삭제');closeModal();toast(`“${p.name}” 프로젝트를 삭제했습니다`,'success');renderApp()}});
+/* ---------- 아젠다: ICON 홈페이지 스타일 (트랙 탭 · 검은 시간 블록 · 카드 · 상세 팝업) + 보기(슬라이드) ---------- */
+const AGCOL=()=>CF_().agColor||'#7850ff';
+function agTabs(L,rows){const tabs=[];L.forEach(b=>{const rs=rows.filter(r=>r.blk===b.id);if(b.tracks.length>1){const wide=rs.filter(r=>r.track==='*'&&!(AG_NS.includes(r.kind)&&r.kind!=='진행'));
+  if(wide.length)tabs.push({key:b.id+'|main',b,label:b.mainLabel||'메인 세션',room:'',desc:b.desc||'',rows:wide});
+  b.tracks.forEach((t,i)=>tabs.push({key:b.id+'|'+i,b,t,ti:i,label:t.disp||t.name,room:t.room||t.dr||'',desc:t.desc||'',rows:rs.filter(r=>r.track===t.name||(!wide.length&&r.track==='*'))}))}
+  else tabs.push({key:b.id,b,label:b.name||(b.tracks[0]&&b.tracks[0].name!=='메인'?b.tracks[0].name:'메인 세션'),room:b.tracks[0]?(b.tracks[0].room||''):'',desc:b.desc||'',rows:rs})});return tabs.filter(t=>t.rows.length||isStaff())}
+const agSort=rs=>rs.slice().sort((a,b)=>(mOf(a.start)??9999)-(mOf(b.start)??9999)||((a.track==='*')-(b.track==='*')));
+function agSpkProf(r){/* 스피커 프로필 탭에서 같은 세션 · 같은 이름을 찾아 사진 · 약력을 가져옴 */
+ return (r.spks||[]).map(s=>{const p=R('spk').find(x=>x.sid===r.sid&&s.n&&(x.nameKo===s.n||x.nameEn===s.n))||null;return {s,p}})}
+function agRow(r,tab){const ns=AG_NS.includes(r.kind)&&r.kind!=='진행',ed=canEdit('agenda');
+ if(ns)return `<li class="ic-brk"><div class="ic-tm">${esc(r.start)}${r.end?' - '+esc(r.end):''}</div><div class="ic-bx">${esc(r.title)}<em>${agDur(r)?agDur(r)+'분':''}${r.note&&isStaff()?' · '+esc(r.note):''}</em></div>${ed?`<button class="ic-ed" data-act="agDet" data-id="${r.id}" data-e="1" title="수정">${ico('edit',13)}</button>`:''}</li>`;
+ const tbc=/^(tbc|tbd|미정)$/i.test(r.title||'')||r.status==='TBC';
+ return `<li class="ic-it${tbc?' tbc':''}" data-act="agDet" data-id="${r.id}"><div class="ic-tm"><b>${esc(r.start)}${r.end?' - '+esc(r.end):''}</b>${r.track==='*'&&tab.t?'<span>전체 트랙</span>':''}</div>
+  <div class="ic-tx">${r.tag?`<strong>${esc(r.tag)}</strong>`:r.kind==='Keynote'||r.kind==='Award'?`<strong>${esc(r.kind)}</strong>`:''}<p>${esc(r.title||'(제목 없음)')}</p>
+  ${(r.spks||[]).length?`<div class="ic-pf">${r.spks.map(s=>`<span class="ic-nm">${esc(s.n||s.o)}${s.n&&(s.r||s.o)?`<em>${esc([s.r,s.o].filter(Boolean).join(', '))}</em>`:''}</span>`).join('')}</div>`:''}
+  ${isStaff()&&(r.status&&r.status!=='확정'||r.sid)?`<div class="ic-meta">${r.sid?`<span>${esc(r.sid)}</span>`:''}${r.status?`<span class="pill t-${toneOf(r.status)}">${esc(r.status)}</span>`:''}</div>`:''}</div><i class="ic-go">↗</i></li>`}
+function agListView(){const rows=agRows();agFix(rows);const L=agLayout(rows),tabs=agTabs(L,rows);if(!tabs.length)return `<div class="card es"><b>아젠다가 없습니다</b>${canEdit('agenda')?'<div class="sub">아젠다 파일을 끌어다 놓으면 트랙별 탭이 자동으로 만들어집니다.</div>':''}</div>`;
+ let cur=tabs.find(t=>t.key===S.agTab)||tabs[0];S.agTab=cur.key;const ed=canEdit('agenda');
+ const desc=ed&&S.agDescEd===cur.key?`<div class="ic-desc ed"><input class="gi" data-chg="agdesc" value="${esc(cur.desc)}" placeholder="이 탭의 한 줄 설명 (예: AI와 데이터로 의사결정을 설계하는 트랙)"><button class="btn btn-xs btn-primary" data-act="agDone">완료</button></div>`
+  :`<p class="ic-desc${ed?' can':''}" ${ed?'data-act="agDescEd"':''}>${cur.desc?esc(cur.desc):ed?'<span class="mute">+ 탭 설명 추가</span>':''}${cur.room&&!cur.desc?'':''}</p>`;
+ return `<div class="ic" style="--ag:${AGCOL()}"><div class="ic-tabs" style="grid-template-columns:repeat(${tabs.length},1fr)">${tabs.map(t=>`<button class="ic-tab ${t.key===cur.key?'on':''}" data-act="agTabGo" data-k="${esc(t.key)}">${esc(t.label)}${t.room?`<small>${esc(t.room)}</small>`:''}</button>`).join('')}</div>
+ ${desc}<ul class="ic-list">${agSort(cur.rows).map(r=>agRow(r,cur)).join('')||'<li class="ic-empty">이 탭에 세션이 없습니다</li>'}</ul>
+ ${ed?`<div class="ic-add"><button class="btn" data-act="agTabAdd" data-k="${esc(cur.key)}">${ico('plus',14)}이 탭에 세션 추가</button><span class="sub">카드를 누르면 상세 내용이 열리고, 그 안에서 바로 수정할 수 있습니다 · 트랙·시간대 구조는 [전체 시간표]에서 편집</span></div>`:''}
+ <p class="ic-note">※ 세션 내용은 사정에 따라 변경될 수 있습니다.</p></div>`}
+/* 상세 팝업 (ICON 홈페이지 팝업과 같은 구성) */
+function agDetail(r,editing){const L=agL(),b=L.find(x=>x.id===r.blk)||L[0],ed=canEdit('agenda'),prof=agSpkProf(r);
+ if(editing&&ed)return `<div style="--ag:${AGCOL()}">${agEditor(r,b)}</div>`;
+ return `<div class="ic-pop" style="--ag:${AGCOL()}"><div class="ic-chips"><span class="c-tm">${esc(r.start)}${r.end?' - '+esc(r.end):''}</span>${r.tag||r.kind?`<span class="c-tag">${esc(r.tag||r.kind)}</span>`:''}${r.track&&r.track!=='*'?`<span class="c-tr">${esc(r.track)}</span>`:''}${r.link?`<a class="c-lk" href="${esc(r.link)}" target="_blank" rel="noopener">영상 · 자료 보기</a>`:''}</div>
+ <h3>${esc(r.title||'(제목 없음)')}</h3>${r.desc?`<div class="ic-ab">${esc(r.desc).replace(/\n/g,'<br>')}</div>`:ed?'<div class="ic-ab mute">세션 소개가 아직 없습니다. [수정]에서 입력하면 여기에 표시됩니다.</div>':''}
+ ${prof.length?`<div class="ic-prof">${prof.map(({s,p})=>{const ph=p&&p.photo&&(p.photo.dataUrl||p.photo.thumb);const bio=p&&(p.introKo||p.bioKo||p.introEn||p.bioEn);
+  return `<div class="ic-pc">${ph?`<img src="${ph}" alt="">`:`<div class="ic-av">${esc(ini(s.n||s.o||'?'))}</div>`}<div><b>${esc(s.n||s.o)}</b><span>${esc([s.r,s.o].filter(Boolean).join(', ')||'')}</span>${bio?`<p>${esc(bio).slice(0,400)}</p>`:''}</div></div>`}).join('')}</div>`:''}
+ ${isStaff()&&r.note?`<div class="note" style="margin-top:12px">비고 · ${esc(r.note)}</div>`:''}
+ ${mfoot('<button class="btn" data-act="close">닫기</button>',ed?`<button class="btn btn-primary" data-act="agDet" data-id="${r.id}" data-e="1">${ico('edit',13)}수정</button>`:'')}</div>`}
+/* 보기: 전체 화면 슬라이드 */
+function agSlides(){const rows=agRows();agFix(rows);const L=agLayout(rows),S2=[{cover:1}];
+ L.forEach(b=>{const ss=agSlots(rows.filter(r=>r.blk===b.id&&!(r.track!=='*'&&agDur(r)>150))),mx=b.tracks.length>1?3.5:4.4,pages=[];let cur=[],w=0;
+  ss.forEach(sl=>{const br=sl.rows.every(r=>AG_NS.includes(r.kind)&&r.kind!=='진행'),ww=br?.35:1;if(w+ww>mx&&cur.length){pages.push(cur);cur=[];w=0}if(!(br&&!cur.length&&pages.length)){cur.push(sl);w+=ww}});if(cur.length)pages.push(cur);
+  pages.forEach((p,i)=>S2.push({b,ss:p,part:pages.length>1?(i+1)+'/'+pages.length:''}))});return S2}
+function agShow(i){const S2=agSlides(),n=S2.length;i=Math.max(0,Math.min(n-1,i));S.agSl=i;const s=S2[i],pj=P(),rows=agRows(),c=AGCOL();let el=$('#agshow');
+ if(!el){el=document.createElement('div');el.id='agshow';document.body.appendChild(el);let x0=null;el.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});el.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)agShow(S.agSl+(dx<0?1:-1));x0=null})}
+ const top=`<div class="sh-top"><b>${esc(pj.name)}</b><span>AGENDA</span><span style="flex:1"></span><span>${fmtD(pj.date)}</span><button class="sh-x" data-act="agShowX">×</button></div>`;
+ const foot=`<div class="sh-foot"><div class="sh-dots">${S2.map((_,j)=>`<i class="${j===i?'on':''}" data-act="agShowGo" data-i="${j}"></i>`).join('')}</div><span>${i+1} / ${n}</span><span style="flex:1"></span><span>← → 키 · 스와이프로 넘기기 · ESC 닫기</span></div><button class="sh-ar l" data-act="agShowGo" data-i="${i-1}" ${i?'':'disabled'}>‹</button><button class="sh-ar r" data-act="agShowGo" data-i="${i+1}" ${i<n-1?'':'disabled'}>›</button>`;
+ const spt=r=>(r.spks||[]).map(x=>esc(x.n||x.o)+(x.n&&x.o?' · '+esc(x.o):'')).join('　');
+ let body='';
+ if(s.cover){const ss=rows.filter(r=>!AG_NS.includes(r.kind)),ks=ss.filter(r=>r.kind==='Keynote').length,trs=agLayout(rows).reduce((a,b)=>a+(b.tracks.length>1?b.tracks.length:0),0),st=agSort(rows)[0],en=agSort(rows).slice(-1)[0];
+  body=`<div class="sh-cv"><div class="sh-k">AGENDA</div><h1>${esc(pj.name)}</h1><div class="sh-bx"><div>일시<b>${fmtD(pj.date)}${st?' '+esc(st.start)+' – '+esc(en.end||en.start):''}</b></div><div>장소<b>${esc(pj.venue)}</b></div><div>구성<b>${ks?'키노트 '+ks+' · ':''}세션 ${ss.length-ks}${trs?' · 트랙 '+trs:''}</b></div></div></div>`}
+ else{const multi=s.b.tracks.length>1;body=`<h2>${esc(s.b.name||'아젠다')}${s.part?` <small>${s.part}</small>`:''}</h2><div class="sh-rg">${esc(s.ss[0].s)} – ${esc(s.ss[s.ss.length-1].e||s.ss[s.ss.length-1].s)}</div>`;
+  if(!multi)body+=`<div class="sh-rows">${s.ss.map(sl=>{const r=sl.rows[0];if(AG_NS.includes(r.kind)&&r.kind!=='진행')return `<div class="sh-r brk"><div class="tm">${esc(sl.s)}</div><div class="tt">${esc(r.title)} · ${agDur(r)}분</div></div>`;return `<div class="sh-r ${r.kind==='Keynote'?'key':''}"><div class="tm">${esc(sl.s)}<span>~ ${esc(sl.e)}</span></div><div>${r.tag?`<div class="tg">${esc(r.tag)}</div>`:''}<div class="tt">${esc(r.title)}</div>${(r.spks||[]).length?`<div class="sp">${spt(r)}</div>`:''}</div></div>`}).join('')}</div>`;
+  else body+=`<div class="sh-g" style="grid-template-columns:150px repeat(${s.b.tracks.length},1fr)"><div></div>${s.b.tracks.map((t,j)=>`<div class="sh-th" style="--c:${TKC[j%TKC.length]}">${esc(t.name)}<small>${esc(t.room||'')}</small></div>`).join('')}${s.ss.map(sl=>{const w=sl.rows.find(r=>r.track==='*');if(w)return `<div class="tm sm">${esc(sl.s)}</div><div class="sh-bl" style="grid-column:2/-1">${esc(w.title)} · ${agDur(w)}분</div>`;
+   return `<div class="tm">${esc(sl.s)}<span>~ ${esc(sl.e)}</span></div>${s.b.tracks.map((t,j)=>{const r=sl.rows.find(x=>x.track===t.name);return r?`<div class="sh-c" style="--c:${TKC[j%TKC.length]}"><div class="tt">${esc(r.title)}</div><div class="sp">${spt(r)}</div></div>`:'<div></div>'}).join('')}`}).join('')}</div>`}
+ el.innerHTML=`<div class="sh-sl ${s.cover?'cv':''}" style="--ag:${c}">${top}<div class="sh-body">${body}</div>${foot}</div>`;el.classList.add('open');document.body.style.overflow='hidden'}
+document.addEventListener('keydown',e=>{const el=$('#agshow');if(!el||!el.classList.contains('open'))return;if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();agShow(S.agSl+1)}else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();agShow(S.agSl-1)}else if(e.key==='Escape')A.agShowX()});
+/* 아젠다 화면 */
+vAgenda=function(v){const rows=agRows(),staff=isStaff(),adm=isAdmin(),pub=!!CF_().agendaPub,ed=canEdit('agenda'),mode=S.agMode||'list';
+ const acts=`<div class="seg">${[['list','트랙별'],['grid','전체 시간표']].map(([k,l])=>`<button class="${mode===k?'on':''}" data-act="agMode" data-m="${k}">${l}</button>`).join('')}</div>${rows.length?`<button class="btn btn-dark" data-act="agShowOpen">▶ 보기</button>`:''}`
+  +(staff?`${ed?`<label class="ag-col" title="포인트 색">${ico('star',12)}<input type="color" data-chg="agcol" value="${AGCOL()}"></label>`:''}<span class="badge ${pub?'badge-green':'badge-gray'}">${ico(pub?'eye':'lock',12)}스폰서 ${pub?'공개 중':'비공개'}</span>${adm?`<button class="btn ${pub?'':'btn-primary'}" data-act="agPub">${pub?'공개 중지':'스폰서에게 공개'}</button>`:''}`:'');
+ v.innerHTML=head('아젠다',staff?'아젠다 파일을 끌어다 놓으면 파일과 같은 구성으로 트랙 탭이 만들어집니다. 카드를 누르면 상세 내용이 열리고 바로 수정할 수 있습니다.':'행사 아젠다입니다. 카드를 누르면 세션 소개와 발표자 정보를 볼 수 있습니다.',acts)
+ +(staff?boardBox()+(ed?`<div class="upload-zone slim" data-drop="agenda" data-act="agPick"><b>${ico('upload',16)} 아젠다 파일을 끌어다 놓거나 눌러서 선택</b><span class="sub">엑셀 · CSV · PDF — 표가 여러 개여도 모두 읽어 트랙별 탭으로 만듭니다</span></div>`:''):'')
+ +(mode==='grid'?`<div id="agmx">${agMain(ed)}</div>`:`<div id="aglv">${agListView()}</div>`)
+ +(staff&&mode==='grid'?`<details class="ag-det"><summary>세션 상세 일괄 편집 <span class="sub">(언어 · 통역 · 상태 · 주제)</span></summary><div style="margin-top:10px">${gridTbl('ag',AGC(),rows.filter(r=>!AG_NS.includes(r.kind)),{del:false,empty:'세션이 없습니다'})}</div></details>`:'')};
+const agListPaint=()=>{const e=$('#aglv');if(e)e.innerHTML=agListView()};
+AFTER.ag=()=>{const e=$('#agmx');if(e)e.innerHTML=agMain(canEdit('agenda'));agListPaint()};
+Object.assign(A,{
+ agMode:d=>{S.agMode=d.m;agClose();renderView()},
+ agTabGo:d=>{S.agTab=d.k;S.agDescEd=null;agListPaint()},
+ agDescEd:()=>{S.agDescEd=S.agTab;agListPaint();const i=document.querySelector('[data-chg="agdesc"]');i&&i.focus()},
+ agDet:(d,e)=>{const r=rowById(d.id);if(!r)return;if(e&&e.target&&e.target.closest('.ic-ed')&&!d.e)return;const editing=!!d.e&&canEdit('agenda');S.agEd=editing?r.id:null;
+  modal(editing?'세션 수정':'',agDetail(r,editing),true);const m=document.querySelector('#mroot .modal');if(m)m.classList.add('ic-modal');if(editing){const t=document.querySelector('#mroot textarea.tt');t&&t.focus()}},
+ agTabAdd:d=>{if(!canEdit('agenda'))return;const L=agL(),[bid,ti]=String(d.k).split('|'),b=L.find(x=>x.id===bid);if(!b)return;const tr=ti!=null&&ti!=='main'&&b.tracks[+ti]?b.tracks[+ti].name:(b.tracks.length>1?'*':(b.tracks[0]?b.tracks[0].name:'*'));
+  const rs=agSort(agRows().filter(r=>r.blk===b.id&&(r.track===tr||r.track==='*'))),last=rs[rs.length-1],st=last?(last.end||addMin(last.start,30)):'09:00';
+  const r=agNewRow({blk:b.id,track:tr,start:st,end:addMin(st,30),status:'TBC'});agSave(L);addLog('추가','아젠다 · '+st+' '+(tr==='*'?'':tr));Store.save('세션 추가');agListPaint();A.agDet({id:r.id,e:1})},
+ agShowOpen:()=>agShow(0),agShowGo:d=>agShow(+d.i),agShowX:()=>{const el=$('#agshow');if(el)el.classList.remove('open');document.body.style.overflow=''}});
+/* 팝업에서 수정 후 닫으면 목록 갱신 */
+{const _close=closeModal;closeModal=function(){const was=S.agEd&&document.querySelector('#mroot .ic-modal');_close();if(was){S.agEd=null;if($('#aglv'))agListPaint()}}}
+document.addEventListener('change',e=>{const a=e.target.closest('[data-chg="agdesc"],[data-chg="agcol"]');if(!a||!canEdit('agenda'))return;
+ if(a.dataset.chg==='agcol'){ensureCfg().agColor=a.value;addLog('수정','아젠다 · 포인트 색 '+a.value);Store.save('색');renderView();return}
+ const L=agL(),[bid,ti]=String(S.agTab).split('|'),b=L.find(x=>x.id===bid);if(!b)return;if(ti!=null&&ti!=='main'&&b.tracks[+ti])b.tracks[+ti].desc=a.value.trim();else b.desc=a.value.trim();agSave(L);addLog('수정','아젠다 · 탭 설명');Store.save('탭 설명')});
+{const d0=A.agDone;A.agDone=()=>{if(document.querySelector('#mroot.open .ic-modal')){closeModal();agClose();return}d0()}}
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';
- if(a.dataset.chg==='proj'&&myProjects().some(p=>p.id===a.value)){S.pid=a.value;S.view='dash';renderApp()}
+ if(a.dataset.chg==='proj'&&myProjects().some(p=>p.id===a.value)){S.pid=a.value;S.view='dash';projSwitch()}
  if(a.dataset.chg==='demo'&&a.value){if(a.value==='__reset'){Store.reset();S.user=null;S.pid='icon2027';closeModal();renderLogin();toast('데모 데이터를 초기화했습니다')}else{closeModal();login(a.value,'',true)}}});
 document.addEventListener('input',e=>{const a=e.target.closest('[data-inp]');if(a&&a.dataset.inp==='q'){S.q=a.value;libBody()}});
 document.addEventListener('dragover',e=>{const d=e.target.closest('.upload-zone');if(d){e.preventDefault();d.classList.add('over')}});
@@ -1800,7 +1989,7 @@ document.addEventListener('dragleave',e=>{const d=e.target.closest('.upload-zone
 document.addEventListener('drop',async e=>{const d=e.target.closest('.upload-zone');if(!d)return;e.preventDefault();d.classList.remove('over');const fs=await readFiles(e.dataTransfer.files);if(!fs.length)return;const k=d.dataset.drop;
  if(k==='agenda'||k==='imp'&&S.view==='agenda'){agImport(fs[0].file)}else if(k==='imp'){impFile(fs[0].file)}else if(k==='kv'){kvSet(fs[0].file)}else if(k==='lib'){upTmp.push(...fs);upList()}else if(k.includes('|')){const[r,s]=k.split('|');addSubFiles(r,s,fs,true)}else addSubFiles(k,mySid(),fs)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-const ADMIN_ONLY=new Set(['approve','unapprove','reject','remind','reqNew','reqEdit','reqSave','reqDel','accNew','accSave','accBulk','bulkSave','pwReset','accTog','pwShow','projNew','projSave','projGo','hostNew','hostSave','hostAcc','hostAccSave','hostEdit','hostEditSave','pickProxy','accEdit','accEditSave','diag','agPub','roadEdit','roadAdd','roadSave','costTab','costPub','schAdd','schDel','kvPick','kvDel','kvMove']);
+const ADMIN_ONLY=new Set(['approve','unapprove','reject','remind','reqNew','reqEdit','reqSave','reqDel','accNew','accSave','accBulk','bulkSave','pwReset','accTog','pwShow','projNew','projSave','projGo','hostNew','hostSave','hostAcc','hostAccSave','hostEdit','hostEditSave','pickProxy','accEdit','accEditSave','diag','agPub','roadEdit','roadAdd','roadSave','costTab','costPub','schAdd','schDel','kvPick','kvDel','kvMove','membAdd','membSave','membDel','projDel','projDelOk']);
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(!a||!A[a.dataset.act])return;if(ADMIN_ONLY.has(a.dataset.act)&&!isAdmin())return toast('마플 관리자만 사용할 수 있습니다','error');A[a.dataset.act](a.dataset,e)});
 /* 서버와 동기화된 최신 데이터로 조용히 갱신 (입력·업로드·모달 중에는 건드리지 않음) */
 const busyUi=()=>Store.n||document.querySelector('.modal-overlay.open')||focusBusy()||DB.files.some(f=>f.up!=null)||DB.subs.some(u=>u.files.some(f=>f.up!=null))||(DB.rows||[]).some(r=>rowFs(r).some(x=>x.up!=null));

@@ -456,6 +456,18 @@ textarea.gi{min-height:34px;height:34px}textarea.gi:focus{field-sizing:content;h
 .kvh.upload-zone,.kvh.upload-zone:hover,.kvh.upload-zone.over{background-size:cover!important;background-repeat:no-repeat!important;background-color:#0f172a;border:0!important;transform:none!important;padding:0!important}
 .kvh.upload-zone.over{box-shadow:0 0 0 3px var(--marple)}
 @media (max-width:700px){.kvh{min-height:150px}.kvh .proj-name{font-size:22px}}
+.kvh2{position:relative;border-radius:16px;overflow:hidden;margin-bottom:20px;background:#0b0b10;isolation:isolate}
+.kvh2-img{display:block;width:100%;height:auto;max-height:560px;object-fit:contain;background:#0b0b10;user-select:none;pointer-events:none;transform:none!important;transition:none!important}
+.kvh2 .kvh-sh{position:absolute;inset:0;pointer-events:none}
+.kvh2 .kvh-in{position:absolute;left:0;right:0;bottom:0}
+.kvh2 .proj-name{color:#fff;font-size:28px;text-shadow:0 2px 12px rgba(0,0,0,.3)}.kvh2 .proj-meta,.kvh2 .proj-meta b{color:rgba(255,255,255,.88)}
+.kvh2 .dday{background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25)}.kvh2 .dday b,.kvh2 .dday span{color:#fff}
+.kvh2 .kvh-act{position:absolute;top:12px;right:12px;display:flex;gap:6px;opacity:0;transition:opacity .15s}.kvh2:hover .kvh-act{opacity:1}.kvh2 .kvh-act .btn{background:rgba(15,23,42,.6);color:#fff;border-color:rgba(255,255,255,.25)}
+.kvh2.over{box-shadow:0 0 0 3px var(--marple)}
+@media (max-width:760px){.kvh2 .kvh-sh{display:none}.kvh2 .kvh-in{position:static;background:#0f172a;padding:14px 16px}.kvh2 .proj-name{font-size:20px}}
+.kvh2 .kvh-act{right:auto;left:12px}
+.kvh2 .dday{white-space:nowrap;flex-shrink:0}
+@media (max-width:760px){.kvh2 .kvh-in{gap:10px}.kvh2 .dday b{font-size:20px}}
 </style>
 </head>
 <body>
@@ -1788,10 +1800,9 @@ async function kvSet(file){if(!isAdmin())return;if(!/^image\//.test(file.type||'
 projHead=function(){const pj=P(),n=dd(pj.date),adm=isAdmin(),kv=pj.kv;
  const meta=`<div class="proj-meta"><span>주관사 <b>${esc(hostName(pj))}</b></span><span>행사일 <b>${fmtD(pj.date)}</b></span><span>세팅일 <b>${fmtD(pj.setup)}</b></span><span>장소 <b>${esc(pj.venue)}</b></span></div>`;
  if(!kv)return `<div class="proj-head${adm?' upload-zone kvz':''}" ${adm?'data-drop="kv"':''}><div><div class="proj-name">${esc(pj.name)}</div>${meta}${adm?`<button class="btn btn-sm kv-add" data-act="kvPick">${ico('upload',13)}키비주얼 올리기</button><span class="kv-hint">이미지를 여기로 끌어다 놓아도 됩니다</span>`:''}</div><div class="dday"><b>${n>=0?'D-'+n:'D+'+(-n)}</b><span>행사일까지</span></div></div>`;
- if(!pj.kvR){const im=new Image();im.onload=()=>{if(!im.naturalHeight||pj.kv!==kv)return;pj.kvR=+(im.naturalWidth/im.naturalHeight).toFixed(4);const el=document.querySelector('.kvh');if(el)el.style.aspectRatio=pj.kvR;if(isAdmin())Store.save('키비주얼')};im.src=kv}
- return `<div class="kvh${adm?' upload-zone':''}" ${adm?'data-drop="kv"':''} style="background-image:url('${kv}');background-size:cover;background-position:center ${pj.kvY||50}%;aspect-ratio:${pj.kvR||'16/5'}"><div class="kvh-sh"></div>
+ return `<div class="kvh2" ${adm?'data-drop="kv"':''}><img class="kvh2-img" src="${kv}" alt="" draggable="false"><div class="kvh-sh"></div>
   <div class="kvh-in"><div><div class="proj-name">${esc(pj.name)}</div>${meta}</div><div class="dday"><b>${n>=0?'D-'+n:'D+'+(-n)}</b><span>행사일까지</span></div></div>
-  ${adm?`<div class="kvh-act"><button class="btn btn-xs" data-act="kvMove" data-d="-10" title="위로">▲</button><button class="btn btn-xs" data-act="kvMove" data-d="10" title="아래로">▼</button><button class="btn btn-xs" data-act="kvPick">${ico('upload',12)}변경</button><button class="btn btn-xs" data-act="kvDel">삭제</button></div>`:''}</div>`};
+  ${adm?`<div class="kvh-act"><button class="btn btn-xs" data-act="kvPick">${ico('upload',12)}변경</button><button class="btn btn-xs" data-act="kvDel">삭제</button></div>`:''}</div>`};
 Object.assign(A,{
  kvPick:()=>{const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>{if(i.files[0])kvSet(i.files[0])};i.click()},
  kvDel:()=>confirmBox('키비주얼을 삭제할까요?',()=>{const pj=P();delete pj.kv;addLog('삭제','대시보드 키비주얼');Store.save('키비주얼');closeModal();renderView()}),

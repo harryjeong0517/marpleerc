@@ -456,18 +456,20 @@ textarea.gi{min-height:34px;height:34px}textarea.gi:focus{field-sizing:content;h
 .kvh.upload-zone,.kvh.upload-zone:hover,.kvh.upload-zone.over{background-size:cover!important;background-repeat:no-repeat!important;background-color:#0f172a;border:0!important;transform:none!important;padding:0!important}
 .kvh.upload-zone.over{box-shadow:0 0 0 3px var(--marple)}
 @media (max-width:700px){.kvh{min-height:150px}.kvh .proj-name{font-size:22px}}
-.kvh2{position:relative;border-radius:16px;overflow:hidden;margin-bottom:20px;background:#0b0b10;isolation:isolate}
-.kvh2-img{display:block;width:100%;height:auto;max-height:560px;object-fit:contain;background:#0b0b10;user-select:none;pointer-events:none;transform:none!important;transition:none!important}
-.kvh2 .kvh-sh{position:absolute;inset:0;pointer-events:none}
-.kvh2 .kvh-in{position:absolute;left:0;right:0;bottom:0}
-.kvh2 .proj-name{color:#fff;font-size:28px;text-shadow:0 2px 12px rgba(0,0,0,.3)}.kvh2 .proj-meta,.kvh2 .proj-meta b{color:rgba(255,255,255,.88)}
-.kvh2 .dday{background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25)}.kvh2 .dday b,.kvh2 .dday span{color:#fff}
-.kvh2 .kvh-act{position:absolute;top:12px;right:12px;display:flex;gap:6px;opacity:0;transition:opacity .15s}.kvh2:hover .kvh-act{opacity:1}.kvh2 .kvh-act .btn{background:rgba(15,23,42,.6);color:#fff;border-color:rgba(255,255,255,.25)}
+.kvh2{position:relative;height:260px;border-radius:16px;overflow:hidden;margin-bottom:20px;background:var(--kvbg,#0b0b10);isolation:isolate}
+.kvh2-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:right center;user-select:none;pointer-events:none;transform:none!important;transition:none!important}
+.kvh2 .kvh-sh{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(2,6,23,.55) 0%,rgba(2,6,23,.15) 45%,rgba(2,6,23,0) 70%),linear-gradient(180deg,rgba(2,6,23,0) 45%,rgba(2,6,23,.6))}
+.kvh2 .kvh-in{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:22px 26px;color:#fff}
+.kvh2 .proj-name{color:#fff;font-size:28px;text-shadow:0 2px 12px rgba(0,0,0,.35)}.kvh2 .proj-meta,.kvh2 .proj-meta b{color:rgba(255,255,255,.9)}
+.kvh2 .dday{white-space:nowrap;flex-shrink:0;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25)}.kvh2 .dday b,.kvh2 .dday span{color:#fff}
+.kvh2 .kvh-act{position:absolute;top:12px;left:12px;display:flex;gap:6px;opacity:0;transition:opacity .15s;z-index:2}.kvh2:hover .kvh-act{opacity:1}.kvh2 .kvh-act .btn{background:rgba(15,23,42,.6);color:#fff;border-color:rgba(255,255,255,.25)}
 .kvh2.over{box-shadow:0 0 0 3px var(--marple)}
-@media (max-width:760px){.kvh2 .kvh-sh{display:none}.kvh2 .kvh-in{position:static;background:#0f172a;padding:14px 16px}.kvh2 .proj-name{font-size:20px}}
-.kvh2 .kvh-act{right:auto;left:12px}
-.kvh2 .dday{white-space:nowrap;flex-shrink:0}
-@media (max-width:760px){.kvh2 .kvh-in{gap:10px}.kvh2 .dday b{font-size:20px}}
+@media (max-width:760px){.kvh2{height:auto}.kvh2-img{position:static;display:block;height:150px;object-position:center}.kvh2 .kvh-sh{display:none}.kvh2 .kvh-in{position:static;background:#0f172a;padding:14px 16px;gap:10px}.kvh2 .proj-name{font-size:20px}.kvh2 .dday b{font-size:20px}}
+.kvh2-bg{position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(36px) brightness(.7) saturate(1.1);pointer-events:none;user-select:none}
+.kvh2-img{z-index:1}.kvh2 .kvh-sh{z-index:1}.kvh2 .kvh-in{z-index:2;max-width:62%}
+.kvh-tl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.kvh-dd{font-size:13px;font-weight:800;color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px);padding:4px 10px;border-radius:999px;white-space:nowrap}
+@media (max-width:760px){.kvh2-bg{display:none}.kvh2{background:#0f172a}.kvh2 .kvh-in{max-width:none}}
 </style>
 </head>
 <body>
@@ -1793,15 +1795,18 @@ Object.assign(A,{
  schDel:d=>{const m=DB.sched.find(x=>x.id===d.id);if(!m)return;confirmBox(`“${esc(m.title)}” 일정을 삭제할까요?`,()=>{DB.sched=DB.sched.filter(x=>x!==m);addLog('삭제','일정 · '+m.title);Store.save('일정 삭제');closeModal();renderView()})},
  reqAdd:()=>{if(!canEdit('req'))return;const r=newRow('req',Object.assign(REQD(),{sid:''}));S.reqSel=r.id;addLog('추가','Requirement · 새 세션');Store.save('추가');renderView()}});
 /* ---------- 대시보드 키비주얼 ---------- */
+/* 키비주얼 가장자리 평균색 → 남는 공간을 같은 색으로 채움 */
+function kvEdge(c){try{const g=c.getContext('2d'),W=c.width,H=c.height,d=[...g.getImageData(0,0,W,4).data,...g.getImageData(0,H-4,W,4).data,...g.getImageData(0,0,4,H).data,...g.getImageData(W-4,0,4,H).data];let r=0,gg=0,b=0,n=0;for(let i=0;i<d.length;i+=4){r+=d[i];gg+=d[i+1];b+=d[i+2];n++}return `rgb(${Math.round(r/n)},${Math.round(gg/n)},${Math.round(b/n)})`}catch(e){return '#0b0b10'}}
+function kvBgLazy(pj){if(pj.kvBg||pj.__kvb)return;pj.__kvb=1;const im=new Image();im.onload=()=>{const k=Math.min(1,600/im.naturalWidth),c=document.createElement('canvas');c.width=Math.max(8,Math.round(im.naturalWidth*k));c.height=Math.max(8,Math.round(im.naturalHeight*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);pj.kvBg=kvEdge(c);const el=document.querySelector('.kvh2');if(el)el.style.setProperty('--kvbg',pj.kvBg);if(isAdmin())Store.save('키비주얼')};im.src=pj.kv}
 async function kvSet(file){if(!isAdmin())return;if(!/^image\//.test(file.type||''))return toast('이미지 파일(JPG · PNG)을 올려 주세요','error');
  try{const bm=await createImageBitmap(file),k=Math.min(1,1800/bm.width),c=document.createElement('canvas');c.width=Math.round(bm.width*k);c.height=Math.round(bm.height*k);c.getContext('2d').drawImage(bm,0,0,c.width,c.height);
-  let q=.85,u=c.toDataURL('image/jpeg',q);while(u.length>450000&&q>.45){q-=.1;u=c.toDataURL('image/jpeg',q)}const pj=P();pj.kv=u;pj.kvY=50;pj.kvR=+(c.width/c.height).toFixed(4);addLog('수정','대시보드 키비주얼 변경');Store.save('키비주얼');toast('키비주얼을 적용했습니다','success');renderView()}
+  let q=.85,u=c.toDataURL('image/jpeg',q);while(u.length>450000&&q>.45){q-=.1;u=c.toDataURL('image/jpeg',q)}const pj=P();pj.kv=u;pj.kvY=50;pj.kvR=+(c.width/c.height).toFixed(4);pj.kvBg=kvEdge(c);addLog('수정','대시보드 키비주얼 변경');Store.save('키비주얼');toast('키비주얼을 적용했습니다','success');renderView()}
  catch(e){toast('이미지를 열지 못했습니다','error')}}
 projHead=function(){const pj=P(),n=dd(pj.date),adm=isAdmin(),kv=pj.kv;
  const meta=`<div class="proj-meta"><span>주관사 <b>${esc(hostName(pj))}</b></span><span>행사일 <b>${fmtD(pj.date)}</b></span><span>세팅일 <b>${fmtD(pj.setup)}</b></span><span>장소 <b>${esc(pj.venue)}</b></span></div>`;
  if(!kv)return `<div class="proj-head${adm?' upload-zone kvz':''}" ${adm?'data-drop="kv"':''}><div><div class="proj-name">${esc(pj.name)}</div>${meta}${adm?`<button class="btn btn-sm kv-add" data-act="kvPick">${ico('upload',13)}키비주얼 올리기</button><span class="kv-hint">이미지를 여기로 끌어다 놓아도 됩니다</span>`:''}</div><div class="dday"><b>${n>=0?'D-'+n:'D+'+(-n)}</b><span>행사일까지</span></div></div>`;
- return `<div class="kvh2" ${adm?'data-drop="kv"':''}><img class="kvh2-img" src="${kv}" alt="" draggable="false"><div class="kvh-sh"></div>
-  <div class="kvh-in"><div><div class="proj-name">${esc(pj.name)}</div>${meta}</div><div class="dday"><b>${n>=0?'D-'+n:'D+'+(-n)}</b><span>행사일까지</span></div></div>
+ kvBgLazy(pj);return `<div class="kvh2" ${adm?'data-drop="kv"':''} style="--kvbg:${pj.kvBg||'#0b0b10'}"><img class="kvh2-bg" src="${kv}" alt="" draggable="false"><img class="kvh2-img" src="${kv}" alt="" draggable="false"><div class="kvh-sh"></div>
+  <div class="kvh-in"><div><div class="kvh-tl"><div class="proj-name">${esc(pj.name)}</div><span class="kvh-dd">${n>=0?'D-'+n:'D+'+(-n)}</span></div>${meta}</div></div>
   ${adm?`<div class="kvh-act"><button class="btn btn-xs" data-act="kvPick">${ico('upload',12)}변경</button><button class="btn btn-xs" data-act="kvDel">삭제</button></div>`:''}</div>`};
 Object.assign(A,{
  kvPick:()=>{const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>{if(i.files[0])kvSet(i.files[0])};i.click()},

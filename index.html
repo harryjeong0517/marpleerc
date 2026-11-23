@@ -477,6 +477,10 @@ textarea.gi{min-height:34px;height:34px}textarea.gi:focus{field-sizing:content;h
 @media (max-width:760px){.logt tr{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 12px;border-bottom:1px solid #f3f5f8}.logt td{padding:0;border:0;width:auto!important}.logt .ld{flex-basis:100%}}
 .logp-h b{white-space:nowrap}.logt .ld{word-break:keep-all;overflow-wrap:anywhere}
 @media (max-width:760px){.logp-h .sub{display:none}}
+.imgm{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px;max-height:52vh;overflow:auto}
+.imgm-it{display:flex;gap:10px;align-items:center;border:1px solid #e5e7eb;border-radius:10px;padding:8px;background:#f8fafc}.imgm-it.on{background:#eff6ff;border-color:#bfdbfe}
+.imgm-it img,.imgm-it .ph{width:52px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#64748b}
+.imgm-b{flex:1;min-width:0;display:grid;gap:4px}.imgm-n{font-size:12px;color:#334155;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.imgm-b select{height:30px;font-size:12.5px;padding:0 6px}
 </style>
 </head>
 <body>
@@ -1823,7 +1827,7 @@ function viewDecor(v){if(!S.user)return;const bar=impBar();if(bar){const ph=v.qu
  if(isStaff()&&!['dash','accounts','projects'].includes(S.view))v.insertAdjacentHTML('beforeend',logPanel())}
 /* ---------- 모든 표: 엑셀 · CSV 끌어다 놓기 → 머리글 자동 매칭 → 미리보기 → 추가/교체 ---------- */
 const GRT=new Set();
-const NOIMP=['dash','library','submit','status','accounts','projects'];
+const NOIMP=['dash','submit','status'];
 const ALIAS={name:'이름|성명|name',co:'회사|소속|사명|업체|스폰서사|고객사|company|organization',pos:'직함|직급|직책|직위|title|position',dept:'부서|팀|department|dept',
  tel:'휴대폰|핸드폰|연락처|전화|모바일|mobile|phone|tel|hp',mail:'이메일|메일|email|e-mail',title:'제목|항목|마일스톤|세션|내용|title',note:'비고|메모|참고|note|memo|remark',
  a:'시작|시작일|start',b:'종료|종료일|마감|end|due',st:'상태|진행상태|진행 상태|status',who:'구분|담당 구분',key:'담당|담당자|키맨|담당 키맨',sid:'세션id|세션 id|세션|id|코드',
@@ -1837,6 +1841,13 @@ function impTables(){const out=[];
  if(S.view==='requests'&&isAdmin())out.push({rt:'request',label:'자료 요청 항목',cols:[{k:'title',l:'항목|요청 항목|자료|자료명|제목'},{k:'desc',l:'설명|내용|안내'},{k:'due',l:'마감|마감일|기한',ty:'date'},{k:'formats',l:'형식|파일 형식|포맷|확장자'},{k:'rule',l:'파일명|파일명 규칙|규칙'}],need:'title',
   add:o=>{const r={id:uid('r'),pid:S.pid,title:o.title,desc:o.desc||'',type:'file',formats:String(o.formats||'').split(/[,/·\s]+/).map(x=>x.trim().toUpperCase()).filter(Boolean),rule:o.rule||'',due:o.due||P().date,target:'all',priv:false,fields:null,created:Date.now()};DB.requests.push(r);return r},
   clear:null,rows:()=>DB.requests.filter(r=>r.pid===S.pid),key:'title'});
+ if(S.view==='accounts'&&isAdmin())out.push({rt:'acc',label:'스폰서 계정',cols:[{k:'name',l:'스폰서사|스폰서|회사|회사명|업체|업체명|사명|기업명|company'},{k:'tier',l:'등급|tier|스폰서 등급',ty:'sel',opts:['Platinum','Gold','Silver']},{k:'floor',l:'층|floor'},{k:'booth',l:'부스|부스 유형|부스유형|부스 규격|booth'},{k:'person',l:'담당자|담당자명|이름|성명|name'},{k:'mail',l:'이메일|메일|email|e-mail'},{k:'tel',l:'연락처|전화|휴대폰|핸드폰|phone|mobile'}],need:'name',key:'name',
+  rows:()=>sponsors(),clear:null,
+  add:o=>{const a=newSponsorAcc(o.name,['Platinum','Gold','Silver'].includes(o.tier)?o.tier:'Silver',o.floor||'1F',o.booth||'-',o.person||'');if(a){if(o.mail)a.email=o.mail;if(o.tel)a.tel=o.tel;if(o.person)a.name=o.person}return a},
+  after:made=>{const ac=made.filter(x=>x&&x.pw);if(ac.length)setTimeout(()=>credModal(ac),50)}});
+ if(S.view==='projects'&&isAdmin())out.push({rt:'proj',label:'프로젝트',cols:[{k:'name',l:'프로젝트|프로젝트명|행사|행사명|이벤트|event'},{k:'host',l:'주관사|고객사|클라이언트|광고주|client'},{k:'date',l:'행사일|행사 일자|일자|날짜|일시|date',ty:'date'},{k:'setup',l:'세팅일|셋업|설치일|반입일',ty:'date'},{k:'venue',l:'장소|베뉴|행사장|venue'},{k:'status',l:'상태|진행 상태|status'}],need:'name',key:'name',
+  rows:()=>DB.projects,clear:null,
+  add:o=>{let h=o.host&&DB.hosts.find(h=>nz(h.name)===nz(o.host));if(!h&&o.host){h={id:uid('h'),name:o.host};DB.hosts.push(h)}if(!h)h=DB.hosts[0];const d=o.date||new Date().toISOString().slice(0,10);const p={id:uid('p'),hostId:h?h.id:'',name:o.name,date:d,setup:o.setup||d,venue:o.venue||'-',status:o.status||'준비중'};DB.projects.push(p);return p}});
  GRT.forEach(rt=>{const cols=(GCOLS[rt]||[]).filter(c=>!c.f&&c.ty!=='file'&&!c.ro);if(!cols.length||!canEdit(RT2MOD[rt],null,'__row'))return;
   out.push({rt,label:TBL_L[rt]||TITLES[S.view],cols,need:null,add:o=>newRow(rt,Object.assign(BLANK[rt]?BLANK[rt]():rt==='req'?REQD():{},o)),clear:()=>{DB.rows=DB.rows.filter(r=>!(r.pid===S.pid&&r.t===rt))},rows:()=>R(rt),key:IMPKEY[rt]})});
  return out}
@@ -1880,12 +1891,34 @@ function impAll(){const cur=impTables(),have=new Set(cur.map(t=>t.rt)),sv=S.view
  if(S.view==='road'){const i=ex.findIndex(t=>t.rt==='trk');if(i>0)ex.unshift(ex.splice(i,1)[0])}
  return cur.concat(ex)}
 let impTmp=null;
+/* 어떤 파일이든 표(행×열)로 읽기: xlsx·xls·ods·csv(한글 인코딩 포함)·PDF·Word·PowerPoint 표 */
+const XLSXCDN='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+function txtDecode(buf){const u=new TextDecoder('utf-8').decode(buf);if((u.match(/\ufffd/g)||[]).length<3)return u.replace(/^\ufeff/,'');try{return new TextDecoder('euc-kr').decode(buf)}catch(e){return u}}
+async function sheetjsGrids(buf){if(!window.XLSX)await loadScript(XLSXCDN).catch(()=>{throw new Error('엑셀 읽기 도구를 불러오지 못했습니다. 인터넷 연결을 확인하거나 .xlsx로 저장해서 올려 주세요.')});
+ const wb=XLSX.read(new Uint8Array(buf),{type:'array',cellDates:false});return wb.SheetNames.map(n=>({name:n,g:XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,raw:true,defval:null,blankrows:true})}))}
+async function ooxmlTables(buf,kind){const z=await unzip(buf),names=Object.keys(z).filter(n=>kind==='docx'?n==='word/document.xml':/^ppt\/slides\/slide\d+\.xml$/.test(n)).sort((a,b)=>(+a.replace(/\D/g,''))-(+b.replace(/\D/g,''))),out=[];
+ for(const n of names){const x=new DOMParser().parseFromString(new TextDecoder().decode(await z[n]()),'application/xml'),W=kind==='docx'?'w':'a',all=x.getElementsByTagName('*'),tbls=[...all].filter(e=>e.localName==='tbl');
+  tbls.forEach((t,ti)=>{let q=t.parentNode;while(q&&q.localName!=='tbl')q=q.parentNode;if(q)return;const g=[];[...t.children].filter(e=>e.localName==='tr').forEach(tr=>{const row=[];[...tr.children].filter(e=>e.localName==='tc').forEach(tc=>{const ps=[...tc.getElementsByTagName('*')].filter(e=>e.localName==='p').map(p=>[...p.getElementsByTagName('*')].filter(e=>e.localName==='t').map(e=>e.textContent).join('')).filter(Boolean);const sp=+(([...tc.getElementsByTagName('*')].find(e=>e.localName==='gridSpan')||{getAttribute:()=>1}).getAttribute(W+':val')||tc.getAttribute('gridSpan')||1);row.push(ps.join('\n'));for(let k=1;k<sp;k++)row.push(null)});g.push(row)});
+   if(g.length>=2)out.push({name:(kind==='docx'?'표 ':'슬라이드 '+n.replace(/\D/g,'')+' · 표 ')+(ti+1),g})})}
+ return out}
+async function impGrids(file){const ext=extOf(file.name),buf=await file.arrayBuffer();
+ if(ext==='xlsx'||ext==='xlsm'){try{return (await xlsxSheets(buf)).map(s=>({name:s.name,g:s.g}))}catch(e){return sheetjsGrids(buf)}}
+ if(['xls','ods','xlsb','numbers','fods'].includes(ext))return sheetjsGrids(buf);
+ if(['csv','tsv','txt'].includes(ext))return [{name:'',g:csvGrid(txtDecode(buf))}];
+ if(ext==='pdf'){const ls=await pdfLines(buf);return [{name:'PDF',g:ls.map(l=>l.split(' | ').map(x=>x.trim()))}]}
+ if(ext==='docx'||ext==='pptx'){const t=await ooxmlTables(buf,ext);if(!t.length)throw new Error((ext==='docx'?'문서':'슬라이드')+' 안에서 표를 찾지 못했습니다');return t}
+ if(ext==='hwp'||ext==='hwpx')throw new Error('한글(HWP) 파일은 바로 읽을 수 없습니다. 표를 엑셀로 복사해 저장하거나 PDF로 저장해서 올려 주세요');
+ if(ext==='doc'||ext==='ppt')throw new Error('옛 형식(.'+ext+')은 읽을 수 없습니다. .'+ext+'x로 다시 저장해서 올려 주세요');
+ throw new Error('이 형식(.'+ext+')은 표로 읽을 수 없습니다. 엑셀·CSV·PDF·Word·PowerPoint 파일을 올려 주세요')}
+const IMGX=/^(png|jpe?g|webp|gif|svg|bmp)$/;
+async function impFiles(fs){if(!fs||!fs.length)return;const imgs=fs.filter(f=>IMGX.test(f.ext||extOf(f.name)));
+ if(imgs.length===fs.length&&impImgTarget())return impImgs(imgs);
+ if(S.view==='library'){libUpModal();upTmp.push(...fs);upList();return}
+ const f=fs.find(f=>!IMGX.test(f.ext||extOf(f.name)))||fs[0];if(fs.length>1)toast(`여러 파일 중 “${f.name}” 하나를 가져옵니다`,'info');impFile(f.file||f)}
 async function impFile(file){const tables=impTables();
- const ext=extOf(file.name);let grids=[];toast('파일을 분석하고 있습니다…');
- try{if(ext==='xlsx'||ext==='xlsm')grids=(await xlsxSheets(await file.arrayBuffer())).map(s=>({name:s.name,g:s.g}));
-  else if(['csv','tsv','txt'].includes(ext))grids=[{name:'',g:csvGrid(new TextDecoder().decode(await file.arrayBuffer()))}];
-  else if(ext==='xls')return toast('옛 엑셀(.xls)은 읽을 수 없습니다. .xlsx로 다시 저장해서 올려 주세요.','error',7000);
-  else return toast('엑셀(.xlsx) 또는 CSV 파일을 끌어다 놓아 주세요','error')}catch(e){return toast('파일을 읽지 못했습니다: '+(e.message||e),'error',7000)}
+ let grids=[];toast('파일을 분석하고 있습니다…');
+ try{grids=await impGrids(file)}catch(e){document.querySelectorAll('.toast').forEach(t=>{if(/분석하고/.test(t.textContent))t.remove()});return toast(e.message||String(e),'error',8000)}
+ grids=grids.map(s=>({name:s.name,g:(s.g||[]).map(r=>(r||[]).map(v=>typeof v==='string'?v.replace(/\r/g,'').trim():v))}));
  const pick=ts=>{let b=null;grids.forEach(s=>{const p=impParse(s.g,ts,s.name);if(p&&p.rows.length&&(!b||p.sc>b.sc))b=Object.assign(p,{sheet:s.name,grid:s.g})});return b};
  const all=impAll();if(!all.length)return toast('가져올 수 있는 표가 없습니다','error');const rel={road:['trk']}[S.view]||[];let best=pick(tables)||(rel.length&&pick(all.filter(t=>rel.includes(t.rt))))||pick(all);
  if(!best){const s=grids.find(x=>x.g&&x.g.some(r=>(r||[]).filter(v=>v!=null&&String(v).trim()!=='').length>=2));if(!s)return toast('파일에 읽을 내용이 없습니다','error');best=Object.assign(impLoose(s.g,all[0]),{sheet:s.name,grid:s.g})}
@@ -1907,20 +1940,37 @@ document.addEventListener('change',e=>{const a=e.target.closest('[data-chg="impm
  else{const ci=+a.dataset.ci;if(a.value===''){delete T.map[ci]}else{const k=+a.value;Object.keys(T.map).forEach(c=>{if(T.map[c]===k)delete T.map[c]});T.map[ci]=k}}
  impRe()});
 Object.assign(A,{
- impPick:()=>{const i=document.createElement('input');i.type='file';i.accept='.xlsx,.xlsm,.csv,.tsv,.txt';i.onchange=()=>{if(i.files[0])impFile(i.files[0])};i.click()},
+ impPick:()=>pickFiles(fs=>impFiles(fs)),
  impApply:()=>{if(!impTmp)return;const {t,rows,file}=impTmp;if(!rows.length)return toast('가져올 행이 없습니다. 열을 연결해 주세요','error');const mode=(document.querySelector('input[name=impm]:checked')||{}).value||'merge',kk=t.key;let add=0,upd=0;
   if(mode==='replace'&&t.clear)t.clear();
-  rows.forEach(o=>{const f=mode==='merge'&&kk&&o[kk]&&t.rows().find(r=>nz(r[kk])===nz(o[kk]));if(f){Object.assign(f,o);upd++}else{t.add(o);add++}});
-  addLog('가져오기',`${t.label} · ${file} · 추가 ${add}${upd?' · 갱신 '+upd:''}${mode==='replace'?' (교체)':''}`);Store.save('가져오기');closeModal();impTmp=null;toast(`${t.other?'['+(navLab(RT2MOD[t.rt])||t.label)+'] ':''}${t.label}에 ${add}행 추가${upd?' · '+upd+'행 갱신':''}했습니다`,'success');renderView()}});
+  const made=[];rows.forEach(o=>{const f=mode==='merge'&&kk&&o[kk]&&t.rows().find(r=>nz(r[kk])===nz(o[kk]));if(f){Object.assign(f,t.rt==='acc'?{tier:o.tier||f.tier,floor:o.floor||f.floor,booth:o.booth||f.booth}:t.rt==='proj'?Object.fromEntries(Object.entries(o).filter(([k])=>k!=='host')):o);upd++}else{made.push(t.add(o));add++}});
+  addLog('가져오기',`${t.label} · ${file} · 추가 ${add}${upd?' · 갱신 '+upd:''}${mode==='replace'?' (교체)':''}`);Store.save('가져오기');closeModal();impTmp=null;if(t.after)t.after(made);toast(`${t.other?'['+(navLab(RT2MOD[t.rt])||t.label)+'] ':''}${t.label}에 ${add}행 추가${upd?' · '+upd+'행 갱신':''}했습니다`,'success');renderView()}});
 /* 화면 전체에 끌어다 놓기 */
 const impOK=()=>S.user&&isStaff()&&!NOIMP.includes(S.view)&&(S.view==='agenda'?canEdit('agenda'):true);
 let dragN=0;
 document.addEventListener('dragenter',e=>{if(!e.dataTransfer||![...e.dataTransfer.types].includes('Files')||!impOK())return;dragN++;let o=$('#dropov');
  if(!o){o=document.createElement('div');o.id='dropov';o.className='upload-zone';o.dataset.drop='imp';document.body.appendChild(o)}
- o.innerHTML=`<div class="dov-in">${ico('upload',30)}<b>놓으면 ${S.view==='agenda'?'아젠다 표를 만듭니다':`[${esc(navLab(S.view))}] 표에 가져옵니다`}</b><span>${S.view==='agenda'?'엑셀 · CSV · PDF':'엑셀(.xlsx) · CSV — 열 이름을 자동으로 맞춰 미리보기를 보여드립니다'}</span></div>`;o.classList.add('show')});
+ o.innerHTML=`<div class="dov-in">${ico('upload',30)}<b>놓으면 ${S.view==='agenda'?'아젠다 표를 만듭니다':S.view==='library'?'자료 업로드 창에 담습니다':`[${esc(navLab(S.view))}] 표에 가져옵니다`}</b><span>${S.view==='agenda'?'엑셀 · CSV · PDF':S.view==='library'?'여러 파일을 한 번에 올릴 수 있습니다':'엑셀 · CSV · PDF · Word · PowerPoint 표'+(impImgTarget()?' · 사진/로고 이미지':'')+' — 열 이름을 자동으로 맞춰 미리보기를 보여드립니다'}</span></div>`;o.classList.add('show')});
 document.addEventListener('dragleave',e=>{const o=$('#dropov');if(!o)return;if(--dragN<=0||e.target===o&&!e.relatedTarget){dragN=0;o.classList.remove('show')}});
 document.addEventListener('drop',()=>{dragN=0;const o=$('#dropov');if(o)setTimeout(()=>o.classList.remove('show'),0)},true);
-function impBar(){if(!impOK()||S.view==='agenda')return '';const t=impTables()[0];return `<div class="imp-bar" data-drop="imp">${ico('upload',14)}<span><b>엑셀·CSV를 이 화면에 끌어다 놓으면</b> ${t?esc(t.label)+' 표에 바로 추가됩니다':'맞는 표를 찾아 넣어 드립니다'} · 열 이름이 달라도 직접 연결할 수 있어요</span><button class="btn btn-xs" data-act="impPick">파일 선택</button></div>`}
+function impBar(){if(!impOK()||S.view==='agenda'||S.view==='library')return '';const t=impTables()[0];return `<div class="imp-bar" data-drop="imp">${ico('upload',14)}<span><b>엑셀·CSV·PDF·Word 표를 이 화면에 끌어다 놓으면</b> ${t?esc(t.label)+' 표에 바로 추가됩니다':'맞는 표를 찾아 넣어 드립니다'} · 열 이름이 달라도 직접 연결할 수 있어요</span><button class="btn btn-xs" data-act="impPick">파일 선택</button></div>`}
+
+/* ---------- 사진·로고 이미지 여러 장: 파일 이름으로 행을 찾아 자동 연결 ---------- */
+function impImgTarget(){for(const rt of GRT){const c=(GCOLS[rt]||[]).find(c=>c.ty==='file'&&RFK.includes(c.k));if(c&&canEdit(RT2MOD[rt],null,c.k))return {rt,k:c.k,l:String(c.l).split('|')[0]}}return null}
+const imgLab=r=>[r.nameKo,r.nameEn,r.name,r.org].filter(Boolean).join(' · ')||r.sid||'(이름 없음)';
+function imgGuess(stem,rows){const n=nz(stem);let best=null,bs=0;rows.forEach(r=>{[r.sid,r.nameKo,r.nameEn,r.name].filter(Boolean).forEach(v=>{const x=nz(v);if(x.length<2)return;const sc=n===x?3:n.includes(x)?2+x.length/100:x.includes(n)&&n.length>=2?1:0;if(sc>bs){bs=sc;best=r}})});return best}
+let imgTmp=null;
+function impImgs(imgs){const T=impImgTarget(),rows=R(T.rt);imgTmp={T,items:imgs.map(f=>{const stem=f.name.replace(/\.[^.]+$/,''),r=imgGuess(stem,rows);return {f,stem,rid:r?r.id:''}})};impImgPreview()}
+function impImgPreview(){const {T,items}=imgTmp,rows=R(T.rt),ok=items.filter(x=>x.rid).length;
+ modal(`${esc(T.l)} 한 번에 올리기`,`<div class="ag-pv-sum"><b>이미지 ${items.length}장</b><span>자동 연결 ${ok}장</span>${items.length-ok?`<span>직접 고르기 ${items.length-ok}장</span>`:''}</div>
+ <div class="sub" style="margin:10px 0">파일 이름으로 ${esc(TBL_L[T.rt]||'')} 행을 찾아 연결했습니다. 틀린 곳은 바꿔 주세요. 이미 사진이 있는 행은 새 파일로 바뀝니다.</div>
+ <div class="imgm">${items.map((x,i)=>`<div class="imgm-it ${x.rid?'on':''}">${(x.f.thumb||x.f.dataUrl||x.f.file)?`<img src="${x.f.thumb||x.f.dataUrl||(x.u||(x.u=URL.createObjectURL(x.f.file)))}" alt="">`:`<div class="ph">${esc((x.f.ext||'').toUpperCase())}</div>`}<div class="imgm-b"><div class="imgm-n" title="${esc(x.f.name)}">${esc(x.f.name)}</div><select class="form-select" data-chg="imgmap" data-i="${i}"><option value="">건너뜀</option><option value="__new" ${x.rid==='__new'?'selected':''}>+ 새 행 추가 (“${esc(x.stem.slice(0,16))}”)</option>${rows.map(r=>`<option value="${r.id}" ${x.rid===r.id?'selected':''}>${esc(imgLab(r))}${r[T.k]?' · 사진 있음':''}</option>`).join('')}</select></div></div>`).join('')}</div>
+ ${mfoot('<button class="btn" data-act="close">취소</button>',`<button class="btn btn-primary" data-act="impImgApply">올리기 (${items.filter(x=>x.rid).length}장)</button>`)}`,true);const m=document.querySelector('#mroot .modal');if(m)m.classList.add('modal-xl')}
+document.addEventListener('change',e=>{const a=e.target.closest('[data-chg="imgmap"]');if(!a||!imgTmp)return;imgTmp.items[+a.dataset.i].rid=a.value;impImgPreview()});
+function rowAttach(r,k,f){let name=f.name;if(r.t==='spk'){const nm=[r.sid,(r.nameKo||r.nameEn||'').trim(),(r.org||'').trim()].filter(Boolean).join('_').replace(/[\\/:*?"<>|\s]+/g,'');if(r.sid&&(r.nameKo||r.nameEn))name=nm+'.'+f.ext}else if(k==='logoF'&&r.name)name=r.name.replace(/[\\/:*?"<>|\s]+/g,'_')+'_로고.'+f.ext;
+ const old=r[k];if(old&&old.driveId&&Drive.on())Drive.del(old.driveId);const o={id:uid('f'),name,size:f.size,ext:f.ext,dataUrl:f.dataUrl,thumb:f.thumb,file:f.file,date:Date.now(),by:S.user.org,v:1};r[k]=o;if(k==='logoF'&&r.t==='spn'&&r.logo==='미수령')r.logo='수령';startUpload(o,k==='logoF'?'로고':k==='card'?'명함':'연사자 사진');return o}
+Object.assign(A,{impImgApply:()=>{if(!imgTmp)return;const {T,items}=imgTmp;let n=0;items.forEach(x=>{if(!x.rid)return;let r=x.rid==='__new'?newRow(T.rt,Object.assign(BLANK[T.rt]?BLANK[T.rt]():{},T.rt==='spk'?{nameKo:x.stem}:{name:x.stem})):rowById(x.rid);if(!r)return;rowAttach(r,T.k,x.f);n++});
+ addLog(T.l+' 일괄 업로드',n+'장');Store.save('사진');closeModal();imgTmp=null;toast(`${T.l} ${n}장을 올렸습니다`,'success');renderView()}});
 /* ---------- 계정: 한 아이디가 프로젝트마다 다른 권한 (예: ICON 2027 스폰서 + Cloudflare ABM 주관사) ---------- */
 function memb(a){if(!a)return [];if(a.role==='admin')return DB.projects.map(p=>({pid:p.id,role:'admin'}));const out=[];
  if(a.role==='host')DB.projects.filter(p=>p.hostId===a.hid).forEach(p=>out.push({pid:p.id,role:'host',hid:a.hid}));
@@ -2063,7 +2113,7 @@ document.addEventListener('input',e=>{const a=e.target.closest('[data-inp]');if(
 document.addEventListener('dragover',e=>{const d=e.target.closest('.upload-zone');if(d){e.preventDefault();d.classList.add('over')}});
 document.addEventListener('dragleave',e=>{const d=e.target.closest('.upload-zone');if(d)d.classList.remove('over')});
 document.addEventListener('drop',async e=>{const d=e.target.closest('.upload-zone');if(!d)return;e.preventDefault();d.classList.remove('over');const fs=await readFiles(e.dataTransfer.files);if(!fs.length)return;const k=d.dataset.drop;
- if(k==='agenda'||k==='imp'&&S.view==='agenda'){agImport(fs[0].file)}else if(k==='imp'){impFile(fs[0].file)}else if(k==='kv'){kvSet(fs[0].file)}else if(k==='lib'){upTmp.push(...fs);upList()}else if(k.includes('|')){const[r,s]=k.split('|');addSubFiles(r,s,fs,true)}else addSubFiles(k,mySid(),fs)});
+ if(k==='agenda'||k==='imp'&&S.view==='agenda'){agImport(fs[0].file)}else if(k==='imp'){impFiles(fs)}else if(k==='kv'){kvSet(fs[0].file)}else if(k==='lib'){upTmp.push(...fs);upList()}else if(k.includes('|')){const[r,s]=k.split('|');addSubFiles(r,s,fs,true)}else addSubFiles(k,mySid(),fs)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 const ADMIN_ONLY=new Set(['approve','unapprove','reject','remind','reqNew','reqEdit','reqSave','reqDel','accNew','accSave','accBulk','bulkSave','pwReset','accTog','pwShow','projNew','projSave','projGo','hostNew','hostSave','hostAcc','hostAccSave','hostEdit','hostEditSave','pickProxy','accEdit','accEditSave','diag','agPub','roadEdit','roadAdd','roadSave','costTab','costPub','schAdd','schDel','kvPick','kvDel','kvMove','membAdd','membSave','membDel','projDel','projDelOk']);
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(!a||!A[a.dataset.act])return;if(ADMIN_ONLY.has(a.dataset.act)&&!isAdmin())return toast('마플 관리자만 사용할 수 있습니다','error');A[a.dataset.act](a.dataset,e)});

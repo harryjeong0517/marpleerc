@@ -1208,14 +1208,14 @@ const sidList=()=>`<datalist id="dl-sid">${agRows().filter(a=>a.kind!=='휴식')
 /* ---------- 마일스톤 트래커 ---------- */
 const ST_ICON={'미착수':'⬜','진행중':'🔄','완료':'✅','지연':'⚠️','보류':'⏸'};
 const trkDd=r=>{if(r.st==='완료')return '<span class="badge badge-green">완료</span>';if(!r.b)return '';const n=dd(r.b);return `<span class="badge ${n<0?'badge-red':n<=7?'badge-orange':'badge-gray'}">${ddl(n)}</span>`};
-const TRKC=()=>[C('grp','분야',100,{list:'dl-grp'}),C('title','마일스톤',330),C('a','시작일',128,{ty:'date'}),C('b','종료일',128,{ty:'date'}),C('key','담당 키맨',100),SEL('st','진행상태',96,OPT.trk,{bd:bdOK}),{k:'dd',l:'D-day',w:76,f:trkDd,cls:'ctr'},SEL('who','구분',78,OPT.who),SEL('conf','확정 여부',88,OPT.conf),C('note','비고',280)];
+const TRKC=()=>[C('grp','분야',100,{list:'dl-grp'}),C('title','마일스톤',330),C('a','시작일',128,{ty:'date'}),C('b','종료일',128,{ty:'date'}),C('key','담당 키맨',100),SEL('st','진행상태',96,OPT.trk,{bd:bdOK}),{k:'dd',l:'D-day',w:76,f:trkDd,cls:'ctr'},SEL('who','구분',78,OPT.who),C('note','비고',280)];
 BOARD.trk=()=>{const rs=R('trk'),c=s=>rs.filter(r=>r.st===s).length;return `<div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">${stat('전체',rs.length)}${stat('<i class="sd t-n"></i>미착수',c('미착수'))}${stat('<i class="sd t-b"></i>진행중',c('진행중'),'blue')}${stat('<i class="sd t-g"></i>완료',c('완료'),'green')}${stat('<i class="sd t-r"></i>지연',c('지연'),c('지연')?'red':'')}${stat('<i class="sd t-a"></i>보류',c('보류'))}</div>`};
 function vTrk(v){const all=R('trk'),f=TF.trk,q=f.q.toLowerCase(),grps=[...new Set(all.map(r=>r.grp))];
  const rows=all.filter(r=>(!f.g||r.grp===f.g)&&(!f.who||r.who===f.who)&&(!f.st||r.st===f.st)&&(!q||(r.title+r.note+r.key).toLowerCase().includes(q)));
  v.innerHTML=head('마일스톤 트래커','진행상태는 드롭다운으로 바꾸고, 담당 키맨은 직접 입력합니다. 시각 로드맵은 [준비 로드맵]에서 볼 수 있습니다.',roBadge('trk')+(canEdit('trk',null,'__row')?addBtn('trk','마일스톤 추가'):''))+boardBox()
   +`<div class="filter-bar">${fsel('trk','g','분야 전체',grps)}${fsel('trk','who','구분 전체',OPT.who)}${fsel('trk','st','상태 전체',OPT.trk)}${fq('trk')}<span class="sub">${rows.length} / ${all.length}건</span></div><datalist id="dl-grp">${grps.map(g=>`<option value="${esc(g)}">`).join('')}</datalist>`
   +gridTbl('trk',TRKC(),rows,{del:true,grp:r=>esc(r.grp),gk:'grp',empty:'조건에 맞는 마일스톤이 없습니다'})
-  +`<div class="sub" style="margin-top:10px">구분: MKT = 메가존 마케팅 · 마플 = 대행사 실무 · 공통 = 양사 협의/컨펌 &nbsp;|&nbsp; 확정 여부: 확정 = 협의 완료 · 제안 = 견적 기준 역산 · 협의 = 견적 협의사항 · 메가존 = 메가존 직접 진행</div>`}
+  +`<div class="sub" style="margin-top:10px">구분: MKT = 메가존 마케팅 · 마플 = 대행사 실무 · 공통 = 양사 협의/컨펌</div>`}
 AFTER.trk=()=>{};
 
 /* ---------- 준비 로드맵 (간트) ---------- */
@@ -1236,7 +1236,7 @@ function vRoad(v){const rows=R('trk').filter(r=>r.a&&r.b),adm=isAdmin();
   +`<div class="filter-bar"><div class="legend"><span><i style="background:#7c8dd8"></i>메가존(MKT)</span><span><i style="background:#009ddf"></i>마플</span><span><i style="background:#34b37e"></i>공통</span><span><i style="background:#e5484d;width:3px"></i>오늘</span><span>◆ 하루 일정(컨펌·제출)</span></div></div>`+gantt
   +`<div class="card-header" style="margin-top:24px"><div class="card-title">Proposal v1.0 대비 컴포넌트 체크</div>${adm?addBtn('comp','행 추가'):''}</div>`+gridTbl('comp',cc,comp,{del:true,empty:'항목이 없습니다'})
   +`<div class="sub" style="margin-top:8px">❌ 미반영 · ⚠️ 확인 항목은 진행 여부 결정 후 견적에 추가하고 마일스톤에 반영합니다. ⛔ 항목은 견적 제외에 따라 마일스톤에서 삭제됩니다.</div>`}
-const RF=[['grp','분야','text'],['title','마일스톤','text'],['a','시작일','date'],['b','종료일','date'],['key','담당 키맨','text'],['who','구분','sel',OPT.who],['conf','확정 여부','sel',OPT.conf],['st','진행상태','sel',OPT.trk],['note','비고','text']];
+const RF=[['grp','분야','text'],['title','마일스톤','text'],['a','시작일','date'],['b','종료일','date'],['key','담당 키맨','text'],['who','구분','sel',OPT.who],['st','진행상태','sel',OPT.trk],['note','비고','text']];
 function roadModal(r){const nw=!r;r=r||{grp:(R('trk').slice(-1)[0]||{}).grp||'',title:'',a:'',b:'',key:'',who:'마플',conf:'제안',st:'미착수',note:''};
  modal(nw?'일정 추가':'일정 수정',`<div class="form-row">${RF.map(f=>`<div class="form-group" ${f[0]==='title'||f[0]==='note'?'style="grid-column:1/-1"':''}><label class="form-label">${f[1]}</label>${f[2]==='sel'?`<select class="form-select" id="rf_${f[0]}">${f[3].map(o=>`<option ${o===r[f[0]]?'selected':''}>${o}</option>`).join('')}</select>`:`<input class="form-input" type="${f[2]}" id="rf_${f[0]}" value="${esc(r[f[0]])}" ${f[0]==='grp'?'list="dl-grp2"':''}>`}</div>`).join('')}</div><datalist id="dl-grp2">${[...new Set(R('trk').map(x=>x.grp))].map(g=>`<option value="${esc(g)}">`).join('')}</datalist>${mfoot(nw?'':`<button class="btn btn-danger" data-act="rowDel" data-id="${r.id}">삭제</button>`,'<button class="btn" data-act="close">취소</button>',`<button class="btn btn-primary" data-act="roadSave" data-id="${nw?'':r.id}">저장</button>`)}`,true)}
 

@@ -757,6 +757,38 @@ textarea.gi:focus{max-height:none;min-height:34px;field-sizing:content}
 .gtbl td .wrap{white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere}
 .gtbl td a.link[title="해당 화면으로"]{white-space:nowrap}
 .mmain>.mpad:last-child{padding-bottom:96px}
+/* 모바일 아젠다 */
+.mdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
+.mnow{background:var(--m-ink);color:#fff;border-radius:16px;padding:14px}.mnow.soft{background:#1e293b}
+.mnow .lb{display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:800;color:#c9cfe0}.mnow .lb em{font-style:normal;background:var(--m-ac);color:var(--m-act);border-radius:99px;padding:2px 8px;flex-shrink:0}
+.mnow h3{font-size:16.5px;line-height:1.35;margin:8px 0 10px;word-break:keep-all}.mnow .who{display:flex;align-items:center;gap:10px;font-size:12.5px;color:#c9cfe0}.mnow .who b{color:#fff}
+.mnow .pbar{height:4px;background:rgba(255,255,255,.15);border-radius:9px;margin-top:12px}.mnow .pbar i{display:block;height:100%;background:var(--m-ac);border-radius:9px}
+.mnow .pt{display:flex;justify-content:space-between;gap:6px;font-size:10.5px;color:#9aa3bd;margin-top:6px}
+.mavs{display:flex;flex-shrink:0}.mavs i{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;font-weight:800;font-size:12px;border:2px solid #fff;margin-left:-9px;overflow:hidden}.mavs i:first-child{margin-left:0}.mavs i img{width:100%;height:100%;object-fit:cover}
+.mavs.big i{width:44px;height:44px;font-size:15px}.mnow .mavs i{border-color:var(--m-ink)}
+.magl{display:flex;flex-direction:column;margin-top:4px}.magi{display:grid;grid-template-columns:44px 1fr;gap:9px}.magi .tm{font-weight:800;font-size:12.5px;text-align:right;padding-top:12px}.magi .tm small{display:block;color:#94a3b8;font-weight:600;font-size:10.5px}
+.magc{background:#fff;border:1px solid #e8ebf0;border-left:4px solid #6d28d9;border-radius:14px;padding:11px 12px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}.magc .x{flex:1;min-width:0}
+.magc .tg{font-size:10px;font-weight:800;letter-spacing:.02em}.magc h4{font-size:13.5px;line-height:1.35;margin:2px 0 4px;word-break:keep-all}.magc .sp{font-size:11.5px;color:#475569}.magc .sp b{color:#0f172a}
+.magi.past{opacity:.45}.magi.now .magc{box-shadow:0 0 0 2px var(--m-ac)}
+.magb{margin:2px 0 12px 53px;color:#94a3b8;font-size:12px;font-weight:700;display:flex;align-items:center;gap:8px}.magb::after{content:'';flex:1;border-top:1px dashed #cbd5e1}.magb.past{opacity:.5}
+.mgrid2{display:flex;background:#fff;border:1px solid #e8ebf0;border-radius:14px;overflow:hidden}
+.mg-t{width:44px;flex-shrink:0;border-right:1px solid #eef0f4}.mg-t span{position:absolute;left:4px;font-size:10px;color:#94a3b8;font-weight:700;transform:translateY(-1px)}
+.mg-h{height:44px;display:flex;border-bottom:1px solid #eef0f4;background:#fafbfc}.mg-h>div{padding:7px 8px;font-size:11.5px;font-weight:800;line-height:1.2;flex-shrink:0;border-left:1px solid #f1f3f6}.mg-h small{display:block;color:#94a3b8;font-weight:600;font-size:9.5px;margin-top:2px}
+.mg-s{flex:1;overflow-x:auto}.mg-b{position:relative;background-image:linear-gradient(#f1f3f6 1px,transparent 1px),linear-gradient(90deg,#f1f3f6 1px,transparent 1px)}
+.mgc{position:absolute;border:1px solid;border-radius:9px;padding:5px 7px;overflow:hidden;font-size:10.5px;line-height:1.3}.mgc b{display:block;font-size:11px;color:#0f172a;margin-bottom:2px}
+.mg-now{position:absolute;left:0;right:0;height:2px;background:#ef4444;z-index:2}
+.mspk{background:#fff;border:1px solid #e8ebf0;border-radius:14px;padding:12px;display:flex;gap:12px}.mspk .x{flex:1;min-width:0}.mspk h4{font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}.mspk h4 small{font-size:11px;color:#64748b;font-weight:600}
+.msl{display:flex;gap:7px;align-items:center;font-size:12px;background:#f6f7f9;border-radius:9px;padding:6px 8px;margin-top:6px}.msl b{font-size:11.5px;white-space:nowrap}.msl i{font-style:normal;font-size:10px;font-weight:800;border-radius:5px;padding:1px 6px;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis}.msl span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 리마인드 메일 */
+.rm-st{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:9px 12px;border-radius:10px;background:#f1f5f9;color:#475569;margin-bottom:12px}.rm-st i{width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0}
+.rm-st.ok{background:#ecfdf5;color:#047857}.rm-st.ok i{background:#10b981}.rm-st.off{background:#fffbeb;color:#92400e}.rm-st.off i{background:#f59e0b}
+.rm-warn{background:#fef2f2;color:#b91c1c;font-size:12.5px;padding:8px 12px;border-radius:10px;margin-bottom:12px}
+.rm-to{display:flex;flex-wrap:wrap;gap:6px;min-height:34px;padding:6px;border:1px solid var(--border,#e5e7eb);border-radius:10px;margin:4px 0 6px}
+.rm-chip{display:inline-flex;align-items:center;gap:4px;background:#eef2ff;color:#3730a3;border-radius:99px;padding:3px 4px 3px 10px;font-size:12.5px}.rm-chip button{border:0;background:rgba(55,48,163,.12);color:#3730a3;width:18px;height:18px;border-radius:50%;cursor:pointer;line-height:1}
+.rm-add{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.rm-add .form-input{flex:1;min-width:200px}.rm-keep{font-size:12px;color:#64748b;display:flex;gap:5px;align-items:center;white-space:nowrap}
+.rm-pv{border:1px solid var(--border,#e5e7eb);border-radius:12px;padding:12px;background:#f8fafc;max-height:340px;overflow:auto;margin-top:4px}
+.rm-all{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}.rm-row{display:grid;grid-template-columns:20px 1fr auto;gap:2px 8px;align-items:center;border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:9px 12px;cursor:pointer}
+.rm-row b{font-size:13.5px}.rm-row span{font-size:12px;color:#b45309;font-weight:700}.rm-row small{grid-column:2/4;font-size:11.5px;color:#64748b}.rm-row small em{color:#b91c1c;font-style:normal}.rm-row i{grid-column:2/4;font-style:normal;font-size:11px;color:#b91c1c}
 </style>
 </head>
 <body>
@@ -3031,13 +3063,51 @@ function mSchOpen(id,isNew){const m=isNew?{id:'',title:'',a:ymd(today()),b:ymd(t
   <div class="mbts wide">${isNew?'':`<button class="mbtn red" data-act="mSchDel" data-id="${m.id}">삭제</button>`}<button class="mbtn dk" data-act="mSchSave" data-id="${m.id}">저장</button></div></div>`);mSheet()}
 
 /* ---------- 아젠다 ---------- */
-function mAgenda(){const rows=agRows();agFix(rows);const L=agLayout(rows),tabs=agTabs(L,rows),pj=P();
- if(!tabs.length)return mHd('아젠다','')+`<div class="mpad">${mEmpty('아젠다가 아직 없습니다')}</div>`;
- const i=Math.min(S.mAgT||0,tabs.length-1),tb=tabs[i],rs=tb.rows.filter(r=>String(r.title||'').trim()||r.start).sort((a,b)=>(mOf(a.start)??9999)-(mOf(b.start)??9999)),ses=agSess().length;
- return mHd('아젠다',`${fmtD(pj.date)} · 세션 ${ses}`)+`<div class="mseg dk scroll">${tabs.map((t,k)=>`<button class="${k===i?'on':''}" data-act="mAgT" data-i="${k}">${esc(t.label)}</button>`).join('')}</div>`
-  +`<div class="mpad">${tb.room||tb.desc?`<div class="msubt" style="margin:0 2px 8px">${esc([tb.room,tb.desc].filter(Boolean).join(' · '))}</div>`:''}<section class="mcd">${rs.map(r=>{const brk=AG_NS.includes(r.kind)&&r.kind!=='진행',sp=(r.spks||[]).map(s=>[s.n,s.r,s.o].filter(Boolean).join(' · ')).filter(Boolean);
-   return `<div class="mag ${brk?'brk':''}" data-act="mAg" data-id="${r.id}"><div class="tm">${esc(r.start||'')}<small>${esc(r.end||'')}</small></div><div class="bx">${r.tag||(r.kind&&r.kind!=='세션')?`<div class="tg" style="color:${KC[r.kind]||'#6d28d9'}">${esc(r.tag||r.kind)}</div>`:''}<b>${esc(r.title||'(제목 미정)')}</b>${sp.length?`<div class="sp">${sp.map(esc).join('<br>')}</div>`:''}</div></div>`}).join('')||mEmpty('세션이 없습니다')}</section></div>`
-  +(canEdit('agenda')?mFab('mNew','data-rt="ag"'):'')}
+const M_AGC_COL=['#7c3aed','#0ea5e9','#f59e0b','#10b981','#ef4444','#ec4899','#14b8a6','#64748b'];
+function mAgData(){const rows=agRows();agFix(rows);const L=agLayout(rows),tabs=agTabs(L,rows),info={};
+ tabs.forEach((t,k)=>t.rows.forEach(r=>{if(!info[r.id])info[r.id]={tab:t,k,label:r.track==='*'?(t.t?'전체':t.label):t.label,room:r.track==='*'?'':t.room}}));
+ const all=[];const seen=new Set();tabs.forEach(t=>t.rows.forEach(r=>{if(!seen.has(r.id)&&(String(r.title||'').trim()||r.start)){seen.add(r.id);all.push(r)}}));
+ all.sort((a,b)=>(mOf(a.start)??9999)-(mOf(b.start)??9999)||((a.track==='*'?0:1)-(b.track==='*'?0:1))||((info[a.id]||{}).k||0)-((info[b.id]||{}).k||0));return {tabs,info,all}}
+const mBrk=r=>AG_NS.includes(r.kind)&&r.kind!=='진행';
+const mInit=n=>String(n||'?').trim().replace(/^(Dr\.|Mr\.|Ms\.)\s*/,'')[0]||'?';
+function mAv(r,big){const ps=agSpkProf(r).filter(x=>String(x.s.n||'').trim()&&!/^[?？]+$/.test(String(x.s.n).trim()));if(!ps.length)return '';return `<div class="mavs ${big?'big':''}">${ps.slice(0,3).map(({s,p},k)=>{const im=p&&p.photo&&(p.photo.dataUrl||p.photo.thumb);return `<i style="background:${M_AGC_COL[(s.n||'').length%M_AGC_COL.length]}">${im?`<img src="${im}" alt="">`:esc(mInit(s.n))}</i>`}).join('')}</div>`}
+const mSpTxt=r=>{const sp=(r.spks||[]).filter(s=>String(s.n||'').trim()&&!/^[?？]+$/.test(String(s.n).trim()));if(!sp.length)return '';const f=sp[0];return `<b>${esc(f.n)}</b>${sp.length>1?` 외 ${sp.length-1}명`:''}${[f.r,f.o].filter(Boolean).length?' · '+esc([f.r,f.o].filter(Boolean).join(' · ')):''}`};
+function mAgenda(){const {tabs,info,all}=mAgData(),pj=P(),md=S.mAgM||'list';
+ if(!all.length)return mHd('아젠다','')+`<div class="mpad">${mEmpty('아젠다가 아직 없습니다')}</div>`+(canEdit('agenda')?mFab('mNew','data-rt="ag"'):'');
+ const spkN=new Set(all.flatMap(r=>(r.spks||[]).map(s=>s.n).filter(Boolean))).size;
+ const seg=`<div class="mseg dk">${[['list','목록'],['grid','표'],['spk','연사별']].map(x=>`<button class="${md===x[0]?'on':''}" data-act="mAgM" data-m="${x[0]}">${x[1]}</button>`).join('')}</div>`;
+ const head=mHd('아젠다',`${fmtD(pj.date)} · 세션 ${all.filter(r=>!mBrk(r)).length} · 연사 ${spkN}`)+seg;
+ const body=md==='grid'?mAgGrid(tabs,info):md==='spk'?mAgSpk(all,info):mAgList(tabs,info,all);
+ return head+body+(canEdit('agenda')&&md==='list'?mFab('mNew','data-rt="ag"'):'')}
+function mAgList(tabs,info,all){const f=S.mAgT==null?-1:+S.mAgT,list=f<0?all:all.filter(r=>tabs[f]&&tabs[f].rows.includes(r)),pj=P();
+ const chips=tabs.length>1?`<div class="mchips">${[[-1,'전체']].concat(tabs.map((t,k)=>[k,t.label])).map(([k,l])=>`<button class="${f===k?'on':''}" data-act="mAgT" data-i="${k}">${k>=0?`<i class="mdot" style="background:${M_AGC_COL[k%8]}"></i>`:''}${esc(l)}</button>`).join('')}</div>`:'';
+ /* 지금 · 다음 */
+ const T=ymd(today()),isDay=pj.date===T,nw=new Date(),nm=nw.getHours()*60+nw.getMinutes(),ses=list.filter(r=>!mBrk(r)&&mOf(r.start)!=null);
+ let top='';
+ if(isDay){const cur=ses.filter(r=>mOf(r.start)<=nm&&(mOf(r.end)??mOf(r.start)+30)>nm),nx=ses.find(r=>mOf(r.start)>nm);
+  if(cur.length)top=cur.slice(0,2).map(r=>{const a=mOf(r.start),b=mOf(r.end)??a+30,p=Math.round((nm-a)/(b-a)*100),inf=info[r.id]||{};return `<div class="mnow" data-act="mAg" data-id="${r.id}"><div class="lb"><span>지금 진행 중 · ${esc(inf.label||'')}${inf.room?' · '+esc(inf.room):''}</span><em>${String(nw.getHours()).padStart(2,'0')}:${String(nw.getMinutes()).padStart(2,'0')}</em></div><h3>${esc(r.title||'')}</h3>${mSpTxt(r)?`<div class="who">${mAv(r,1)}<div>${mSpTxt(r)}</div></div>`:''}<div class="pbar"><i style="width:${p}%"></i></div><div class="pt"><span>${esc(r.start)}</span><span>${b-nm}분 남음${nx?' · 다음 '+esc(nx.start)+' '+esc((nx.title||'').slice(0,14)):''}</span><span>${esc(r.end||'')}</span></div></div>`}).join('');
+  else if(nx)top=`<div class="mnow soft" data-act="mAg" data-id="${nx.id}"><div class="lb"><span>다음 세션 · ${mOf(nx.start)-nm}분 후</span><em>${esc(nx.start)}</em></div><h3>${esc(nx.title||'')}</h3>${mSpTxt(nx)?`<div class="who">${mAv(nx,1)}<div>${mSpTxt(nx)}</div></div>`:''}</div>`;
+  else top=`<div class="mnow soft"><div class="lb"><span>오늘 세션이 모두 끝났습니다</span></div></div>`}
+ else{const n=dd(pj.date),fst=ses[0];top=`<div class="mnow soft"${fst?` data-act="mAg" data-id="${fst.id}"`:''}><div class="lb"><span>${n>0?'행사까지 '+ddl(n):'행사 종료'} · ${fmtD(pj.date)}</span><em>${fst?esc(fst.start):''}</em></div><h3>${fst?esc(fst.title||''):'세션 없음'}</h3><div class="pt"><span>행사 당일에는 여기에 '지금 진행 중'인 세션과 남은 시간이 나옵니다</span></div></div>`}
+ let lastT=null;const items=list.map(r=>{const inf=info[r.id]||{},c=M_AGC_COL[(inf.k||0)%8],past=isDay&&(mOf(r.end)??mOf(r.start)??0)<=nm,now=isDay&&mOf(r.start)<=nm&&(mOf(r.end)??0)>nm;
+  if(mBrk(r))return `<div class="magb ${past?'past':''}" data-act="mAg" data-id="${r.id}">${esc(r.start||'')}${r.end?' – '+esc(r.end):''} ${esc(r.title||r.kind)}</div>`;
+  const showT=r.start!==lastT;lastT=r.start;
+  return `<div class="magi ${past?'past':''} ${now?'now':''}"><div class="tm">${showT?`${esc(r.start||'')}<small>${esc(r.end||'')}</small>`:''}</div><div class="magc" style="border-left-color:${c}" data-act="mAg" data-id="${r.id}">${mAv(r)}<div class="x"><div class="tg" style="color:${c}">${esc([r.tag||(r.kind&&r.kind!=='세션'?r.kind:''),inf.label,inf.room].filter(Boolean).join(' · '))}</div><h4>${esc(r.title||'(제목 미정)')}</h4>${mSpTxt(r)?`<div class="sp">${mSpTxt(r)}</div>`:''}</div></div></div>`}).join('');
+ return chips+`<div class="mpad">${top}<div class="magl">${items}</div></div>`}
+function mAgGrid(tabs,info){const cols=tabs.length?tabs:[];const rs=cols.flatMap(t=>t.rows).filter(r=>mOf(r.start)!=null);if(!rs.length)return `<div class="mpad">${mEmpty('시간이 입력된 세션이 없습니다')}</div>`;
+ const t0=Math.floor(Math.min(...rs.map(r=>mOf(r.start)))/30)*30,t1=Math.ceil(Math.max(...rs.map(r=>mOf(r.end)??mOf(r.start)+30))/30)*30,PX=1.9,CW=150,H=(t1-t0)*PX;
+ const lines=[];for(let m=t0;m<=t1;m+=30)lines.push(m);const hh=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+ const T=ymd(today()),nw=new Date(),nm=nw.getHours()*60+nw.getMinutes(),showNow=P().date===T&&nm>=t0&&nm<=t1;
+ const cells=cols.map((t,k)=>t.rows.filter(r=>mOf(r.start)!=null).map(r=>{const a=mOf(r.start),b=mOf(r.end)??a+30,c=mBrk(r)?'#94a3b8':M_AGC_COL[k%8],sp=(r.spks||[]).filter(s=>s.n);
+  return `<div class="mgc" data-act="mAg" data-id="${r.id}" style="left:${k*CW+3}px;top:${(a-t0)*PX+2}px;height:${Math.max(18,(b-a)*PX-4)}px;width:${CW-6}px;background:${c}1a;border-color:${c}66"><b>${esc(r.title||r.kind||'')}</b>${sp.length?`<span style="color:${c}">${esc(sp[0].n)}${sp.length>1?' 외 '+(sp.length-1):''}${sp[0].o?' · '+esc(sp[0].o):''}</span>`:''}</div>`}).join('')).join('');
+ return `<div class="mpad"><div class="mgrid2"><div class="mg-t"><div class="mg-h"></div><div style="height:${H}px;position:relative">${lines.map(m=>`<span style="top:${(m-t0)*PX}px">${hh(m)}</span>`).join('')}</div></div><div class="mg-s"><div class="mg-h" style="width:${cols.length*CW}px">${cols.map((t,k)=>`<div style="width:${CW}px"><i class="mdot" style="background:${M_AGC_COL[k%8]}"></i>${esc(t.label)}${t.room?`<small>${esc(t.room)}</small>`:''}</div>`).join('')}</div>
+  <div class="mg-b" style="height:${H}px;width:${cols.length*CW}px;background-size:${CW}px ${30*PX}px">${cells}${showNow?`<div class="mg-now" style="top:${(nm-t0)*PX}px"></div>`:''}</div></div></div>${cols.length>2?'<div class="msubt" style="text-align:center">← 옆으로 밀면 다른 트랙 →</div>':''}${showNow?'':'<div class="msubt" style="text-align:center">행사 당일에는 빨간 선으로 지금 시간이 표시됩니다</div>'}</div>`}
+function mAgSpk(all,info){const q=(S.mq||'').toLowerCase(),map=new Map();
+ all.forEach(r=>agSpkProf(r).forEach(({s,p})=>{if(!s.n)return;const k=s.n.trim();if(!map.has(k))map.set(k,{n:k,r:s.r,o:s.o,p,ss:[]});const m=map.get(k);if(!m.p&&p)m.p=p;if(!m.r&&s.r)m.r=s.r;if(!m.o&&s.o)m.o=s.o;m.ss.push(r)}));
+ let L=[...map.values()].filter(m=>!q||(m.n+' '+(m.o||'')+' '+(m.r||'')).toLowerCase().includes(q)).sort((a,b)=>(mOf(a.ss[0].start)??9999)-(mOf(b.ss[0].start)??9999));
+ const stc=isStaff()?mCols('spk').find(c=>c.ty==='sel'&&c.bd):null;
+ return `<div class="mpad"><input class="msearch" placeholder="연사 이름 · 회사 검색" value="${esc(S.mq||'')}" data-inp="mq">${L.map(m=>{const im=m.p&&m.p.photo&&(m.p.photo.dataUrl||m.p.photo.thumb),st=stc&&m.p?m.p[stc.k]:'';
+  return `<div class="mspk"><div class="mavs big"><i style="background:${M_AGC_COL[m.n.length%8]}">${im?`<img src="${im}" alt="">`:esc(mInit(m.n))}</i></div><div class="x"><h4>${esc(m.n)}<small>${esc([m.r,m.o].filter(Boolean).join(' · '))}</small>${st?mPill(st):''}</h4>${m.ss.map(r=>{const inf=info[r.id]||{};return `<div class="msl" data-act="mAg" data-id="${r.id}"><b>${esc(r.start||'')}</b><i style="background:${M_AGC_COL[(inf.k||0)%8]}1f;color:${M_AGC_COL[(inf.k||0)%8]}">${esc(inf.label||'')}${inf.room?' · '+esc(inf.room):''}</i><span>${esc(r.title||'')}</span></div>`}).join('')}</div></div>`}).join('')||mEmpty(q?'검색 결과가 없습니다':'연사가 아직 없습니다')}</div>`}
 function mAgOpen(id){const r=rowById(id);if(!r)return;if(canEdit('agenda',r,'title'))return mEdit(id);const sp=(r.spks||[]);
  modal(esc(r.title||'세션'),`<div class="msh"><dl class="mdl"><dt>시간</dt><dd>${esc(r.start||'')}${r.end?' – '+esc(r.end):''}</dd><dt>구분</dt><dd>${esc(r.tag||r.kind||'')}</dd>${r.track&&r.track!=='*'?`<dt>트랙</dt><dd>${esc(r.track)}</dd>`:''}${sp.length?`<dt>연사</dt><dd>${sp.map(s=>esc([s.n,s.r,s.o].filter(Boolean).join(' · '))).join('<br>')}</dd>`:''}${r.topic?`<dt>내용</dt><dd>${esc(r.topic)}</dd>`:''}</dl></div>`);mSheet()}
 
@@ -3057,7 +3127,7 @@ function mStatus(){const rs=reqs(),ss=sponsors(),srt=S.mf_st||'';if(!rs.length||
  let cards=ss.map(s=>{let t=0,d=0,w=0;const cells=rs.map(r=>{if(!canSee(r.target,s.id))return '';t++;const st=stOf(r.id,s.id)||'none';if(st==='submitted'||st==='approved')d++;if(st==='submitted')w++;const c=C[st]||C.none;
    return `<div class="msq"><span class="${c[0]}" ${st!=='none'?`data-act="openSub" data-rid="${r.id}" data-sid="${s.id}"`:''}>${c[1]}</span>${esc(r.title.length>5?r.title.slice(0,5)+'…':r.title)}</div>`}).join(''),p=t?Math.round(d/t*100):0;return {s,p,w,h:`<section class="mcd"><div class="msph"><b>${esc(s.name)} <small>${esc(s.tier||'')}</small></b><span>${p}%</span></div><div class="mbar"><i style="width:${p}%"></i></div><div class="msqs">${cells}</div>${isAdmin()&&p<100?`<button class="mbtn sm" data-act="remind" data-sid="${s.id}">리마인드</button>`:''}</section>`}});
  if(srt==='low')cards.sort((a,b)=>a.p-b.p);if(srt==='wait')cards=cards.filter(c=>c.w);
- return mChips('st',[['','전체 '+ss.length],['low','미제출 많은 순'],['wait','검수 대기']],srt)+`<div class="mpad"><div class="mleg"><span><i class="ok"></i>승인</span><span><i class="wt"></i>검수 대기</span><span><i class="rj"></i>반려</span><span><i class="no"></i>미제출</span></div>${cards.map(c=>c.h).join('')||mEmpty('검수 대기 중인 스폰서가 없습니다')}</div>`}
+ return mChips('st',[['','전체 '+ss.length],['low','미제출 많은 순'],['wait','검수 대기']],srt)+`<div class="mpad">${isAdmin()?`<button class="mbtn ac" data-act="remindAll" style="height:40px">✉ 미제출 전체 리마인드</button>`:''}<div class="mleg"><span><i class="ok"></i>승인</span><span><i class="wt"></i>검수 대기</span><span><i class="rj"></i>반려</span><span><i class="no"></i>미제출</span></div>${cards.map(c=>c.h).join('')||mEmpty('검수 대기 중인 스폰서가 없습니다')}</div>`}
 function mSub(rid,refresh){const r=DB.requests.find(x=>x.id===rid);if(!r)return;S.mSubRid=rid;
  const sid=isStaff()?null:mySid();if(!sid)return;
  modal(esc(r.title),`<div class="msub">${reqCard(r,sid)}</div>`);mSheet();if(!refresh)S.mSubRid=rid}
@@ -3122,6 +3192,7 @@ Object.assign(A,{
  mF:d=>{S['mf_'+d.k]=d.v;mApp()},
  mDocT:d=>{S.md=d.d;mApp()},
  mAgT:d=>{S.mAgT=+d.i;mApp()},
+ mAgM:d=>{S.mAgM=d.m;S.mq='';mApp()},
  mAg:d=>mAgOpen(d.id),
  mTrk:d=>mTrkOpen(d.id),
  mWk:d=>{S.mWk=+d.d===0?0:(S.mWk||0)+(+d.d);S.mDay='';mApp()},
@@ -3162,6 +3233,100 @@ if(MB.on){
  window.addEventListener('popstate',()=>{if($('#mroot').classList.contains('open'))closeModal();else if(S.ms){S.ms=null;mApp()}});
  const mdB=modal;modal=function(t,h,w){const was=$('#mroot').classList.contains('open');mdB(t,h,w);mSheet();if(!was)try{history.pushState({m:1},'')}catch(_){}};
 }
+/* =====================================================================
+   리마인드 메일 (p23)
+   ① Apps Script(marple_plan@marple.co.kr)로 바로 발송  ② 연결이 안 되면 아웃룩 새 메일 창
+   ===================================================================== */
+const MAIL_RX=/^[^\s@,;<>]+@[^\s@,;<>]+\.[^\s@,;<>]+$/;
+const MAIL={st:null};
+const mLum=h=>{const m=/^#?([0-9a-f]{6})$/i.exec(String(h||''));if(!m)return 0;const n=parseInt(m[1],16);return (0.299*(n>>16&255)+0.587*(n>>8&255)+0.114*(n&255))/255};/* null=확인 전 · true=발송 가능 · false=불가(아웃룩) */
+function mailCfg(){const p=P(),m=p.mail||{};const icon=/^i-?con\s*2027$/i.test(p.name||'');return {name:m.name||(icon?'ICON 2027 운영사무국':(p.name||'')+' 운영사무국'),reply:m.reply||'marple_plan@marple.co.kr'}}
+function siteUrl(){const pj=P(),slug=pj.slug||'';if(/^https?:/.test(location.protocol))return location.origin+'/'+(slug||'');return location.href.split('?')[0]+(slug?'?p='+slug:'')}
+async function mailReady(){if(!Drive.on())return MAIL.st=false;if(MAIL.st!==null)return MAIL.st;try{await Drive.rpc({a:'mailq'});MAIL.st=true}catch(e){console.warn('mail not ready',e);MAIL.st=false}return MAIL.st}
+function spMails(s){const out=[],add=m=>{m=String(m||'').trim();if(MAIL_RX.test(m)&&!out.includes(m))out.push(m)};
+ DB.accounts.filter(a=>a.sid===s.id).forEach(a=>String(a.email||'').split(/[,;\s]+/).forEach(add));
+ String(s.email||'').split(/[,;\s]+/).forEach(add);
+ const nm=String(s.name||'').replace(/\s|\(주\)|㈜|주식회사/g,'').toLowerCase();
+ R('spc').forEach(r=>{const co=String(r.co||'').replace(/\s|\(주\)|㈜|주식회사/g,'').toLowerCase();if(co&&nm&&(co.includes(nm)||nm.includes(co)))String(r.mail||'').split(/[,;\s]+/).forEach(add)});
+ return out}
+function remindItems(s){return reqs().filter(r=>canSee(r.target,s.id)&&['none','rejected'].includes(stOf(r.id,s.id))).sort((a,b)=>(a.due||'9')<(b.due||'9')?-1:1)}
+function remindBody(s,items){const c=mailCfg(),pj=P(),acc=DB.accounts.find(a=>a.sid===s.id),url=siteUrl();
+ const line=r=>{const u=subOf(r.id,s.id),rej=stOf(r.id,s.id)==='rejected';return {t:r.title,due:r.due?fmtD(r.due):'-',st:rej?'반려 · 다시 제출':'미제출',cm:rej&&u&&u.comment?u.comment:''}};
+ const L=items.map(line);
+ const text=`${s.name} 담당자님, 안녕하세요.\n${c.name}입니다.\n\n${pj.name} 준비를 위해 아래 자료 ${L.length}건의 제출을 부탁드립니다.\n\n${L.map((x,i)=>`${i+1}. ${x.t} — 마감 ${x.due} (${x.st})${x.cm?'\n   · 반려 사유: '+x.cm:''}`).join('\n')}\n\n▶ 제출하기: ${url}${acc?`\n   아이디: ${acc.id}`:''}\n\n문의는 이 메일에 회신해 주세요.\n감사합니다.\n\n${c.name} 드림`;
+ return {subject:`[${pj.name}] 자료 제출 요청 — 미제출 ${L.length}건`,text,L,url,acc}}
+function remindHtml(s,b,note){const c=mailCfg(),pj=P(),th=thOf(pj),ac=(th&&th.ac)||'#009ddf',e=x=>esc(String(x||''));
+ return `<div style="font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;max-width:620px;margin:0 auto;color:#0f172a;font-size:14px;line-height:1.6">
+ <div style="background:#0b1020;color:#fff;padding:18px 22px;border-radius:12px 12px 0 0"><div style="font-size:11px;letter-spacing:.14em;color:#9aa3bd">RESOURCE CENTER</div><div style="font-size:20px;font-weight:800">${e(pj.name)}</div></div>
+ <div style="border:1px solid #e5e7eb;border-top:0;padding:22px;border-radius:0 0 12px 12px">
+ <p style="margin:0 0 14px">${e(s.name)} 담당자님, 안녕하세요.<br>${e(c.name)}입니다.</p>
+ <p style="margin:0 0 14px">${e(pj.name)} 준비를 위해 아래 자료 <b>${b.L.length}건</b>의 제출을 부탁드립니다.</p>${note?`<p style="margin:0 0 14px;white-space:pre-wrap;background:#fffbeb;border-left:3px solid #f59e0b;padding:8px 12px;border-radius:6px">${e(note)}</p>`:''}
+ <table style="width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 18px"><tr style="background:#f4f6f9"><th style="text-align:left;padding:8px 10px;border-bottom:1px solid #e5e7eb">자료</th><th style="text-align:left;padding:8px 10px;border-bottom:1px solid #e5e7eb;white-space:nowrap">마감</th><th style="text-align:left;padding:8px 10px;border-bottom:1px solid #e5e7eb;white-space:nowrap">상태</th></tr>
+ ${b.L.map(x=>`<tr><td style="padding:9px 10px;border-bottom:1px solid #f1f3f6"><b>${e(x.t)}</b>${x.cm?`<div style="color:#9a3412;font-size:12px;margin-top:2px">반려 사유: ${e(x.cm)}</div>`:''}</td><td style="padding:9px 10px;border-bottom:1px solid #f1f3f6;white-space:nowrap">${e(x.due)}</td><td style="padding:9px 10px;border-bottom:1px solid #f1f3f6;white-space:nowrap;color:${x.cm||x.st.startsWith('반려')?'#b91c1c':'#475569'}">${e(x.st)}</td></tr>`).join('')}</table>
+ <p style="margin:0 0 18px"><a href="${e(b.url)}" style="display:inline-block;background:${e(ac)};color:${mLum(ac)>.55?'#0b1020':'#fff'};text-decoration:none;font-weight:800;padding:11px 20px;border-radius:9px">자료 제출하러 가기</a>${b.acc?`<span style="color:#64748b;font-size:12px;margin-left:10px">아이디: ${e(b.acc.id)}</span>`:''}</p>
+ <p style="margin:0;color:#64748b;font-size:12.5px">문의는 이 메일에 회신해 주세요. 감사합니다.<br><b style="color:#0f172a">${e(c.name)}</b></p></div></div>`}
+function outlookOpen(to,subject,text){const body=text.length>1700?text.slice(0,1700)+'\n…(이하 생략)':text;
+ const u='mailto:'+to.map(encodeURIComponent).join(',')+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);const a=document.createElement('a');a.href=u;a.style.display='none';document.body.appendChild(a);a.click();a.remove()}
+const sentToday=sid=>{const t=(CF_().remindAt||{})[sid];return t&&ymd(new Date(t))===ymd(today())};
+
+/* ---- 개별 리마인드 ---- */
+let RM=null;
+A.remind=async d=>{if(!isAdmin())return;const s=sp(d.sid);if(!s)return;const items=remindItems(s);if(!items.length)return toast(s.name+'은(는) 모두 제출했습니다');
+ const b=remindBody(s,items),c=mailCfg();RM={sid:s.id,to:spMails(s),extra:[]};
+ modal('리마인드 메일 · '+esc(s.name),`<div class="rm">
+  <div class="rm-st" id="rmst"><i></i>발송 방법 확인 중…</div>
+  ${sentToday(s.id)?`<div class="rm-warn">오늘 이미 이 스폰서에게 리마인드를 보냈습니다. 한 번 더 보낼지 확인해 주세요.</div>`:''}
+  <label class="form-label">받는 사람</label><div class="rm-to" id="rmto"></div>
+  <div class="rm-add"><input class="form-input" id="rmadd" placeholder="이메일 추가 (Enter)" inputmode="email"><label class="rm-keep"><input type="checkbox" id="rmkeep" checked> 이 스폰서 기본 받는 사람으로 저장</label></div>
+  <div class="form-row" style="margin-top:10px"><div class="form-group"><label class="form-label">보내는 사람 이름</label><input class="form-input" id="rmname" value="${esc(c.name)}"></div><div class="form-group"><label class="form-label">답장 받을 주소</label><input class="form-input" id="rmreply" value="${esc(c.reply)}"></div></div>
+  <div class="form-group"><label class="form-label">제목</label><input class="form-input" id="rmsub" value="${esc(b.subject)}"></div>
+  <div class="form-group"><label class="form-label">추가 안내 문구 <span class="sub">(기본 문구 아래에 강조해서 들어갑니다 · 선택)</span></label><textarea class="form-input" id="rmnote" rows="2" placeholder="예) 이번 주 금요일까지 꼭 부탁드립니다."></textarea></div>
+  <label class="form-label">미리보기</label><div class="rm-pv" id="rmpv"></div></div>
+  ${mfoot(`<button class="btn" data-act="close">취소</button><button class="btn" data-act="rmOutlook">${ico('mail',13)}아웃룩으로 열기</button><button class="btn btn-primary" data-act="rmSend" id="rmsend" disabled>${ico('mail',13)}바로 발송</button>`)}`,true);
+ rmPaint();
+ $('#rmadd').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();rmAdd()}});
+ ['rmnote','rmname','rmsub'].forEach(id=>$('#'+id).addEventListener('input',rmPv));
+ const ok=await mailReady();const st=$('#rmst');if(!st)return;
+ st.className='rm-st '+(ok?'ok':'off');st.innerHTML=ok?'<i></i>marple_plan@marple.co.kr 계정으로 바로 발송합니다':'<i></i>메일 발송이 아직 연결되지 않아 <b>아웃룩 새 메일 창</b>으로 엽니다 (Apps Script 새 버전 배포 후 자동 전환)';
+ const bt=$('#rmsend');if(bt){bt.disabled=!ok;if(!ok)bt.style.display='none'}};
+function rmAdd(){const i=$('#rmadd');if(!i)return;const vs=i.value.split(/[,;\s]+/).filter(Boolean),bad=vs.filter(v=>!MAIL_RX.test(v));if(bad.length)return toast('이메일 형식을 확인해 주세요: '+bad.join(', '),'error');vs.forEach(v=>{if(!RM.to.includes(v))RM.to.push(v);RM.extra.push(v)});i.value='';rmPaint()}
+function rmPaint(){const el=$('#rmto');if(!el)return;el.innerHTML=RM.to.length?RM.to.map((m,k)=>`<span class="rm-chip">${esc(m)}<button data-act="rmDel" data-i="${k}" title="빼기">×</button></span>`).join(''):'<span class="sub" style="color:#b91c1c">받는 사람이 없습니다 — 아래에 이메일을 추가해 주세요 (스폰서 담당자 탭의 이메일도 자동으로 찾습니다)</span>';rmPv()}
+function rmPv(){const pv=$('#rmpv');if(!pv||!RM)return;const s=sp(RM.sid),b=remindBody(s,remindItems(s)),c={name:($('#rmname')||{}).value};const keep=P().mail;P().mail=Object.assign({},keep||{},{name:c.name||mailCfg().name});pv.innerHTML=remindHtml(s,b,($('#rmnote')||{}).value||'');P().mail=keep}
+function rmCollect(){if($('#rmadd')&&$('#rmadd').value.trim())rmAdd();const s=sp(RM.sid),items=remindItems(s),b=remindBody(s,items),name=$('#rmname').value.trim()||mailCfg().name,reply=$('#rmreply').value.trim(),note=$('#rmnote').value.trim(),subject=$('#rmsub').value.trim()||b.subject;
+ if(reply&&!MAIL_RX.test(reply)){toast('답장 받을 주소 형식을 확인해 주세요','error');return null}
+ if(!RM.to.length){toast('받는 사람을 추가해 주세요','error');return null}
+ const pj=P(),c0=mailCfg();if(name!==c0.name||reply!==c0.reply)pj.mail={name,reply};
+ if($('#rmkeep')&&$('#rmkeep').checked){const a=DB.accounts.find(x=>x.sid===s.id);if(a){const cur=String(a.email||'').split(/[,;\s]+/).filter(Boolean);const nx=[...new Set(cur.concat(RM.to))].join(', ');if(nx!==a.email)a.email=nx}}
+ const keep=pj.mail;pj.mail={name,reply};const html=remindHtml(s,b,note);pj.mail=keep;
+ const text=note?b.text.replace(/(준비를 위해[^\n]*\n)/,`$1\n${note}\n`):b.text;
+ return {s,items,to:RM.to.slice(),subject,html,text:text.replace(/\n\n[^\n]*드림$/,`\n\n${name} 드림`).replace(/^([^\n]*\n)[^\n]*입니다\./,`$1${name}입니다.`),name,reply}}
+function rmDone(o,how){const c=ensureCfg();c.remindAt=c.remindAt||{};c.remindAt[o.s.id]=Date.now();addLog('리마인드 발송',`${o.s.name} · 미제출 ${o.items.length}건 · ${o.to.join(', ')} · ${how}`);Store.save('리마인드')}
+Object.assign(A,{
+ rmDel:d=>{RM.to.splice(+d.i,1);rmPaint()},
+ rmOutlook:()=>{const o=rmCollect();if(!o)return;outlookOpen(o.to,o.subject,o.text);rmDone(o,'아웃룩 작성 창');closeModal();toast('아웃룩 새 메일 창을 열었습니다 — 내용 확인 후 [보내기]를 눌러 주세요','success',6000)},
+ rmSend:async()=>{const o=rmCollect();if(!o)return;const bt=$('#rmsend');if(bt){bt.disabled=true;bt.textContent='발송 중…'}
+  try{const r=await Drive.rpc({a:'mail',to:o.to,subject:o.subject,html:o.html,text:o.text,name:o.name,replyTo:o.reply});rmDone(o,'메일 발송');closeModal();toast(`${o.s.name}에 리마인드 메일을 보냈습니다 (${o.to.length}명 · 오늘 남은 발송 ${r.left}건)`,'success',6000)}
+  catch(e){const m=String(e&&e.message||e);console.error(e);MAIL.st=/action|send_mail|권한|permission|Authorization/i.test(m)?false:MAIL.st;
+   if(bt){bt.disabled=false;bt.innerHTML=ico('mail',13)+'바로 발송'}
+   const why=m==='quota'?'오늘 발송 한도를 넘었습니다':m==='role'?'마플 관리자만 발송할 수 있습니다':m==='to'?'받는 사람 주소가 올바르지 않습니다':/action/.test(m)?'Apps Script가 아직 새 버전이 아닙니다':'발송에 실패했습니다 ('+m+')';
+   confirmBox(why+'. 아웃룩 새 메일 창으로 대신 열까요?',()=>{outlookOpen(o.to,o.subject,o.text);rmDone(o,'아웃룩 작성 창 (자동 전환)');closeModal()},'아웃룩으로 열기')}},
+ /* ---- 미제출 전체 리마인드 ---- */
+ remindAll:async()=>{if(!isAdmin())return;const list=sponsors().map(s=>({s,items:remindItems(s),to:spMails(s)})).filter(x=>x.items.length);if(!list.length)return toast('미제출 스폰서가 없습니다');
+  modal('미제출 전체 리마인드',`<div class="rm"><div class="rm-st" id="rmst"><i></i>발송 방법 확인 중…</div>
+   <div class="rm-all">${list.map((x,k)=>`<label class="rm-row"><input type="checkbox" data-k="${k}" ${x.to.length?'checked':'disabled'}><b>${esc(x.s.name)}</b><span>미제출 ${x.items.length}건</span><small>${x.to.length?esc(x.to.join(', ')):'<em>받는 사람 없음 — 개별 리마인드에서 이메일을 추가해 주세요</em>'}</small>${sentToday(x.s.id)?'<i>오늘 발송함</i>':''}</label>`).join('')}</div>
+   <div class="sub" style="margin-top:8px">스폰서마다 자기 미제출 목록만 담긴 메일이 따로 발송됩니다. 보내는 사람: ${esc(mailCfg().name)} · 답장: ${esc(mailCfg().reply)}</div></div>
+   ${mfoot(`<button class="btn" data-act="close">취소</button><button class="btn btn-primary" data-act="rmAllGo" id="rmsend" disabled>${ico('mail',13)}선택한 스폰서에 발송</button>`)}`,true);A._rmAll=list;
+  const ok=await mailReady(),st=$('#rmst');if(!st)return;st.className='rm-st '+(ok?'ok':'off');
+  st.innerHTML=ok?'<i></i>marple_plan@marple.co.kr 계정으로 한 번에 발송합니다':'<i></i>메일 발송이 아직 연결되지 않았습니다. 한꺼번에 보내기는 메일 발송 연결 후 가능하며, 지금은 스폰서별 [리마인드]로 아웃룩 창을 열어 보내 주세요.';
+  const bt=$('#rmsend');if(bt)bt.disabled=!ok},
+ rmAllGo:async()=>{const ks=[...document.querySelectorAll('.rm-all input:checked')].map(i=>+i.dataset.k),list=(A._rmAll||[]).filter((_,k)=>ks.includes(k));if(!list.length)return toast('보낼 스폰서를 선택해 주세요');
+  const bt=$('#rmsend');if(bt)bt.disabled=true;let ok=0,fail=[];const c=mailCfg();
+  for(const x of list){if(bt)bt.textContent=`발송 중… ${ok+fail.length+1}/${list.length}`;const b=remindBody(x.s,x.items);
+   try{await Drive.rpc({a:'mail',to:x.to,subject:b.subject,html:remindHtml(x.s,b,''),text:b.text,name:c.name,replyTo:c.reply});rmDone({s:x.s,items:x.items,to:x.to},'메일 발송 (전체)');ok++}catch(e){fail.push(x.s.name+'('+String(e&&e.message||e)+')')}}
+  closeModal();toast(`${ok}곳에 발송했습니다${fail.length?' · 실패: '+fail.join(', '):''}`,fail.length?'error':'success',8000);refresh()}});
+
+/* 제출 현황 화면 위쪽에 [미제출 전체 리마인드] */
+{const vS=vStatus;vStatus=function(v){vS(v);if(!isAdmin())return;const fb=v.querySelector('.filter-bar');if(fb&&!fb.querySelector('[data-act=remindAll]')){const b=document.createElement('button');b.className='btn btn-sm btn-primary';b.dataset.act='remindAll';b.innerHTML=ico('mail',13)+'미제출 전체 리마인드';b.style.marginLeft='10px';fb.appendChild(b)}}}
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';

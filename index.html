@@ -751,6 +751,11 @@ html.mob body.wl .mkv{box-shadow:0 0 0 1px rgba(0,0,0,.04)}
 .mpv{width:32px;height:32px;border-radius:10px;border:0;background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center}.mpv.on{background:var(--m-ac);color:var(--m-act)}
 html.mob body.wl-light .mpv{background:#f1f5f9;color:#0f172a}html.mob body.wl-light .mpv.on{background:var(--m-ac);color:var(--m-act)}
 .mpvbar{position:sticky;top:52px;z-index:19;background:#fef3c7;color:#92400e;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between;padding:7px 14px}.mpvbar button{border:0;background:#92400e;color:#fff;border-radius:8px;padding:4px 10px;font-size:11.5px;font-weight:700;font-family:inherit}
+/* 표 안 긴 글: 내용만큼 늘어나 줄바꿈 (잘리지 않게) */
+textarea.gi,textarea.gi:not(:focus){height:auto;max-height:none;overflow:hidden;field-sizing:content;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere}
+textarea.gi:focus{max-height:none;min-height:34px;field-sizing:content}
+.gtbl td .wrap{white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere}
+.gtbl td a.link[title="해당 화면으로"]{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -1351,11 +1356,13 @@ function gcell(rt,c,r,ed){
  if(c.ty==='file')return `<td>${fileCell(r,c,e)}</td>`;
  if(!e){let t=esc(val);if(c.ty==='link')t=val?`<a class="link" href="${esc(val)}" target="_blank" rel="noopener">열기 ↗</a>`:'<span class="mute">-</span>';else if(c.ty==='num')t=val===''?'':won(val);else if(c.bd)t=val===''?'':`<span class="pill t-${toneOf(val)}">${t}</span>`;else if(c.ty==='date')t=val?fmtMD(val):'<span class="mute">—</span>';else if(val==='')t='<span class="mute">—</span>';
   return `<td class="${c.cls||''}">${c.ty==='long'?`<div class="wrap" style="min-width:${c.w||120}px">${t}</div>`:t}</td>`}
- const a=`class="gi" data-chg="cell" data-id="${r.id}" data-k="${c.k}" style="min-width:${c.w||100}px"`;
+ let a=`class="gi" data-chg="cell" data-id="${r.id}" data-k="${c.k}" style="min-width:${c.w||100}px"`;
  if(c.ty==='sel'){const o=c.opts.includes(val)?c.opts:c.opts.concat(val===''?[]:[val]);return `<td><select ${c.bd?a.replace('class="gi"','class="gi pill t-'+toneOf(val)+'"'):a}>${o.map(x=>`<option ${x===val?'selected':''}>${esc(x)}</option>`).join('')}</select></td>`}
  if(c.ty==='long')return `<td><textarea ${a} rows="1">${esc(val)}</textarea></td>`;
  if(c.ty==='date'||c.ty==='time')return `<td><label class="dt${val?'':' em'}" style="min-width:${c.w||100}px"><span>${val?(c.ty==='date'?fmtMD(val):esc(val)):(c.ty==='date'?'날짜':'시간')}</span>${ico(c.ty==='date'?'cal':'clock',12)}<input type="${c.ty}" ${a.replace('class="gi"','class="gi dti"')} value="${esc(val)}"></label></td>`;
  if(c.ty==='num')return `<td><input type="text" inputmode="decimal" ${a.replace('class="gi"','class="gi nf"')} value="${val===''?'':won(val)}"></td>`;
+ const tw=[...String(val)].reduce((s,ch)=>s+(/[ㄱ-힣]/.test(ch)?13.2:7.6),0)+22;if(c.ty==='text'&&c.list&&tw>(c.w||100))a=a.replace(/min-width:\d+px/,'min-width:'+Math.min(360,Math.ceil(tw))+'px');
+ if(c.ty==='text'&&!c.list&&tw>(c.w||100))return `<td><textarea ${a.replace('class="gi"','class="gi g1"')} rows="1">${esc(val)}</textarea></td>`;
  const ty=c.ty==='date'?'date':c.ty==='time'?'time':'text';
  return `<td><input type="${ty}" ${a} value="${esc(val)}" ${c.list?`list="${c.list}"`:''} ${c.ph?`placeholder="${esc(c.ph)}"`:''}>${c.ty==='link'&&val?`<a class="link" href="${esc(val)}" target="_blank" rel="noopener" style="font-size:11.5px">열기 ↗</a>`:''}</td>`}
 function fileCell(r,c,e){const f=r[c.k];
@@ -1615,9 +1622,10 @@ function synProg(k){const s=agSess();switch(k){
  case 'cln':{const a=R('cln');return [a.filter(x=>x.st==='확정').length,a.length,'개사 확정'];}
  case 'spc':return [R('spc').length,0,'명 등록'];case 'clc':return [R('clc').length,0,'명 등록'];}return [0,0,'']}
 const synState=k=>{const [a,b]=synProg(k);return a===0?'미착수':(b&&a>=b)?'완료':'진행중'};
-const SYNC=()=>[{k:'part',l:'파트',w:150,f:r=>`<a class="link" data-act="nav" data-v="${SYN_VIEW[r.key]}"><b>${esc(r.part)}</b></a>`},C('main','주요 내용',250,{ty:'long'}),C('author','작성 주체',110),C('recv','수신 주체',90),C('d1','1차 마감',170),C('dfin','최종 마감',170),
- {k:'prog',l:'작성 현황',w:200,f:r=>{const [a,b,t]=synProg(r.key);return `<b>${a}${b?' / '+b:''}</b> <span class="sub">${t}</span>${b?`<div class="progress-bar"><div class="progress-fill ${a>=b?'green':''}" style="width:${pct(a,b)}%"></div></div>`:''}`}},
- {k:'state',l:'진행상태',w:84,f:r=>{const s=synState(r.key);return `<span class="badge ${s==='완료'?'badge-green':s==='진행중'?'badge-blue':'badge-gray'}">${s}</span>`},cls:'ctr'},C('mz','메가존 담당',90),C('mp','마플 담당',90),C('note','비고',160)];
+const synKey=r=>{if(r.key&&SYN_VIEW[r.key])return r.key;const t=String((r.part||'')+' '+(r.main||''));return /담당자|컨택|연락처/.test(t)?(/고객사|시공/.test(t)?'clc':'spc'):/고객사|자체 시공|배치도/.test(t)?'cln':/스폰서/.test(t)?'spn':/리허설|세팅|슬롯/.test(t)?'reh':/에셋|폴더|파일명/.test(t)?'ast':/requirement|장비|연출|통역|발표자료/i.test(t)?'req':/스피커|약력|프로필/.test(t)?'spk':/아젠다/.test(t)?'ag':''};
+const SYNC=()=>[C('part','파트',130,{ty:'long'}),{k:'go',l:'',w:64,f:r=>{const k=synKey(r);return SYN_VIEW[k]?`<a class="link" data-act="nav" data-v="${SYN_VIEW[k]}" title="해당 화면으로">열기 ↗</a>`:''},cls:'ctr'},C('main','주요 내용',260,{ty:'long'}),C('author','작성 주체',120,{ty:'long'}),C('recv','수신 주체',110,{ty:'long'}),C('d1','1차 마감',180,{ty:'long'}),C('dfin','최종 마감',180,{ty:'long'}),
+ {k:'prog',l:'작성 현황',w:200,f:r=>{const [a,b,t]=synProg(synKey(r));return `<b>${a}${b?' / '+b:''}</b> <span class="sub">${t}</span>${b?`<div class="progress-bar"><div class="progress-fill ${a>=b?'green':''}" style="width:${pct(a,b)}%"></div></div>`:''}`}},
+ {k:'state',l:'진행상태',w:84,f:r=>{const s=synState(synKey(r));return `<span class="badge ${s==='완료'?'badge-green':s==='진행중'?'badge-blue':'badge-gray'}">${s}</span>`},cls:'ctr'},C('mz','메가존 담당',100,{ty:'long'}),C('mp','마플 담당',100,{ty:'long'}),C('note','비고',200,{ty:'long'})];
 BOARD.sync=()=>{const ks=SYN_KEYS,st=ks.map(synState);return `<div class="stat-grid">${stat('전체 파트',ks.length)}${stat('완료',st.filter(s=>s==='완료').length,'green')}${stat('진행중',st.filter(s=>s==='진행중').length,'blue')}${stat('미착수',st.filter(s=>s==='미착수').length)}</div>`};
 AFTER.syn=()=>{};
 function vSync(v){v.innerHTML=head('Sync 허브','메가존 × 마플 씽크업용 현황판입니다. 각 파트 탭에서 입력하면 작성 현황이 자동으로 집계됩니다. 일정 기준은 [마일스톤 트래커]입니다.',roBadge('sync'))+boardBox()+gridTbl('syn',SYNC(),R('syn'),{idx:true})
@@ -2873,6 +2881,14 @@ Object.assign(A,{
    const ks=[...new Set(x.items.map(b=>b.k))],extra=ks.filter(k=>!BASE_KINDS.includes(k));
    if(ks.some(k=>BASE_KINDS.includes(k))){const dd=await Remote.pull(Remote.scope());Remote.adopt(dd,true)}else if(extra.length)await Remote.more(extra);
    closeModal();toast(`${x.items.length}개를 되살렸습니다`,'success');renderApp()}catch(e){toast('복구하지 못했습니다 ('+e.message+')','error')}}});
+
+/* field-sizing을 모르는 브라우저(사파리·파이어폭스)용: 표 안 글상자를 내용 높이에 맞춤 */
+const TA_FIT=(()=>{try{return !CSS.supports('field-sizing','content')}catch(e){return true}})();
+function taFit(el){if(!el||!TA_FIT)return;el.style.height='auto';el.style.height=Math.max(34,el.scrollHeight+2)+'px'}
+if(TA_FIT){document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('textarea.gi'))taFit(e.target)});
+ new MutationObserver(()=>{document.querySelectorAll('textarea.gi:not([data-fit])').forEach(t=>{t.dataset.fit=1;taFit(t)})}).observe(document.documentElement,{childList:true,subtree:true})}
+/* 한 줄 칸에서 바뀐 글상자: Enter는 줄바꿈 대신 입력 확정 */
+document.addEventListener('keydown',e=>{const t=e.target;if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing&&t&&t.classList&&t.classList.contains('g1')){e.preventDefault();t.blur()}});
 /* =====================================================================
    모바일 버전 (p22) — 주소 끝 /m (예: /icon2027/m) · 휴대폰은 자동으로 /m
    같은 데이터·같은 권한·같은 저장 엔진을 쓰고, 화면만 휴대폰용으로 다시 그림
@@ -2967,26 +2983,28 @@ function mHome(){const role=S.user.role,T=ymd(today()),all=dItems(),B=dBuckets(a
 function mPlan(){if(!isStaff())return mHd('일정','날짜순 · 오늘 '+fmtD(ymd(today())))+`<div class="mpad">${mSched(true)}</div>`;
  S.mp=S.mp||'trk';const seg=`<div class="mseg dk">${[['trk','마일스톤'],['road','로드맵'],['sched','일정']].map(x=>`<button class="${S.mp===x[0]?'on':''}" data-act="mSub" data-s="${x[0]}">${x[1]}</button>`).join('')}</div>`;
  return S.mp==='road'?mRoad(seg):S.mp==='sched'?mHd('일정','날짜순 · 오늘 '+fmtD(ymd(today())))+seg+`<div class="mpad">${mSched()}</div>`+(isAdmin()?mFab('mSchNew'):''):mTrkList(seg)}
+/* 분야 이름 정리: '🎯'처럼 이모지만 있는 분야는 같은 이모지로 시작하는 분야('🎯 기획·계약')에 합쳐 보여 줌 */
+const mGL=g=>{g=String(g||'').trim();const t=g.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim();if(t)return g;const em=g.replace(/\s/g,'');if(!em)return '기타';const hit=[...new Set(R('trk').map(r=>String(r.grp||'').trim()))].find(x=>x!==g&&x.replace(/\s/g,'').startsWith(em)&&x.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim());return hit||g};
 function mTrkList(seg){const all=R('trk'),f=S.mf_trk||'',T=ymd(today()),W=addD(T,7),c=s=>all.filter(r=>r.st===s).length;
  const late=r=>r.st!=='완료'&&r.b&&r.b<T;
  const rows=all.filter(r=>!f||(f==='wk'?(r.st!=='완료'&&(r.b||r.a)>=T&&(r.a||r.b)<=W):f==='late'?late(r)||r.st==='지연':f.startsWith('w:')?whoK(r.who)===f.slice(2):r.st===f));
- const done=all.filter(r=>r.st==='완료').length,grps=[...new Set(rows.map(r=>r.grp))];
+ const done=all.filter(r=>r.st==='완료').length,grps=[...new Set(rows.map(r=>mGL(r.grp)))];
  return mHd('마일스톤 트래커',`${all.length}개 · 완료 ${pct(done,all.length)}% · 지연 ${all.filter(late).length}`)+seg
   +mChips('trk',[['','전체'],['진행중','진행중 '+c('진행중')],['late','지연 '+all.filter(r=>late(r)||r.st==='지연').length],['wk','이번 주'],['w:mp','운영사무국'],['w:mkt','주관사'],['w:co','공통']],f)
-  +`<div class="mpad">${grps.length?grps.map(g=>{const rs=rows.filter(r=>r.grp===g),dn=all.filter(r=>r.grp===g&&r.st==='완료').length,tt=all.filter(r=>r.grp===g).length;
+  +`<div class="mpad">${grps.length?grps.map(g=>{const rs=rows.filter(r=>mGL(r.grp)===g),dn=all.filter(r=>mGL(r.grp)===g&&r.st==='완료').length,tt=all.filter(r=>mGL(r.grp)===g).length;
    return `<div class="mgrp"><span>${esc(g||'기타')}</span><span>${dn}/${tt} 완료</span></div>`+rs.map(r=>`<div class="mmc" data-act="mTrk" data-id="${r.id}"><div class="h"><b>${esc(r.title||'(제목 없음)')}</b>${mDd(r.b||r.a,r.st==='완료')}</div><div class="r">${mPill(r.st)}${mTag(whoK(r.who))}<span>${r.a?fmtD(r.a):''}${r.b&&r.b!==r.a?' – '+fmtD(r.b):''}</span>${r.key?`<span>· ${esc(r.key)}</span>`:''}</div></div>`).join('')}).join(''):mEmpty('조건에 맞는 마일스톤이 없습니다')}</div>`
   +(canEdit('trk',null,'__row')?mFab('mNew','data-rt="trk"'):'')}
 function mTrkOpen(id){const r=rowById(id);if(!r)return;const cs=canEdit('trk',r,'st'),any=TRKC().some(c=>!c.f&&canEdit('trk',r,c.k));
- modal(esc(r.title||'마일스톤'),`<div class="msh"><div class="msh-k">${esc(r.grp||'')}</div>
+ modal(esc(r.title||'마일스톤'),`<div class="msh"><div class="msh-k">${esc(mGL(r.grp))}</div>
   <div class="mstchips">${OPT.trk.map(s=>`<button class="mpill t-${toneOf(s)} ${r.st===s?'sel':''}" ${cs?`data-act="mSet" data-id="${r.id}" data-k="st" data-v="${s}"`:'disabled'}>${s}</button>`).join('')}</div>
   <dl class="mdl"><dt>기간</dt><dd>${r.a?fmtD(r.a):'—'}${r.b&&r.b!==r.a?' – '+fmtD(r.b):''} ${mDd(r.b||r.a,r.st==='완료')}</dd><dt>구분</dt><dd>${mTag(whoK(r.who))}</dd><dt>담당 키맨</dt><dd>${esc(r.key||'—')}</dd><dt>비고</dt><dd>${esc(r.note||'—')}</dd></dl>
   <div class="mbts wide">${any?`<button class="mbtn" data-act="mEdit" data-id="${r.id}">수정</button>`:''}${cs&&r.st!=='완료'?`<button class="mbtn dk" data-act="mSet" data-id="${r.id}" data-k="st" data-v="완료">✓ 완료로 표시</button>`:''}${!any&&!cs?'<span class="msubt">보기 전용입니다</span>':''}</div></div>`);mSheet()}
-function mRoad(seg){const grps=[...new Set(R('trk').map(r=>r.grp))],g=S.mf_road||'',rows=R('trk').filter(r=>r.a&&r.b&&(!g||r.grp===g));
+function mRoad(seg){const grps=[...new Set(R('trk').map(r=>mGL(r.grp)))],g=S.mf_road||'',rows=R('trk').filter(r=>r.a&&r.b&&(!g||mGL(r.grp)===g));
  const head=mHd('준비 로드맵',`행사일 ${fmtD(P().date)} · 오늘 ${fmtD(ymd(today()))}`)+seg+mChips('road',[['','전체']].concat(grps.map(x=>[x,esc(x)])),g);
  if(!rows.length)return head+`<div class="mpad">${mEmpty('기간이 입력된 마일스톤이 없습니다')}</div>`;
  const D=s=>new Date(s+'T00:00:00'),s0=new Date(Math.min(...rows.map(r=>+D(r.a))));s0.setDate(1);const e0=new Date(Math.max(...rows.map(r=>+D(r.b)),+D(P().date||ymd(today()))));const e1=new Date(e0.getFullYear(),e0.getMonth()+1,1);
  const ms=[];for(let d=new Date(s0);d<e1;d.setMonth(d.getMonth()+1))ms.push(new Date(d));const tot=+e1-+s0,x=t=>(t-+s0)/tot*100,tp=x(+today()),W=Math.max(100,ms.length*24);
- let last=null;const body=rows.map(r=>{let gh='';if(!g&&r.grp!==last){gh=`<div class="mgr-g">${esc(r.grp||'')}</div>`;last=r.grp}const l=x(+D(r.a)),w=Math.max(1.4,x(+D(r.b)+864e5)-l);
+ let last=null;const body=rows.map(r=>{let gh='';const gl=mGL(r.grp);if(!g&&gl!==last){gh=`<div class="mgr-g">${esc(gl)}</div>`;last=gl}const l=x(+D(r.a)),w=Math.max(1.4,x(+D(r.b)+864e5)-l);
   return gh+`<div class="mgr" data-act="mTrk" data-id="${r.id}"><b>${esc(r.title)}</b><div class="mgb"><i class="${r.st==='완료'?'done':''} ${r.st==='지연'?'late':''}" style="left:${l}%;width:${w}%;background:${WHO_COL[r.who]||'#8a93a3'}"></i></div></div>`}).join('');
  return head+`<div class="mpad"><div class="mgantt"><div class="mgw" style="width:${W}%"><div class="mgm">${ms.map(m=>`<span>${m.getMonth()+1}월</span>`).join('')}</div><div class="mgbody" style="background-image:repeating-linear-gradient(to right,#eef0f4 0,#eef0f4 1px,transparent 1px,transparent ${100/ms.length}%)">${tp>=0&&tp<=100?`<div class="mtoday" style="left:${tp}%"></div>`:''}${body}</div></div></div>
   <div class="mleg"><span><i style="background:#7c8dd8"></i>주관사</span><span><i style="background:#009ddf"></i>운영사무국</span><span><i style="background:#34b37e"></i>공통</span><span><i style="background:#e5484d;width:2px"></i>오늘</span></div><div class="msubt">막대를 누르면 그 마일스톤 상세 창이 열립니다${ms.length>4?' · 옆으로 밀어서 이동':''}</div></div>`}

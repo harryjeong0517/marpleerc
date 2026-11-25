@@ -748,6 +748,9 @@ html.mob body.wl-light .mav,html.mob body.wl-light .mback,html.mob body.wl-light
 html.mob body.wl-light .mseg button{background:#f1f5f9;color:#475569}html.mob body.wl-light .mseg button.on{background:var(--m-ac);color:var(--m-act)}
 html.mob body.wl-light .mname small{color:#94a3b8}
 html.mob body.wl .mkv{box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+.mpv{width:32px;height:32px;border-radius:10px;border:0;background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center}.mpv.on{background:var(--m-ac);color:var(--m-act)}
+html.mob body.wl-light .mpv{background:#f1f5f9;color:#0f172a}html.mob body.wl-light .mpv.on{background:var(--m-ac);color:var(--m-act)}
+.mpvbar{position:sticky;top:52px;z-index:19;background:#fef3c7;color:#92400e;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between;padding:7px 14px}.mpvbar button{border:0;background:#92400e;color:#fff;border-radius:8px;padding:4px 10px;font-size:11.5px;font-weight:700;font-family:inherit}
 </style>
 </head>
 <body>
@@ -2897,11 +2900,10 @@ const mChips=(key,opts,cur)=>`<div class="mchips">${opts.map(([v,l])=>`<button c
 const mHd=(title,sub,back)=>`<div class="mhd">${back?`<button class="mback" data-act="mBack">‹</button>`:''}<div><h2>${esc(title)}</h2>${sub?`<p>${sub}</p>`:''}</div></div>`;
 
 function mTabs(){const t=[['home','grid','홈'],['plan','cal','일정']];if(canView('agenda'))t.push(['ag','mic','아젠다']);t.push(['doc','folder','자료'],['more','menu','더보기']);return t}
-function mBrand(){const pj=P();if(!S.pid)return `<img class="mlogo mlogo-m" src="${LOGO}" alt="marple">`;const th=thOf(pj);if(th.logo)return `<img class="mlogo" src="${th.logo}" alt="">`;return `<b class="mname">${esc(pj.name)}<small>${esc((th&&th.sub)||'RESOURCE CENTER')}</small></b>`}
+function mBrand(){const pj=P();if(!S.pid||!wlOn())return `<img class="mlogo mlogo-m" src="${LOGO}" alt="marple">`;const th=thOf(pj);if(th.logo)return `<img class="mlogo" src="${th.logo}" alt="">`;return `<b class="mname">${esc(pj.name)}<small>${esc((th&&th.sub)||'RESOURCE CENTER')}</small></b>`}
 
 /* ---------- 로그인 ---------- */
-const mLast=()=>{try{const k=localStorage.getItem('erc_m_last');return k?DB.projects.find(p=>p.id===k)||null:null}catch(e){return null}};
-function mLogin(err){const bp=brandProj()||mLast(),t=bp?thOf(bp):null;if(bp)wlApply(bp);else wlClear();const kv=bp?(t.lkv||kvEff(bp)||''):'';
+function mLogin(err){const bp=brandProj(),t=bp?thOf(bp):null;if(bp)wlApply(bp);else wlClear();const kv=bp?(t.lkv||kvEff(bp)||''):'';
  $('#root').innerHTML=`<div class="mlogin ${kv?'has-kv':''}" ${kv?`style="background-image:url('${kv}')"`:''}><form class="mlf" id="lf">
   ${bp?(t.logo?`<img class="mlg-logo" src="${t.logo}" alt="">`:`<small>${esc(t.sub||'RESOURCE CENTER')}</small><h1>${esc(bp.name)}</h1>`):`<img class="mlg-logo" src="${LOGO}" alt="marple"><small>EVENT RESOURCE CENTER</small>`}
   ${bp?`<p>${fmtD(bp.date)} · ${esc(bp.venue||'')}</p>`:'<p>발급받은 계정으로 로그인해 주세요</p>'}
@@ -2914,13 +2916,13 @@ function mLogin(err){const bp=brandProj()||mLast(),t=bp?thOf(bp):null;if(bp)wlAp
 /* ---------- 앱 껍데기 ---------- */
 function mApp(){if(!S.user)return mLogin();fixPid();effUser();
  if(S.user.role==='admin'&&typeof presetFill==='function'&&(presetFill()|slugFill()))Store.save('프로젝트 링크');
- if(S.pid){wlApply(P());try{localStorage.setItem('erc_m_last',S.pid)}catch(e){}}else wlClear();
+ if(S.pid&&wlOn())wlApply(P());else wlClear();
  if(!S.pid&&isAdmin()&&myProjects().length)S.pid=myProjects()[0].id;
  S.mt=S.mt||'home';if(!mTabs().some(t=>t[0]===S.mt))S.mt='home';
  const sy=window.scrollY,keep=S._mk===(S.mt+'|'+(S.ms||'')+'|'+(S.mp||''));
  const ps=myProjects(),body=S.pid?mScreen():mEmpty('참여 중인 프로젝트가 없습니다');
- $('#root').innerHTML=`<div class="mapp r-${S.user.role}"><header class="mtop">${mBrand()}<div class="msp"></div>${ps.length>1?`<select class="mproj" data-chg="proj">${ps.map(p=>`<option value="${p.id}" ${p.id===S.pid?'selected':''}>${esc(p.name)}</option>`).join('')}</select>`:''}<span class="sync" id="sync"></span><button class="mav" data-act="mTab" data-t="more">${esc((S.user.org||'?')[0])}</button></header>
-  <main class="mmain" id="view">${body}</main>
+ $('#root').innerHTML=`<div class="mapp r-${S.user.role}"><header class="mtop">${mBrand()}<div class="msp"></div>${ps.length>1?`<select class="mproj" data-chg="proj">${ps.map(p=>`<option value="${p.id}" ${p.id===S.pid?'selected':''}>${esc(p.name)}</option>`).join('')}</select>`:''}<span class="sync" id="sync"></span>${isAdmin()&&S.pid?`<button class="mpv ${S.wlPrev?'on':''}" data-act="wlPrev" title="주관사·스폰서 화면 미리보기">${ico('eye',16)}</button>`:''}<button class="mav" data-act="mTab" data-t="more">${esc((S.user.org||'?')[0])}</button></header>
+  ${isAdmin()&&S.wlPrev?`<div class="mpvbar" data-nodeb>주관사·스폰서에게 보이는 화면 미리보기 중<button data-act="wlPrev">끄기</button></div>`:''}<main class="mmain" id="view">${body}</main>
   <nav class="mtab">${mTabs().map(t=>`<button class="${S.mt===t[0]?'on':''}" data-act="mTab" data-t="${t[0]}"><i>${ico(t[1],19)}</i>${t[2]}${t[0]==='doc'&&mBadge()?`<b>${mBadge()}</b>`:''}</button>`).join('')}</nav></div>`;
  Store.ui();S._mk=S.mt+'|'+(S.ms||'')+'|'+(S.mp||'');window.scrollTo(0,keep?sy:0);
  const sh=document.querySelector('#mroot.open .msub');if(sh&&S.mSubRid)mSub(S.mSubRid,true);
@@ -2931,7 +2933,7 @@ function mScreen(){if(S.ms)return mMore(S.ms);
 
 /* ---------- 홈 ---------- */
 function mKv(h){const pj=P(),th=thOf(pj),kv=kvEff(pj)||th.lkv||'',n=dd(pj.date);
- return `<div class="mkv" style="height:${h}px;${kv?`background-image:url('${kv}')`:''}"><div class="mkv-in">${th.logo?`<img src="${th.logo}" alt="">`:`<b>${esc(pj.name)}</b>`}<i>${ddl(n)}</i><p>${fmtD(pj.date)} · ${esc((pj.venue||'').split(' ').slice(0,2).join(' '))}</p></div></div>`}
+ return `<div class="mkv" style="height:${h}px;${kv?`background-image:url('${kv}')`:''}"><div class="mkv-in">${th.logo&&wlOn()?`<img src="${th.logo}" alt="">`:`<b>${esc(pj.name)}</b>`}<i>${ddl(n)}</i><p>${fmtD(pj.date)} · ${esc((pj.venue||'').split(' ').slice(0,2).join(' '))}</p></div></div>`}
 function mItem(i,T){const tr=i.trk&&rowById(i.trk),chk=tr&&canEdit('trk');
  const open=i.cfm?`data-act="cfmOpen" data-id="${i.cfm}"`:i.trk?`data-act="mTrk" data-id="${i.trk}"`:i.rid?`data-act="mSubOpen" data-rid="${i.rid}"`:i.nav?`data-act="nav" data-v="${i.nav}"`:'';
  return `<div class="mit ${i.done?'done':''}">${chk?`<button class="mck ${i.done?'on':''}" data-act="dDone" data-id="${i.trk}">${i.done?'✓':''}</button>`:''}<div class="mxx" ${open}><b>${esc(i.title)}</b><div class="mm">${isStaff()?mTag(i.who):''}<span class="msrc">${i.src}</span>${i.meta?`<span>${esc(i.meta)}</span>`:''}</div></div>${mDd(i.due,i.done)}</div>`}
@@ -3044,10 +3046,10 @@ const M_MENU=()=>{const st=isStaff(),it=[];const add=(k,ic,l,ok)=>{if(ok)it.push
  add('status','check','스폰서 현황',st);add('cfm','check','컨펌 요청',st);add('spk','mic','스피커',st&&canView('spk'));add('req','list','세션 Requirement',st&&canView('req'));add('rha','clock','리허설 일정',st&&canView('reh'));add('rhb','clock','스피커 슬롯',st&&canView('reh'));
  add('spn','star','스폰서',st&&canView('spn'));add('spc','users','스폰서 담당자',st&&canView('spc'));add('cln','layers','고객사',st&&canView('cln'));add('clc','users','고객사 담당자',st&&canView('clc'));add('ast','folder','에셋 폴더',st&&canView('ast'));
  return it};
-function mMenu(){const u=S.user;return mHd('더보기','')+`<div class="mpad"><section class="mcd mme"><div class="mav big">${esc((u.org||'?')[0])}</div><div><b>${esc(u.org||'')}</b><small>${esc(u.name||'')} · ${wlOn()&&u.role==='admin'?'운영사무국':ROLE[u.role]}</small></div></section>
+function mMenu(){const u=S.user;return mHd('더보기','')+`<div class="mpad"><section class="mcd mme"><div class="mav big">${esc((u.org||'?')[0])}</div><div><b>${esc(u.org||'')}</b><small>${esc(u.name||'')} · ${ROLE[u.role]}</small></div></section>
  ${M_MENU().length?`<div class="mgrid">${M_MENU().map(m=>`<button data-act="mGo" data-s="${m[0]}"><i>${ico(m[1],20)}</i>${m[2]}</button>`).join('')}</div>`:''}
  ${mNotice()?`<div style="margin:12px 0">${mNotice()}</div>`:''}
- <section class="mcd mlinks">${isAdmin()?`<button data-act="noticeEd">${ico('edit',16)}공지 쓰기 · 수정</button>`:''}<button data-act="pwMe">${ico('lock',16)}비밀번호 변경</button><button data-act="mPC">${ico('grid',16)}PC 버전으로 보기</button><button data-act="logout" class="red">${ico('x',16)}로그아웃</button></section>
+ <section class="mcd mlinks">${isAdmin()?`<button data-act="noticeEd">${ico('edit',16)}공지 쓰기 · 수정</button>`:''}${isAdmin()?`<button data-act="wlPrev">${ico('eye',16)}${S.wlPrev?'주관사·스폰서 화면 미리보기 끄기':'주관사·스폰서 화면 미리보기'}</button>`:''}<button data-act="pwMe">${ico('lock',16)}비밀번호 변경</button><button data-act="mPC">${ico('grid',16)}PC 버전으로 보기</button><button data-act="logout" class="red">${ico('x',16)}로그아웃</button></section>
  ${isAdmin()?'<div class="msubt" style="text-align:center;margin-top:10px">계정·프로젝트 관리와 파일 가져오기는 PC 버전에서 할 수 있습니다</div>':''}</div>`}
 function mMore(k){if(k==='status')return mHd('스폰서 현황','스폰서별 진행률 · 칸을 누르면 검수',1)+mStatus();
  if(k==='cost')return mCost();if(k==='cfm')return mCfm();if(k==='ovw')return mOvw();return mTbl(k)}

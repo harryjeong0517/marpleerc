@@ -591,6 +591,7 @@ body.fv-on{overflow:hidden}
 .fv-txt{margin:24px auto;max-width:1000px;background:#fff;color:#111;padding:28px;border-radius:6px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-all}
 .fv-card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px}.fv-card b{color:#fff;font-size:15px}.fv-card p{color:#9aa1ad;font-size:13px;max-width:420px;line-height:1.6}.fv-ic{transform:scale(1.6);margin-bottom:10px}.fv-ph{max-width:60%;max-height:50%;border-radius:8px;opacity:.7}
 @media (max-width:760px){.fv-top{grid-template-columns:1fr auto;height:auto;padding:8px}.fv-c{grid-column:1/-1;justify-content:center;order:3}.fv-nm span{display:none}.fv-th,.fv-info{display:none}.fv-pages{padding:10px 8px 30px}.fv-pn{display:none}.fv-dl span{display:none}}
+.fv-page canvas{width:100%!important;height:100%!important;image-rendering:auto}.fv-img img{image-rendering:auto}
 </style>
 </head>
 <body>
@@ -2455,7 +2456,7 @@ async function pdfjsReady(){if(!window.pdfjsLib)await loadScript(PDFJS+'pdf.min.
 const FV_IMG=['png','jpg','jpeg','gif','webp','svg','bmp'],FV_VID=['mp4','webm','mov','m4v'],FV_AUD=['mp3','wav','m4a','aac','ogg'],FV_TXT=['txt','csv','md','json','log'];
 let FV=null;
 function fvSiblings(f){const lib=DB.files.filter(x=>x.pid===f.pid&&(x.folder||'')===(f.folder||'')&&!x.del);if(lib.some(x=>x.id===f.id))return lib.sort((a,b)=>b.date-a.date).filter(x=>findFile(x.id));return [f]}
-async function fvBlob(f){const ca=cachedBlob(f);if(ca)return ca;if(f.dataUrl&&/^data:/.test(f.dataUrl)){return await (await fetch(f.dataUrl)).blob()}if(Drive.on()&&f.driveId)return await Drive.blob(f);return null}
+async function fvBlob(f){const ca=cachedBlob(f);if(ca)return ca;if(f.file instanceof Blob)return f.file;if(Drive.on()&&f.driveId){try{return await Drive.blob(f)}catch(e){}}if(f.dataUrl&&/^data:/.test(f.dataUrl))return await (await fetch(f.dataUrl)).blob();return null}
 preview=function(id){const r=findFile(id);if(!r)return toast('열람 권한이 없습니다','error');const f=r.f;if(f.up!=null&&!cachedBlob(f))return toast('전송이 끝난 뒤 열 수 있습니다');
  addLog('열람',f.name);Store.save('열람');fvOpen(f)};
 function fvOpen(f){fvClose(true);const sib=fvSiblings(f),i=sib.findIndex(x=>x.id===f.id);
@@ -2497,9 +2498,9 @@ function fvLayout(keep){if(!FV||!FV.doc)return;const m=$('#fvm'),cur=fvCur(),s=f
  m.querySelectorAll('.fv-page').forEach(el=>{const r=el.getBoundingClientRect(),mr=m.getBoundingClientRect();if(r.bottom>mr.top-600&&r.top<mr.bottom+600)fvRender(+el.dataset.p)});
  if(keep!==false&&cur>1)fvGo(cur,true)}
 async function fvRender(p){if(!FV||!FV.doc)return;const el=$(`#fvps .fv-page[data-p="${p}"]`);if(!el)return;const key=FV.scale.toFixed(3)+'/'+FV.rot;if(el.dataset.r===key)return;el.dataset.r=key;
- try{const pg=await FV.doc.getPage(p),dpr=Math.min(2,window.devicePixelRatio||1),vp=pg.getViewport({scale:FV.scale*dpr,rotation:FV.rot}),c=el.querySelector('canvas');
+ try{const pg=await FV.doc.getPage(p),dpr=window.devicePixelRatio||1,q=Math.min(4,Math.max(2,dpr*1.5)),big=FV.pw*FV.ph*FV.scale*FV.scale*q*q>2.4e7,qq=big?Math.max(dpr,Math.sqrt(2.4e7/(FV.pw*FV.ph*FV.scale*FV.scale))):q,vp=pg.getViewport({scale:FV.scale*qq,rotation:FV.rot}),c=el.querySelector('canvas');
   const off=document.createElement('canvas');off.width=Math.floor(vp.width);off.height=Math.floor(vp.height);await pg.render({canvasContext:off.getContext('2d'),viewport:vp}).promise;if(el.dataset.r!==key)return;c.width=off.width;c.height=off.height;c.getContext('2d').drawImage(off,0,0);el.classList.add('ok')}catch(e){el.dataset.r=''}}
-async function fvThumb(p){const el=$(`#fvth .fv-tp[data-p="${p}"]`);if(!el||el.dataset.r)return;el.dataset.r=1;try{const pg=await FV.doc.getPage(p),vp=pg.getViewport({scale:1}),s=150/vp.width,v2=pg.getViewport({scale:s*1.5}),c=el.querySelector('canvas');c.width=v2.width;c.height=v2.height;await pg.render({canvasContext:c.getContext('2d'),viewport:v2}).promise}catch(e){el.dataset.r=''}}
+async function fvThumb(p){const el=$(`#fvth .fv-tp[data-p="${p}"]`);if(!el||el.dataset.r)return;el.dataset.r=1;try{const pg=await FV.doc.getPage(p),vp=pg.getViewport({scale:1}),s=150/vp.width,v2=pg.getViewport({scale:s*Math.max(2,window.devicePixelRatio||1)}),c=el.querySelector('canvas');c.width=v2.width;c.height=v2.height;await pg.render({canvasContext:c.getContext('2d'),viewport:v2}).promise}catch(e){el.dataset.r=''}}
 function fvCur(){const m=$('#fvm');if(!m)return 1;const ps=[...m.querySelectorAll('.fv-page')],mid=m.getBoundingClientRect().top+m.clientHeight*.35;let c=1;for(const el of ps){if(el.getBoundingClientRect().top<=mid)c=+el.dataset.p;else break}return c}
 let fvST=0;function fvOnScroll(){cancelAnimationFrame(fvST);fvST=requestAnimationFrame(()=>{const c=fvCur(),pi=$('#fvp');if(pi&&document.activeElement!==pi)pi.value=c;const th=$('#fvth');if(th){th.querySelectorAll('.fv-tp.on').forEach(x=>x.classList.remove('on'));const t=th.querySelector(`.fv-tp[data-p="${c}"]`);if(t){t.classList.add('on');const tr=t.getBoundingClientRect(),hr=th.getBoundingClientRect();if(tr.top<hr.top||tr.bottom>hr.bottom)t.scrollIntoView({block:'nearest'})}}})}
 function fvGo(p,instant){const m=$('#fvm'),el=m&&m.querySelector(`.fv-page[data-p="${p}"]`);if(!el)return;m.scrollTo({top:el.offsetTop-16,behavior:instant?'auto':'smooth'})}

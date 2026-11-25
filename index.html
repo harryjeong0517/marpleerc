@@ -556,6 +556,14 @@ body.wl .dst.hi{background:var(--wl-ac);color:var(--ac-tx)}body.wl .dst.hi .l,bo
 @media (max-width:1100px){.dstats{grid-template-columns:repeat(3,1fr)}.dcols{grid-template-columns:1fr}.drow2{grid-template-columns:1fr}}
 @media (max-width:700px){.dstats{grid-template-columns:1fr 1fr}.dwg{grid-template-columns:repeat(7,minmax(90px,1fr));overflow:auto}.dweek{overflow:auto}}
 .card.dcard,.card.dweek{padding:0}
+.kvh-logo{display:block;max-height:64px;max-width:min(420px,60%);width:auto;object-fit:contain;filter:drop-shadow(0 2px 10px rgba(0,0,0,.35))}
+.wl-llogo{display:block;max-height:110px;max-width:min(520px,80%);object-fit:contain;filter:drop-shadow(0 2px 14px rgba(0,0,0,.35));margin-bottom:6px}
+.wl-lg{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.wl-lgp{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:4px 10px;border-radius:8px;background:repeating-conic-gradient(#e5e7eb 0 25%,#fff 0 50%) 0 0/12px 12px;border:1px solid var(--border)}.wl-lgp img{max-height:32px;max-width:180px}
+.wl-mini .kv img.lg{position:absolute;left:12px;bottom:10px;max-height:22px;max-width:60%}
+@media (max-width:760px){.kvh-logo{max-height:40px}.kvh2 .kvh-in .kvh-logo{filter:none}.wl-llogo{max-height:64px}}
+.kvh-logo{height:56px;max-height:none;width:auto}.wl-llogo{height:96px;max-height:none;width:auto}
+@media (max-width:760px){.kvh-logo{height:36px}.wl-llogo{height:56px}}
+.kvh-logo{margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -1892,7 +1900,7 @@ projHead=function(){const pj=P(),n=dd(pj.date),adm=isAdmin(),kv=typeof kvEff==='
  const meta=`<div class="proj-meta"><span>주관사 <b>${esc(hostName(pj))}</b></span><span>행사일 <b>${fmtD(pj.date)}</b></span><span>세팅일 <b>${fmtD(pj.setup)}</b></span><span>장소 <b>${esc(pj.venue)}</b></span></div>`;
  if(!kv)return `<div class="proj-head${adm?' upload-zone kvz':''}" ${adm?'data-drop="kv"':''}><div><div class="proj-name">${esc(pj.name)}</div>${meta}${adm?`<button class="btn btn-sm kv-add" data-act="kvPick">${ico('upload',13)}키비주얼 올리기</button><span class="kv-hint">이미지를 여기로 끌어다 놓아도 됩니다</span>`:''}</div><div class="dday"><b>${n>=0?'D-'+n:'D+'+(-n)}</b><span>행사일까지</span></div></div>`;
  kvBgLazy(pj);return `<div class="kvh2" ${adm?'data-drop="kv"':''} style="--kvbg:${pj.kvBg||'#0b0b10'}"><img class="kvh2-bg" src="${kv}" alt="" draggable="false"><img class="kvh2-img" src="${kv}" alt="" draggable="false"><div class="kvh-sh"></div>
-  <div class="kvh-in"><div><div class="kvh-tl"><div class="proj-name">${esc(pj.name)}</div><span class="kvh-dd">${n>=0?'D-'+n:'D+'+(-n)}</span></div>${meta}</div></div>
+  <div class="kvh-in"><div><div class="kvh-tl">${(typeof thOf==='function'&&thOf(pj).logo)?`<img class="kvh-logo" src="${thOf(pj).logo}" alt="${esc(pj.name)}">`:`<div class="proj-name">${esc(pj.name)}</div>`}<span class="kvh-dd">${n>=0?'D-'+n:'D+'+(-n)}</span></div>${meta}</div></div>
   ${adm?`<div class="kvh-act"><button class="btn btn-xs" data-act="kvPick">${ico('upload',12)}변경</button><button class="btn btn-xs" data-act="kvDel">삭제</button></div>`:''}</div>`};
 Object.assign(A,{
  kvPick:()=>{const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>{if(i.files[0])kvSet(i.files[0])};i.click()},
@@ -2234,7 +2242,7 @@ renderLogin=function(err){const bp=brandProj();
  if(!SLUG){wlClear();return renderLoginBase(err)}
  const p=bp||{name:'Event Resource Center',th:{sub:'',mode:'light',ac:'#334155'}},t=thOf(p),kv=t.lkv||kvEff(p)||'';
  wlApply(p);if(!bp)document.title='Event Resource Center';
- $('#root').innerHTML=`<div class="wl-login ${kv?'':'nokv'}"><div class="wl-lkv" ${kv?`style="background-image:url('${kv}')"`:''}>${bp&&t.showName?`<div class="cap">${t.band?`<span class="band">${esc(t.band)}</span>`:''}<h1>${esc(p.name)}</h1><p>${bp.date?fmtD(bp.date):''}${bp.venue?' · '+esc(bp.venue):''}</p></div>`:''}</div>
+ $('#root').innerHTML=`<div class="wl-login ${kv?'':'nokv'}"><div class="wl-lkv" ${kv?`style="background-image:url('${kv}')"`:''}>${bp&&(t.showName||t.logo)?`<div class="cap">${t.band&&!t.logo?`<span class="band">${esc(t.band)}</span>`:''}${t.logo?`<img class="wl-llogo" src="${t.logo}" alt="${esc(p.name)}">`:`<h1>${esc(p.name)}</h1>`}<p>${bp.date?fmtD(bp.date):''}${bp.venue?' · '+esc(bp.venue):''}</p></div>`:''}</div>
  <form class="wl-lf" id="lf"><div class="pn">${esc(bp?t.sub||'RESOURCE CENTER':'')}</div><h2>${esc(p.name)}</h2><div class="s">${bp?'주관사·스폰서 전용 자료 센터입니다.<br>발급받은 아이디로 로그인해 주세요.':'접속 주소를 다시 확인해 주세요.<br>운영사무국에서 받은 링크로 들어오시면 됩니다.'}</div>
  <label>아이디</label><input id="lid" autocomplete="username" autofocus><label>비밀번호</label><input id="lpw" type="password" autocomplete="current-password">
  <button class="wl-btn" type="submit">로그인</button><div class="login-err" id="lerr">${esc(err||'')}</div>
@@ -2274,6 +2282,9 @@ A.projSave=function(d){const before=new Set(DB.projects.map(p=>p.id));const r=pr
 function presetFill(){let ch=0;DB.projects.forEach(p=>{const pr=presetOf(p);if(pr&&!p.th){p.th=Object.assign({},pr.th);p.kv=pr.kv;delete p.kvR;delete p.kvBg;delete p.__kvb;if(!p.slug&&!DB.projects.some(x=>x.slug===pr.slug))p.slug=pr.slug;ch=1}});return ch}
 function slugFill(){let ch=0;DB.projects.forEach(p=>{if(!p.slug){let s=slugMake(p.name),k=2;while(DB.projects.some(x=>x!==p&&x.slug===s))s=slugMake(p.name)+(k++);p.slug=s;ch=1}});return ch}
 
+/* 로고 바깥 투명 여백 자동 제거 */
+function logoTrim(c){try{const g=c.getContext('2d'),{width:W,height:H}=c,d=g.getImageData(0,0,W,H).data;let x0=W,y0=H,x1=-1,y1=-1;for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(d[(y*W+x)*4+3]>8){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+ if(x1<0||(x0===0&&y0===0&&x1===W-1&&y1===H-1))return c;const o=document.createElement('canvas');o.width=x1-x0+1;o.height=y1-y0+1;o.getContext('2d').drawImage(c,x0,y0,o.width,o.height,0,0,o.width,o.height);return o}catch(e){return c}}
 let thTmp=null;
 function projThemeModal(){const p=DB.projects.find(x=>x.id===thTmp.id),t=thTmp.t,kv=t.lkv||kvEff(p)||'';
  modal(`사이트 꾸미기 · ${esc(p.name)}`,`<div class="wl-ed"><div class="wl-ed-f">
@@ -2283,9 +2294,10 @@ function projThemeModal(){const p=DB.projects.find(x=>x.id===thTmp.id),t=thTmp.t
  <div class="form-row"><div class="form-group"><label class="form-label">메뉴 톤</label><div class="seg"><button class="${t.mode!=='light'?'on':''}" data-act="thMode" data-m="dark">어둡게</button><button class="${t.mode==='light'?'on':''}" data-act="thMode" data-m="light">밝게</button></div></div>
  <div class="form-group"><label class="form-label">로그인 화면 행사명</label><label class="chk" style="margin-top:8px"><input type="checkbox" ${t.showName?'checked':''} data-chg="thf" data-k="showName"> KV 위에 행사명·날짜 표시 <span class="sub">(KV에 로고가 있으면 끄기)</span></label></div></div>
  <div class="form-group"><label class="form-label">로그인 화면 KV <span class="sub">— 없으면 대시보드 KV를 씁니다</span></label><div style="display:flex;gap:8px;align-items:center"><button class="btn btn-sm" data-act="thKv">${ico('upload',13)}${t.lkv?'변경':'올리기'}</button>${t.lkv?`<button class="btn btn-sm btn-danger-ghost" data-act="thKvDel">로그인 KV 삭제</button>`:''}</div></div>
+ <div class="form-group"><label class="form-label">행사 로고 (선택) <span class="sub">— 넣으면 로그인 화면·대시보드 KV의 행사명 글자 대신 로고가 나옵니다. 투명 배경 PNG·SVG 권장</span></label><div class="wl-lg">${t.logo?`<span class="wl-lgp"><img src="${t.logo}" alt=""></span>`:''}<button class="btn btn-sm" data-act="thLogo">${ico('upload',13)}${t.logo?'로고 변경':'로고 올리기'}</button>${t.logo?`<button class="btn btn-sm btn-danger-ghost" data-act="thLogoDel">로고 삭제</button>`:'<span class="sub">없으면 지금처럼 행사명 글자로 표시</span>'}</div></div>
  <div class="form-group"><label class="form-label">문의처 문구</label><input class="form-input" value="${esc(t.contact)}" data-chg="thf" data-k="contact" placeholder="예) 문의 · 운영사무국 02-000-0000"></div>
  </div><div class="wl-ed-p"><div class="sub" style="margin-bottom:6px">미리보기 (로그인 · 메뉴)</div>
- <div class="wl-mini ${t.mode==='light'?'lt':''}" style="--a:${t.ac};--at:${onAc(t.ac)};--sd:${t.mode==='light'?'#fff':mix(t.ac,'#07080d',.965)}"><div class="kv" style="${kv?`background-image:url('${kv}')`:''}">${t.showName?`<b>${esc(p.name)}</b>`:''}</div><div class="fm"><small>${esc(t.sub||'')}</small><b>${esc(p.name)}</b><i></i><i></i><span>로그인</span></div></div>
+ <div class="wl-mini ${t.mode==='light'?'lt':''}" style="--a:${t.ac};--at:${onAc(t.ac)};--sd:${t.mode==='light'?'#fff':mix(t.ac,'#07080d',.965)}"><div class="kv" style="${kv?`background-image:url('${kv}')`:''}">${t.logo?`<img class="lg" src="${t.logo}" alt="">`:t.showName?`<b>${esc(p.name)}</b>`:''}</div><div class="fm"><small>${esc(t.sub||'')}</small><b>${esc(p.name)}</b><i></i><i></i><span>로그인</span></div></div>
  <div class="wl-mini2 ${t.mode==='light'?'lt':''}" style="--a:${t.ac};--at:${onAc(t.ac)};--sd:${t.mode==='light'?'#fff':mix(t.ac,'#07080d',.965)}"><div class="msd"><b>${esc(p.name)}</b><small>${esc(t.sub||'')}</small>${t.band?`<em>${esc(t.band)}</em>`:''}<span class="on">대시보드</span><span>행사 정보</span><span>자료</span></div><div class="mn"><div class="kvb" style="${p.kv?`background-image:url('${p.kv}')`:''}"></div><div class="row"><span class="hi"></span><span></span><span></span></div></div></div>
  </div></div>${mfoot(`<button class="btn" data-act="thPrev">${ico('eye',13)}저장 후 주관사 화면으로 보기</button>`,'<button class="btn" data-act="close">취소</button><button class="btn btn-primary" data-act="thSave">저장</button>')}`,true);const m=document.querySelector('#mroot .modal');if(m)m.classList.add('modal-xl')}
 function thSwLoad(){const p=DB.projects.find(x=>x.id===thTmp.id),src=thTmp.t.lkv||p.kv;if(!src){thTmp.sw=[];return}kvSwatches(src).then(sw=>{if(!thTmp)return;thTmp.sw=sw;if(!thTmp.touched&&!(p.th&&p.th.ac)&&sw[0])thTmp.t.ac=sw[0];if(document.querySelector('.wl-ed'))projThemeModal()})}
@@ -2297,6 +2309,9 @@ Object.assign(A,{
  thSw:d=>{thTmp.t.ac=d.c;thTmp.touched=1;projThemeModal()},
  thMode:d=>{thTmp.t.mode=d.m;projThemeModal()},
  thKv:()=>pickFiles(fs=>{const f=fs[0];if(!f||!/^(png|jpe?g|webp)$/.test(f.ext))return toast('PNG·JPG 이미지를 골라 주세요','error');const im=new Image();im.onload=()=>{const k=Math.min(1,1800/im.naturalWidth),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);thTmp.t.lkv=c.toDataURL('image/jpeg',.82);thTmp.sw=null;projThemeModal();thSwLoad()};im.src=f.dataUrl||URL.createObjectURL(f.file)}),
+ thLogo:()=>pickFiles(fs=>{const f=fs[0];if(!f||!/^(png|jpe?g|webp|svg)$/.test(f.ext))return toast('PNG·SVG·JPG 이미지를 골라 주세요','error');if(f.ext==='svg'){const r=new FileReader();r.onload=()=>{thTmp.t.logo=r.result;projThemeModal()};r.readAsDataURL(f.file);return}
+  const im=new Image();im.onload=()=>{const k=Math.min(1,900/im.naturalWidth,300/im.naturalHeight),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.naturalWidth*k));c.height=Math.max(1,Math.round(im.naturalHeight*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);const cc=logoTrim(c);thTmp.t.logo=cc.toDataURL(f.ext==='png'||f.ext==='webp'?'image/png':'image/jpeg',.9);projThemeModal()};im.src=f.dataUrl||URL.createObjectURL(f.file)}),
+ thLogoDel:()=>{delete thTmp.t.logo;projThemeModal()},
  thKvDel:()=>{delete thTmp.t.lkv;thTmp.sw=null;projThemeModal();thSwLoad()},
  thSave:d=>{if(!thTmp)return false;const p=DB.projects.find(x=>x.id===thTmp.id),s=thTmp.slug;if(!slugOk(s))return toast('접속 링크를 확인해 주세요 (영문 소문자·숫자·하이픈, 2자 이상)','error'),false;if(DB.projects.some(x=>x.id!==p.id&&x.slug===s))return toast('다른 프로젝트가 이미 쓰는 링크입니다','error'),false;
   p.slug=s;const t=Object.assign({},thTmp.t);Object.keys(t).forEach(k=>{if(t[k]===''||t[k]==null)delete t[k]});p.th=t;addLog('사이트 꾸미기',p.name);Store.save('사이트 꾸미기');if(!(d&&d.keep)){closeModal();thTmp=null}toast('저장했습니다','success');renderApp();return true},

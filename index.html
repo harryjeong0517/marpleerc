@@ -636,6 +636,111 @@ body.wl .cs2s-f{background:var(--wl-ac);color:var(--ac-tx)}
 @media (max-width:700px){.cs-bar{display:none}.cs2t th:nth-child(3){display:none}.cs-bar2{display:none}}
 .sync.bad i{background:#f59e0b!important}.sync.bad{color:#b45309}
 .bin-list{display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow:auto}.bin-row{display:flex;align-items:center;gap:12px;border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:10px 12px}.bin-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.bin-t span{font-size:12px;color:var(--muted,#64748b)}.bin-t small{font-size:11.5px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ================= 모바일 (/m) ================= */
+html.mob{--m-ac:var(--wl-ac,var(--marple));--m-act:var(--ac-tx,#fff);--m-dk:var(--side,#111827);--m-ink:#0b1020;-webkit-text-size-adjust:100%}
+html.mob body{background:#e9ecf1;min-width:0;overflow-x:hidden}
+html.mob #root{max-width:520px;margin:0 auto;min-height:100vh;background:#f4f6f9;box-shadow:0 0 40px rgba(0,0,0,.08);position:relative}
+.mapp{min-height:100vh;padding-bottom:calc(78px + env(safe-area-inset-bottom));font-size:14px;color:#0f172a}
+.mtop{position:sticky;top:0;z-index:20;background:var(--m-dk);color:#fff;display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px}
+.mtop .msp{flex:1}.mlogo{max-height:30px;max-width:150px;object-fit:contain;display:block}.mlogo-m{filter:brightness(0) invert(1);max-height:22px}
+.mname{font-weight:900;font-size:17px;line-height:1.05;letter-spacing:-.01em}.mname small{display:block;font-size:8.5px;letter-spacing:.16em;color:#8a93ad;font-weight:700;margin-top:2px}
+.mproj{background:rgba(255,255,255,.1);color:#fff;border:0;border-radius:9px;height:32px;padding:0 8px;font-size:12px;max-width:130px;font-family:inherit}.mproj option{color:#111}
+.mtop .sync{font-size:0;padding:0;background:none;border:0}.mtop .sync i{width:8px;height:8px}
+.mav{width:32px;height:32px;border-radius:10px;border:0;background:rgba(255,255,255,.12);color:#fff;font-weight:800;font-size:13px;font-family:inherit}
+.mav.big{width:44px;height:44px;border-radius:13px;background:var(--m-dk);font-size:17px;display:flex;align-items:center;justify-content:center;color:#fff}
+.mtab{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;z-index:30;background:#fff;border-top:1px solid #e5e7eb;display:flex;padding:6px 4px calc(8px + env(safe-area-inset-bottom))}
+.mtab button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:600;color:#94a3b8;font-family:inherit;position:relative;padding:2px 0}
+.mtab i{display:flex;align-items:center;justify-content:center;height:28px;width:46px;border-radius:10px}.mtab button.on{color:var(--m-ink)}.mtab button.on i{background:var(--m-ac);color:var(--m-act)}
+.mtab b{position:absolute;top:0;right:calc(50% - 24px);background:#ef4444;color:#fff;font-size:9.5px;border-radius:9px;padding:0 5px;line-height:15px}
+.mhd{background:var(--m-dk);color:#fff;padding:4px 16px 14px;display:flex;align-items:center;gap:10px}.mhd h2{font-size:20px;font-weight:800;letter-spacing:-.02em}.mhd p{font-size:11.5px;color:#9aa3bd;margin-top:2px}
+.mback{width:34px;height:34px;border-radius:10px;border:0;background:rgba(255,255,255,.1);color:#fff;font-size:24px;line-height:1;font-family:inherit;flex-shrink:0}
+.mseg{display:flex;gap:6px;padding:0 14px 12px;background:var(--m-dk);overflow-x:auto;scrollbar-width:none}.mseg::-webkit-scrollbar{display:none}
+.mseg button{flex-shrink:0;border:0;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:700;background:rgba(255,255,255,.09);color:#c9cfe0;font-family:inherit}.mseg button.on{background:var(--m-ac);color:var(--m-act)}
+.mbd{background:#ef4444;color:#fff;border-radius:9px;padding:0 6px;font-size:10px}
+.mchips{display:flex;gap:6px;overflow-x:auto;padding:10px 14px 2px;scrollbar-width:none}.mchips::-webkit-scrollbar{display:none}
+.mchips button{flex-shrink:0;border:1px solid #e2e8f0;background:#fff;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700;color:#475569;font-family:inherit}.mchips button.on{background:var(--m-ink);border-color:var(--m-ink);color:#fff}
+.mpad{padding:12px 14px 20px;display:flex;flex-direction:column;gap:10px}
+.mcd{background:#fff;border:1px solid #e8ebf0;border-radius:14px;padding:12px 14px}.mcd>h4{font-size:14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.mcd>h4 em,.mcd>h4 a{font-style:normal;font-size:11.5px;color:#64748b;font-weight:600}
+.mkv{border-radius:16px;background:#1f2937 center/cover no-repeat;position:relative;overflow:hidden;flex-shrink:0}.mkv::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(0,0,0,.72))}
+.mkv-in{position:absolute;left:14px;right:14px;bottom:12px;z-index:1;color:#fff}.mkv-in b{font-size:20px;font-weight:900}.mkv-in img{max-height:34px;max-width:60%;display:inline-block;vertical-align:middle}
+.mkv-in i{font-style:normal;background:var(--m-ac);color:var(--m-act);font-size:11px;font-weight:800;padding:2px 8px;border-radius:99px;margin-left:8px;vertical-align:middle}.mkv-in p{font-size:11px;opacity:.85;margin-top:4px}
+.mstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mst{background:#fff;border:1px solid #e8ebf0;border-radius:12px;padding:10px}.mst small{font-size:10.5px;color:#64748b;font-weight:700}.mst b{display:block;font-size:22px;margin-top:2px;font-weight:800}
+.mst.hi{background:var(--m-ac);border-color:transparent;color:var(--m-act)}.mst.hi small{color:inherit;opacity:.75}.mst.red b{color:#dc2626}
+.mit{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid #eef0f4}.mit:first-of-type,.mcd>h4+.mit{border-top:0}.mit.done{opacity:.5}.mit.done b{text-decoration:line-through}
+.mck{width:22px;height:22px;border:1.5px solid #cbd5e1;border-radius:6px;flex-shrink:0;margin-top:1px;background:#fff;color:#fff;font-weight:900;font-size:12px}.mck.on{background:#16a34a;border-color:#16a34a}
+.mxx{flex:1;min-width:0}.mxx>b,.mmc b{font-size:13.5px;font-weight:650;display:block;line-height:1.35;word-break:keep-all}
+.mm{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap;align-items:center;font-size:11px;color:#94a3b8}
+.mt{font-size:10px;font-weight:700;border-radius:5px;padding:1px 6px}.mt-mkt{background:#ede9fe;color:#6d28d9}.mt-mp{background:#dbeafe;color:#1d4ed8}.mt-co{background:#d1fae5;color:#047857}.mt-sp{background:#fef3c7;color:#b45309}
+.msrc{background:#f1f5f9;color:#64748b;font-size:10px;font-weight:700;border-radius:5px;padding:1px 6px}
+.mdd{font-size:10.5px;font-weight:800;border-radius:6px;padding:2px 7px;background:#f1f5f9;color:#475569;white-space:nowrap;flex-shrink:0}.mdd.late{background:#dc2626;color:#fff}.mdd.t0{background:#fee2e2;color:#dc2626}.mdd.t1{background:#ffedd5;color:#c2410c}.mdd.ok{background:#d1fae5;color:#047857}
+.mempty{text-align:center;color:#94a3b8;font-size:12.5px;padding:18px 0}.mmore{font-size:11.5px;color:#64748b;text-align:center;padding-top:8px}
+.mbts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}.mbts.wide{margin-top:16px}.mbts.wide .mbtn{flex:1;height:44px}
+.mbtn{height:34px;border-radius:10px;border:0;background:#f1f5f9;color:#334155;font-weight:800;font-size:12.5px;padding:0 12px;font-family:inherit}.mbtn.ac{background:var(--m-ac);color:var(--m-act)}.mbtn.dk{background:var(--m-ink);color:#fff}.mbtn.red{background:#fee2e2;color:#b91c1c}.mbtn.sm{height:28px;font-size:11.5px;margin-top:8px}.mbtn.big{width:100%;height:50px;font-size:15px}
+.mnote{display:block;width:100%;text-align:left;background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.5;font-family:inherit}.mnote b{margin-right:6px}.mnote.empty{background:#fff;border-style:dashed;color:#64748b;border-color:#cbd5e1}
+.mrow2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mlink{background:#fff;border:1px solid #e8ebf0;border-radius:12px;padding:12px;font-size:12px;color:#64748b;font-weight:700;text-align:left;font-family:inherit}.mlink b{display:block;font-size:20px;color:#0f172a}
+.mbar{height:6px;background:#eef2f6;border-radius:9px;overflow:hidden;margin-top:6px}.mbar i{display:block;height:100%;background:var(--m-ink);border-radius:9px}
+.msubt{font-size:11.5px;color:#64748b;margin-top:6px}.mrej{font-size:11.5px;color:#9a3412;margin-top:4px}
+.mcst{font-size:10.5px;font-weight:700;border-radius:99px;padding:1px 8px}.mcst.wt{background:#dbeafe;color:#1d4ed8}.mcst.rj{background:#fee2e2;color:#b91c1c}.mcst.ok{background:#d1fae5;color:#047857}
+.mgrp{font-size:11.5px;font-weight:800;color:#64748b;margin:4px 2px -2px;display:flex;justify-content:space-between}.mgrp a{color:var(--marple);cursor:pointer;font-weight:700}
+.mmc{background:#fff;border:1px solid #e8ebf0;border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:7px}.mmc .h{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.mmc .h>span{display:flex;gap:4px;flex-shrink:0}
+.mmc .r{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:11px;color:#64748b}
+.mpill{font-size:10.5px;font-weight:700;border-radius:99px;padding:2px 9px;border:0;font-family:inherit;white-space:nowrap}.mpill.t-g{background:#d1fae5;color:#047857}.mpill.t-b{background:#dbeafe;color:#1d4ed8}.mpill.t-r{background:#fee2e2;color:#b91c1c}.mpill.t-a{background:#fef3c7;color:#b45309}.mpill.t-n{background:#f1f5f9;color:#64748b}
+.mfab{position:fixed;right:max(16px,calc(50% - 260px + 16px));bottom:calc(92px + env(safe-area-inset-bottom));width:54px;height:54px;border-radius:17px;border:0;background:var(--m-ink);color:var(--m-ac);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,.25);z-index:25}
+.mgantt{background:#fff;border:1px solid #e8ebf0;border-radius:14px;padding:10px 12px;overflow-x:auto}.mgw{min-width:100%}
+.mgm{display:flex;font-size:10px;font-weight:800;color:#94a3b8;border-bottom:1px solid #eef0f4;padding-bottom:4px}.mgm span{flex:1}
+.mgbody{position:relative}.mtoday{position:absolute;top:0;bottom:0;width:2px;background:#ef4444;z-index:2}
+.mgr{display:flex;flex-direction:column;gap:3px;padding:7px 0;border-bottom:1px solid #f4f5f8}.mgr b{font-size:11.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:sticky;left:0;max-width:260px;z-index:3;align-self:flex-start;background:rgba(255,255,255,.88);padding-right:4px;border-radius:4px}
+.mgb{position:relative;height:9px;background:rgba(244,246,249,.7);border-radius:9px}.mgb i{position:absolute;top:0;bottom:0;border-radius:9px}.mgb i.done{opacity:.4}.mgb i.late{box-shadow:0 0 0 2px #fecaca}
+.mgr-g{font-size:10.5px;font-weight:800;color:#64748b;padding:8px 0 0;position:sticky;left:0}
+.mleg{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:#64748b;margin-top:2px}.mleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.mleg i.ok{background:#d1fae5}.mleg i.wt{background:#dbeafe}.mleg i.rj{background:#fee2e2}.mleg i.no{background:#f1f5f9;border:1px solid #e2e8f0}
+.mwkh{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#475569}.mwkh span{flex:1;text-align:center}.mwkh button{border:1px solid #e2e8f0;background:#fff;border-radius:8px;height:28px;min-width:30px;font-weight:800;color:#334155;font-family:inherit}
+.mwk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.mwk button{border:1px solid #e8ebf0;background:#fff;border-radius:11px;padding:6px 0;font-size:10.5px;color:#64748b;font-weight:700;font-family:inherit}.mwk b{display:block;font-size:15px;color:#0f172a}
+.mwk button.td{border-color:var(--m-ink)}.mwk button.on{background:var(--m-ink);color:#fff}.mwk button.on b{color:var(--m-ac)}.mwk u{display:flex;justify-content:center;gap:2px;margin-top:3px;height:5px;text-decoration:none}.mwk u i{width:5px;height:5px;border-radius:50%}
+.mmon{font-size:12.5px;font-weight:900;margin:8px 2px 6px}.mtl{position:relative;padding-left:18px}.mtl::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:#e2e8f0}
+.mti{position:relative;margin-bottom:9px}.mti::before{content:'';position:absolute;left:-17px;top:15px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid #94a3b8}.mti.now::before{background:var(--m-ac);border-color:var(--m-ink)}.mti.past{opacity:.5}
+.mtl>.mempty{margin-left:-18px}
+.mag{display:flex;gap:10px;padding:11px 0;border-top:1px solid #eef0f4}.mag:first-child{border-top:0}.mag.brk{opacity:.55}.mag .tm{width:46px;flex-shrink:0;font-weight:800;font-size:12px}.mag .tm small{display:block;color:#94a3b8;font-weight:600;font-size:10.5px}
+.mag b{font-size:13.5px;line-height:1.35;display:block}.mag .sp{font-size:11.5px;color:#64748b;margin-top:3px;line-height:1.45}.mag .tg{font-size:10px;font-weight:800;margin-bottom:2px;letter-spacing:.02em}.mag .bx{flex:1;min-width:0}
+.msearch{width:100%;height:42px;border:1px solid #e2e8f0;border-radius:12px;padding:0 14px;font-size:14px;background:#fff;font-family:inherit}
+.mchips.light{padding-top:12px}
+.mfl{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #eef0f4}.mfl:first-child{border-top:0}
+.mfi{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:10px;flex-shrink:0;overflow:hidden}.mfi img{width:100%;height:100%;object-fit:cover}
+.mfl .x{flex:1;min-width:0}.mfl b{font-size:12.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mfl small{font-size:10.5px;color:#94a3b8}
+.mic{width:34px;height:34px;border:0;background:#f4f6f9;border-radius:9px;color:#475569;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.msph{display:flex;justify-content:space-between;align-items:center}.msph b{font-size:13.5px}.msph small{font-size:11px;color:#94a3b8;font-weight:600}.msph>span{font-weight:800;font-size:12px}
+.msqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px;margin-top:10px}.msq{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;color:#94a3b8;text-align:center;line-height:1.2}
+.msq span{width:26px;height:26px;border-radius:7px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;background:#f1f5f9}.msq .ok{background:#d1fae5;color:#047857}.msq .wt{background:#dbeafe;color:#1d4ed8}.msq .rj{background:#fee2e2;color:#b91c1c}
+.mme{display:flex;align-items:center;gap:12px}.mme b{display:block;font-size:15px}.mme small{font-size:12px;color:#64748b}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mgrid button{background:#fff;border:1px solid #e8ebf0;border-radius:14px;padding:14px 6px;font-size:11.5px;font-weight:700;color:#0f172a;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:inherit}.mgrid i{color:#475569}
+.mlinks{display:flex;flex-direction:column;padding:4px 14px}.mlinks button{display:flex;align-items:center;gap:10px;border:0;background:none;padding:13px 0;border-top:1px solid #eef0f4;font-size:13.5px;font-weight:600;color:#0f172a;font-family:inherit;text-align:left}.mlinks button:first-child{border-top:0}.mlinks .red{color:#dc2626}
+.mtotal{background:var(--m-ink);color:#fff;border:0}.mtotal small{font-size:11px;color:#9aa3bd;font-weight:700}.mtotal>b{display:block;font-size:28px;font-weight:900;color:var(--m-ac);margin:2px 0 6px}.mtotal>b em{font-style:normal;font-size:14px;margin-left:2px}
+.mtotal div{display:flex;justify-content:space-between;font-size:11.5px;color:#c9cfe0;margin-top:3px}
+.mcs{padding:9px 0;border-top:1px solid #eef0f4}.mcs:first-child{border-top:0}.mcs>div:first-child{display:flex;justify-content:space-between;font-size:13px}.mcs small{font-size:10.5px;color:#94a3b8}
+.mcl{background:#f8fafc;border-radius:10px;padding:2px 10px;margin-bottom:6px}.mci{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #eef0f4;font-size:12px}.mci:first-child{border-top:0}.mci small{display:block;color:#94a3b8;font-size:10.5px;margin-top:2px}.mci>b{white-space:nowrap}.mst-x{font-style:normal;color:#b45309}
+.mdl{display:grid;grid-template-columns:84px 1fr;gap:9px 10px;font-size:13px;margin-top:12px}.mdl dt{color:#64748b}.mdl dd{font-weight:600;margin:0;word-break:break-all}.mdl dd small{display:block;color:#94a3b8;font-weight:500;font-size:11.5px;margin-top:2px}
+.mdl.wide{grid-template-columns:96px 1fr;margin-top:0}
+.msh-k{font-size:11.5px;color:#64748b;font-weight:700;margin-bottom:8px}.mstchips{display:flex;gap:6px;flex-wrap:wrap}.mstchips .mpill{padding:8px 13px;font-size:12px}.mstchips .mpill.sel{outline:2px solid currentColor;outline-offset:1px}.mstchips .mpill:disabled{opacity:.6}
+.mform{display:flex;flex-direction:column;gap:10px}.mform label{display:flex;flex-direction:column;gap:4px;font-size:11.5px;font-weight:700;color:#64748b}
+.mform input,.mform select,.mform textarea{height:44px;border:1px solid #e2e8f0;border-radius:11px;padding:0 12px;font-size:15px;font-family:inherit;color:#0f172a;background:#fff;width:100%}.mform textarea{height:auto;padding:10px 12px;line-height:1.5}
+.mform label.mro div{font-size:14px;color:#0f172a;font-weight:600;padding:2px 0}.mform .m2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mform .mchk{flex-direction:row;align-items:center;gap:8px;font-size:13px;color:#0f172a}.mform .mchk input{width:20px;height:20px}
+/* 아래에서 올라오는 창 — 기존 모든 모달에도 적용 */
+html.mob .modal-overlay{align-items:flex-end;padding:0}
+html.mob .modal{width:100%;max-width:520px;margin:0 auto;border-radius:22px 22px 0 0;max-height:90vh;overflow:auto;padding:18px 18px calc(22px + env(safe-area-inset-bottom));animation:msu .22s ease-out}
+html.mob .modal::before{content:'';display:block;width:40px;height:5px;border-radius:9px;background:#e2e8f0;margin:-6px auto 12px}
+html.mob .modal-title{font-size:17px;padding-right:30px}html.mob .modal .form-row{grid-template-columns:1fr}html.mob .modal-foot{flex-wrap:wrap}html.mob .modal-foot .btn{flex:1;height:44px;justify-content:center}
+html.mob .modal .upload-zone{padding:22px 12px}html.mob .msub .card{border:0;box-shadow:none;padding:0}
+@keyframes msu{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+html.mob .toast-container{bottom:calc(92px + env(safe-area-inset-bottom));left:50%;right:auto;transform:translateX(-50%);width:min(92vw,480px)}
+/* 로그인 */
+.mlogin{min-height:100vh;background:#0b1020 center/cover no-repeat;position:relative;display:flex;align-items:flex-end}
+.mlogin::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 15%,rgba(5,8,18,.92) 60%)}
+.mlf{position:relative;z-index:1;width:100%;padding:22px 22px calc(34px + env(safe-area-inset-bottom));color:#fff;display:flex;flex-direction:column}
+.mlf small{font-size:10.5px;letter-spacing:.18em;font-weight:800;color:var(--m-ac)}.mlf h1{font-size:30px;font-weight:900;margin:4px 0 2px;letter-spacing:-.02em}.mlf p{font-size:12px;color:#c9cfe0;margin:2px 0 18px}
+.mlg-logo{max-height:56px;max-width:70%;object-fit:contain;align-self:flex-start;margin-bottom:6px}.mlogin:not(.has-kv) .mlg-logo{filter:brightness(0) invert(1);max-height:30px;margin-bottom:10px}
+.mlf input{height:50px;border-radius:13px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);margin-bottom:10px;padding:0 15px;color:#fff;font-size:16px;font-family:inherit}.mlf input::placeholder{color:#9aa3bd}
+.mlerr{color:#fca5a5;font-size:12.5px;min-height:18px;margin-top:8px;text-align:center}.mlfoot{text-align:center;font-size:11px;color:#9aa3bd;margin-top:10px}.mlfoot a{color:#c9cfe0}
+.mdemo{display:flex;gap:6px;justify-content:center;margin-top:6px}.mdemo button{border:1px solid rgba(255,255,255,.25);background:none;color:#fff;border-radius:9px;padding:6px 10px;font-size:12px;font-family:inherit}
 </style>
 </head>
 <body>
@@ -1527,8 +1632,8 @@ function rateFee(b){let r=RATES[0];RATES.forEach(x=>{if(b>=x[0])r=x});return Mat
 function vCost(v){const t=S.costTab||'sum';queueMicrotask(()=>{if((S.costTab||'sum')==='est')costSubPaint()});
  const pub=!!CF_().costPub;v.innerHTML=head('견적',isAdmin()?'마플만 수정할 수 있습니다. [주관사에 공개]를 누르면 주관사가 보기 전용으로 볼 수 있습니다. 스폰서에게는 항상 보이지 않습니다.':'마플이 공개한 견적입니다. (보기 전용)',isAdmin()?`<button class="btn" data-act="binOpen" title="실수로 지워진 견적·표 행을 되살립니다">${ico('clock',13)}지운 데이터 복구</button><span class="badge ${pub?'badge-green':'badge-gray'}">${ico(pub?'eye':'lock',12)}주관사 ${pub?'공개 중':'비공개'}</span><button class="btn ${pub?'':'btn-primary'}" data-act="costPub">${pub?'주관사 공개 중지':'주관사에 공개'}</button>`:`<span class="badge badge-gray">${ico('eye',12)}보기 전용</span>`)
   +`<div class="tabs" style="max-width:520px"><div class="tab ${t==='sum'?'active':''}" data-act="costTab" data-t="sum">견적 Summary</div><div class="tab ${t==='est'?'active':''}" data-act="costTab" data-t="est">견적서</div><div class="tab ${t==='rate'?'active':''}" data-act="costTab" data-t="rate">기획요율표</div></div>`
-  +(t==='sum'?`<div class="filter-bar"><label class="form-label" style="margin:0">에이전시 커미션(%)</label><input class="form-input" type="number" style="width:90px" value="${costSum().comm}" data-chg="comm"><span class="sub">견적서 항목에서 자동 계산됩니다 · 단위: KRW / VAT 별도</span></div><div id="csum"><div>${costTotals()}</div></div>`
-  :t==='est'?`<div class="filter-bar"><span class="sub">금액 = 수량 × 단가 × 일수. 구분이 [메가존 진행 / 협의사항 / 삭제 / 제외]이면 합계에서 빠집니다.</span><div style="flex:1"></div>${addBtn('cost','항목 추가')}</div><datalist id="dl-cs">${[...new Set(R('cost').map(r=>r.sub))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist>`+gridTbl('cost',COSTC(),R('cost'),{del:true,grp:r=>`<span data-sub="${esc(r.sec)}|${esc(r.sub)}">${esc(r.sec)}${r.sub?' · '+esc(r.sub):''} <b class="gsum"></b></span>`})+`<div class="cest-tot" id="cestt">${costEstTot()}</div>`
+  +(t==='sum'?`<div class="filter-bar"><label class="form-label" style="margin:0">에이전시 커미션(%)</label><input class="form-input" type="number" style="width:90px" value="${costSum().comm}" data-chg="comm" ${isAdmin()?'':'disabled'}><span class="sub">견적서 항목에서 자동 계산됩니다 · 단위: KRW / VAT 별도</span></div><div id="csum"><div>${costTotals()}</div></div>`
+  :t==='est'?`<div class="filter-bar"><span class="sub">금액 = 수량 × 단가 × 일수. 구분이 [메가존 진행 / 협의사항 / 삭제 / 제외]이면 합계에서 빠집니다.</span><div style="flex:1"></div>${isAdmin()?addBtn('cost','항목 추가'):''}</div><datalist id="dl-cs">${[...new Set(R('cost').map(r=>r.sub))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist>`+gridTbl('cost',COSTC(),R('cost'),{del:true,grp:r=>`<span data-sub="${esc(r.sec)}|${esc(r.sub)}">${esc(r.sec)}${r.sub?' · '+esc(r.sub):''} <b class="gsum"></b></span>`})+`<div class="cest-tot" id="cestt">${costEstTot()}</div>`
   :`<div class="card flush"><div class="table-wrap"><table class="gtbl"><thead><tr><th>행사 예산 하한(원)</th><th>적용 요율</th><th style="text-align:right">구간 상한 기준 산출액</th><th>구분 / 행사 성격</th></tr></thead><tbody>${RATES.map(x=>`<tr><td>${won(x[0])}</td><td>${(x[1]*100).toFixed(2).replace(/\.?0+$/,'')}%</td><td class="num">${won(x[2])}</td><td>${x[3]}</td></tr>`).join('')}</tbody></table></div></div>
   <div class="card" style="margin-top:14px"><div class="card-title" style="margin-bottom:10px">기획비 계산기 <span class="mute" style="font-weight:500;font-size:12px">· 최저 책정 기본금 300,000원 · 참고용</span></div><div class="form-row" style="max-width:520px"><div class="form-group"><label class="form-label">행사 예산 (원)</label><input class="form-input" type="number" id="rbud" value="300000000" data-chg="rate"></div><div class="form-group"><label class="form-label">산출 기획비</label><div class="ro" id="rout" style="font-size:18px;font-weight:800">${won(rateFee(3e8))}원</div></div></div></div>`)}
 function costEstTot(){const c=costSum(),n=c.rs.length,ex=c.rs.filter(r=>r.st).length;return `<div class="cet-l"><b>합계</b><span>${n}개 항목${ex?` · 합계 제외 ${ex}개(메가존 진행·협의 등)`:''}</span></div><div class="cet-r"><div><span>소계</span><b>${won(c.all)}</b></div><i>+</i><div><span>에이전시 커미션 ${c.comm}%<small>기획/디자인 제외</small></span><b>${won(c.cm)}</b></div><i>=</i><div class="fin"><span>견적금액<small>VAT 별도 · ${c.all+c.cm>=1e8?'만원':'천원'} 단위 절사</small></span><b>${won(c.final)}<em>원</em></b></div><div class="vat"><span>VAT 포함</span><b>${won(Math.round(c.final*1.1))}</b></div></div>`}
@@ -2281,7 +2386,7 @@ const presetOf=p=>p&&TH_PRESET.find(x=>x.re.test((p.name||'').trim())||(p.slug&&
    · 주소 하나 + 뒤에 /프로젝트링크 (예: /icon2027)  — 로컬 파일·미리보기에서는 ?p=icon2027
    · 주관사·스폰서는 marple 표시 없이 그 행사 이름·KV·색으로만 보임
    · 마플 관리자는 기존 화면 유지 + [주관사 화면 미리보기] */
-const SLUG=(()=>{try{const q=new URLSearchParams(location.search).get('p');if(q)return q.toLowerCase().trim();const seg=location.pathname.split('/').filter(Boolean).pop()||'';return /\.[a-z0-9]+$/i.test(seg)?'':decodeURIComponent(seg).toLowerCase()}catch(e){return ''}})();
+const SLUG=(()=>{try{const q=new URLSearchParams(location.search).get('p');if(q)return q.toLowerCase().trim();const sg=location.pathname.split('/').filter(Boolean);if(sg[sg.length-1]==='m')sg.pop();const seg=sg.pop()||'';return /\.[a-z0-9]+$/i.test(seg)?'':decodeURIComponent(seg).toLowerCase()}catch(e){return ''}})();
 const slugMake=n=>(String(n||'').toLowerCase().replace(/[^a-z0-9]+/g,'')||'event').slice(0,30);
 const slugOk=s=>/^[a-z0-9][a-z0-9-]{1,39}$/.test(s||'');
 function brandProj(){return SLUG?DB.projects.find(p=>(p.slug||'').toLowerCase()===SLUG)||DB.projects.find(p=>!p.slug&&slugMake(p.name)===SLUG)||null:null}
@@ -2758,6 +2863,273 @@ Object.assign(A,{
    const ks=[...new Set(x.items.map(b=>b.k))],extra=ks.filter(k=>!BASE_KINDS.includes(k));
    if(ks.some(k=>BASE_KINDS.includes(k))){const dd=await Remote.pull(Remote.scope());Remote.adopt(dd,true)}else if(extra.length)await Remote.more(extra);
    closeModal();toast(`${x.items.length}개를 되살렸습니다`,'success');renderApp()}catch(e){toast('복구하지 못했습니다 ('+e.message+')','error')}}});
+/* =====================================================================
+   모바일 버전 (p22) — 주소 끝 /m (예: /icon2027/m) · 휴대폰은 자동으로 /m
+   같은 데이터·같은 권한·같은 저장 엔진을 쓰고, 화면만 휴대폰용으로 다시 그림
+   ===================================================================== */
+const MB={on:false};
+function mUrl(on){const l=location,qs=new URLSearchParams(l.search);qs.delete('m');qs.delete('pc');
+ if(l.protocol==='file:'||qs.get('p')||/\.html?$/i.test(l.pathname)){if(on)qs.set('m','1');const q=qs.toString();return l.pathname+(q?'?'+q:'')+l.hash}
+ let p=l.pathname.replace(/\/m\/?$/,'').replace(/\/+$/,'');if(on)p+='/m';const q=qs.toString();return (p||'/')+(q?'?'+q:'')+l.hash}
+(function(){const qs=new URLSearchParams(location.search),isM=/\/m\/?$/.test(location.pathname)||qs.get('m')==='1';
+ let pc=false;try{pc=sessionStorage.getItem('erc_pc')==='1'}catch(e){}
+ const phone=/Android|iPhone|iPod|Mobile|Windows Phone/i.test(navigator.userAgent)||(window.matchMedia&&matchMedia('(max-width:760px)').matches&&matchMedia('(pointer:coarse)').matches);
+ if(isM){MB.on=true;try{sessionStorage.removeItem('erc_pc')}catch(e){}}
+ else if(phone&&!pc&&qs.get('pc')!=='1'){MB.on=true;try{history.replaceState(null,'',mUrl(true))}catch(e){}}
+ if(MB.on){document.documentElement.classList.add('mob');let vp=document.querySelector('meta[name=viewport]');if(!vp){vp=document.createElement('meta');vp.name='viewport';document.head.appendChild(vp)}vp.content='width=device-width,initial-scale=1,viewport-fit=cover'}})();
+
+/* ---------- 공통 조각 ---------- */
+const mT=(k)=>({mkt:'주관사',mp:'운영사무국',co:'공통',sp:'스폰서'}[k]||k);
+const mTag=k=>`<span class="mt mt-${k}">${mT(k)}</span>`;
+const mPill=v=>v?`<span class="mpill t-${toneOf(v)}">${esc(v)}</span>`:'';
+const mDd=(due,done)=>{if(done)return '<span class="mdd ok">완료</span>';if(!due)return '';const n=dd(due);return `<span class="mdd ${n<0?'late':n===0?'t0':n<=3?'t1':''}">${n<0?'지연 '+(-n)+'일':n===0?'오늘':'D-'+n}</span>`};
+const mEmpty=t=>`<div class="mempty">${t}</div>`;
+const mCard=(title,body,side)=>`<section class="mcd">${title?`<h4>${title}${side?`<em>${side}</em>`:''}</h4>`:''}${body}</section>`;
+const mFab=(act,attrs)=>`<button class="mfab" data-act="${act}" ${attrs||''}>${ico('plus',22)}</button>`;
+const mChips=(key,opts,cur)=>`<div class="mchips">${opts.map(([v,l])=>`<button class="${(cur||'')===v?'on':''}" data-act="mF" data-k="${key}" data-v="${esc(v)}">${l}</button>`).join('')}</div>`;
+const mHd=(title,sub,back)=>`<div class="mhd">${back?`<button class="mback" data-act="mBack">‹</button>`:''}<div><h2>${esc(title)}</h2>${sub?`<p>${sub}</p>`:''}</div></div>`;
+
+function mTabs(){const t=[['home','grid','홈'],['plan','cal','일정']];if(canView('agenda'))t.push(['ag','mic','아젠다']);t.push(['doc','folder','자료'],['more','menu','더보기']);return t}
+function mBrand(){const pj=P(),th=wlOn()?thOf(pj):null;if(th&&th.logo)return `<img class="mlogo" src="${th.logo}" alt="">`;
+ if(!wlOn())return `<img class="mlogo mlogo-m" src="${LOGO}" alt="marple">`;return `<b class="mname">${esc(pj.name)}<small>${esc((th&&th.sub)||'RESOURCE CENTER')}</small></b>`}
+
+/* ---------- 로그인 ---------- */
+function mLogin(err){const bp=brandProj(),t=bp?thOf(bp):null;if(bp)wlApply(bp);else wlClear();const kv=bp?(t.lkv||kvEff(bp)):'';
+ $('#root').innerHTML=`<div class="mlogin ${kv?'has-kv':''}" ${kv?`style="background-image:url('${kv}')"`:''}><form class="mlf" id="lf">
+  ${bp?(t.logo?`<img class="mlg-logo" src="${t.logo}" alt="">`:`<small>${esc(t.sub||'RESOURCE CENTER')}</small><h1>${esc(bp.name)}</h1>`):`<img class="mlg-logo" src="${LOGO}" alt="marple"><small>EVENT RESOURCE CENTER</small>`}
+  ${bp?`<p>${fmtD(bp.date)} · ${esc(bp.venue||'')}</p>`:'<p>발급받은 계정으로 로그인해 주세요</p>'}
+  <input id="lid" placeholder="아이디" autocomplete="username" autocapitalize="off"><input id="lpw" type="password" placeholder="비밀번호" autocomplete="current-password">
+  <button class="mbtn ac big" type="submit">로그인</button><div class="mlerr" id="lerr">${esc(err||'')}</div>
+  ${CFG.DEMO?`<div class="mdemo">${[['marple','마플'],['megazone','주관사'],['cloudworks','스폰서 A']].map(d=>`<button type="button" data-act="quick" data-id="${d[0]}">${d[1]}</button>`).join('')}</div>`:''}
+  <div class="mlfoot">${bp?esc(t.contact||'문의 · 운영사무국'):'© Marketing People'} · <a href="#" data-act="mPC">PC 버전</a></div></form></div>`;
+ $('#lf').onsubmit=e=>{e.preventDefault();login($('#lid').value.trim(),$('#lpw').value)}}
+
+/* ---------- 앱 껍데기 ---------- */
+function mApp(){if(!S.user)return mLogin();fixPid();effUser();
+ if(S.user.role==='admin'&&typeof presetFill==='function'&&(presetFill()|slugFill()))Store.save('프로젝트 링크');
+ if(wlOn()&&S.pid)wlApply(P());else wlClear();
+ if(!S.pid&&isAdmin()&&myProjects().length)S.pid=myProjects()[0].id;
+ S.mt=S.mt||'home';if(!mTabs().some(t=>t[0]===S.mt))S.mt='home';
+ const sy=window.scrollY,keep=S._mk===(S.mt+'|'+(S.ms||'')+'|'+(S.mp||''));
+ const ps=myProjects(),body=S.pid?mScreen():mEmpty('참여 중인 프로젝트가 없습니다');
+ $('#root').innerHTML=`<div class="mapp r-${S.user.role}"><header class="mtop">${mBrand()}<div class="msp"></div>${ps.length>1?`<select class="mproj" data-chg="proj">${ps.map(p=>`<option value="${p.id}" ${p.id===S.pid?'selected':''}>${esc(p.name)}</option>`).join('')}</select>`:''}<span class="sync" id="sync"></span><button class="mav" data-act="mTab" data-t="more">${esc((S.user.org||'?')[0])}</button></header>
+  <main class="mmain" id="view">${body}</main>
+  <nav class="mtab">${mTabs().map(t=>`<button class="${S.mt===t[0]?'on':''}" data-act="mTab" data-t="${t[0]}"><i>${ico(t[1],19)}</i>${t[2]}${t[0]==='doc'&&mBadge()?`<b>${mBadge()}</b>`:''}</button>`).join('')}</nav></div>`;
+ Store.ui();S._mk=S.mt+'|'+(S.ms||'')+'|'+(S.mp||'');window.scrollTo(0,keep?sy:0);
+ const sh=document.querySelector('#mroot.open .msub');if(sh&&S.mSubRid)mSub(S.mSubRid,true);
+ if(S.mt==='doc'||S.mt==='home')prefetch()}
+function mBadge(){if(!S.user)return 0;if(isStaff())return DB.subs.filter(u=>u.status==='submitted'&&reqs().some(r=>r.id===u.rid)).length;return reqs().filter(r=>['none','rejected'].includes(stOf(r.id,mySid()))).length}
+function mScreen(){if(S.ms)return mMore(S.ms);
+ switch(S.mt){case 'plan':return mPlan();case 'ag':return mAgenda();case 'doc':return mDoc();case 'more':return mMenu();default:return mHome()}}
+
+/* ---------- 홈 ---------- */
+function mKv(h){const pj=P(),kv=kvEff(pj),th=thOf(pj),n=dd(pj.date);
+ return `<div class="mkv" style="height:${h}px;${kv?`background-image:url('${kv}')`:''}"><div class="mkv-in">${th.logo&&wlOn()?`<img src="${th.logo}" alt="">`:`<b>${esc(pj.name)}</b>`}<i>${ddl(n)}</i><p>${fmtD(pj.date)} · ${esc((pj.venue||'').split(' ').slice(0,2).join(' '))}</p></div></div>`}
+function mItem(i,T){const tr=i.trk&&rowById(i.trk),chk=tr&&canEdit('trk');
+ const open=i.cfm?`data-act="cfmOpen" data-id="${i.cfm}"`:i.trk?`data-act="mTrk" data-id="${i.trk}"`:i.rid?`data-act="mSubOpen" data-rid="${i.rid}"`:i.nav?`data-act="nav" data-v="${i.nav}"`:'';
+ return `<div class="mit ${i.done?'done':''}">${chk?`<button class="mck ${i.done?'on':''}" data-act="dDone" data-id="${i.trk}">${i.done?'✓':''}</button>`:''}<div class="mxx" ${open}><b>${esc(i.title)}</b><div class="mm">${isStaff()?mTag(i.who):''}<span class="msrc">${i.src}</span>${i.meta?`<span>${esc(i.meta)}</span>`:''}</div></div>${mDd(i.due,i.done)}</div>`}
+function mList(list,T,n,empty){if(!list.length)return mEmpty(empty||'없습니다');const r=list.slice(0,n).map(i=>mItem(i,T)).join('');return r+(list.length>n?`<div class="mmore">+ ${list.length-n}건 더</div>`:'')}
+function mNotice(){const p=P(),n=p.notice,role=S.user.role;if(!n||!n.text)return isAdmin()?`<button class="mnote empty" data-act="noticeEd">+ 공지 쓰기</button>`:'';
+ if(!isAdmin()&&!(n.to==='all'||(n.to==='host'&&role==='host')||(n.to==='sp'&&role==='sponsor')))return '';
+ return `<div class="mnote" ${isAdmin()?'data-act="noticeEd"':''}><b>공지</b>${esc(n.text)}</div>`}
+const mStat=(l,v,cls,act)=>`<div class="mst ${cls||''}" ${act||''}><small>${l}</small><b>${v}</b></div>`;
+function mHome(){const role=S.user.role,T=ymd(today()),all=dItems(),B=dBuckets(all);let h='';
+ if(isAdmin()){const subs=DB.subs.filter(u=>u.status==='submitted'&&reqs().some(r=>r.id===u.rid)).length,cw=R('cfm').filter(c=>c.st==='대기').length;
+  h=mKv(150)+mNotice()+`<div class="mstats">${mStat('오늘 할 일',B.today.length,'hi')}${mStat('7일 안',B.week.length)}${mStat('지연',B.late.length,B.late.length?'red':'')}</div>`
+   +mCard('오늘',mList(B.today,T,8,'오늘 마감인 일이 없습니다'),fmtD(T))
+   +(B.late.length?mCard('지연 · 확인 필요',mList(B.late,T,8),B.late.length+'건'):'')
+   +mCard('7일 안에 마감',mList(B.week,T,8,'가까운 마감이 없습니다'),B.week.length+'건')
+   +`<div class="mrow2"><button class="mlink" data-act="mGo" data-s="status"><b>${subs}</b>검수 대기</button><button class="mlink" data-act="mGo" data-s="cfm"><b>${cw}</b>컨펌 대기</button></div>`}
+ else if(role==='host'){const mine=i=>i.who==='mkt'||i.who==='co',mL=B.late.filter(mine).concat(B.today.filter(mine),B.week.filter(mine)),rs=reqs();let tot=0,sub=0;rs.forEach(r=>targetsOf(r).forEach(s=>{tot++;if(['submitted','approved'].includes(stOf(r.id,s.id)))sub++}));
+  const cs=R('cfm').filter(c=>c.st!=='컨펌').sort((a,b)=>(a.st==='대기'?0:1)-(b.st==='대기'?0:1)),mp=all.filter(i=>i.who==='mp'&&!i.done&&i.due<=addD(T,14)).sort((a,b)=>a.due<b.due?-1:1),pc=tot?Math.round(sub/tot*100):0;
+  h=mKv(120)+mNotice()+mCard('컨펌 요청',cs.length?cs.slice(0,5).map(c=>`<div class="mit"><div class="mxx"><b data-act="cfmOpen" data-id="${c.id}">${esc(c.title)}</b><div class="mm"><span class="mcst ${c.st==='수정 요청'?'rj':'wt'}">${c.st}</span><span>${esc(c.by||'')}</span></div>${c.st==='대기'?`<div class="mbts"><button class="mbtn" data-act="cfmOpen" data-id="${c.id}">보기</button><button class="mbtn ac" data-act="cfmAct" data-id="${c.id}" data-s="컨펌">컨펌</button><button class="mbtn" data-act="cfmAct" data-id="${c.id}" data-s="수정 요청">수정 요청</button></div>`:''}</div>${mDd(c.due)}</div>`).join(''):mEmpty('확인할 것이 없습니다'),'운영사무국이 올린 것')
+   +mCard('우리 할 일 · 7일',mList(mL,T,8,'가까운 할 일이 없습니다'),mL.length+'건')
+   +mCard('스폰서 제출률',`<div class="mbar"><i style="width:${pc}%"></i></div><div class="msubt">${sub} / ${tot}건 제출</div>`,pc+'%')
+   +mCard('운영사무국 진행 상황',mList(mp,T,6,'진행 중인 일이 없습니다'),'2주 안')}
+ else{const rs=reqs(),st=r=>stOf(r.id,mySid()),todo=rs.filter(r=>st(r)==='none'),rej=rs.filter(r=>st(r)==='rejected'),done=rs.filter(r=>['submitted','approved'].includes(st(r)));
+  const btn=r=>`<button class="mbtn ac" data-act="mSubOpen" data-rid="${r.id}">${r.type==='text'?'입력하기':'📷 촬영·파일 올리기'}</button>`;
+  h=mNotice()+`<div class="mstats">${mStat('제출할 것',todo.length,'hi','data-act="mTab" data-t="doc"')}${mStat('다시 낼 것',rej.length,rej.length?'red':'')}${mStat('완료',done.length+'/'+rs.length)}</div>`
+   +mCard('지금 제출할 것',todo.length?todo.map(r=>`<div class="mit"><div class="mxx"><b data-act="mSubOpen" data-rid="${r.id}">${esc(r.title)}</b><div class="mm"><span>${fmtD(r.due)} 마감</span>${r.formats&&r.formats.length?`<span>${esc(r.formats.join('·'))}</span>`:''}</div><div class="mbts">${btn(r)}</div></div>${mDd(r.due)}</div>`).join(''):mEmpty('모두 제출했습니다 👍'),'마감 순')
+   +(rej.length?mCard('다시 내야 할 것',rej.map(r=>{const u=subOf(r.id,mySid());return `<div class="mit"><div class="mxx" data-act="mSubOpen" data-rid="${r.id}"><b>${esc(r.title)}</b>${u&&u.comment?`<div class="mrej">“${esc(u.comment)}”</div>`:''}</div>${mDd(r.due)}</div>`}).join(''),rej.length+'건'):'')
+   +mCard('공유 자료',mFiles(libFiles().sort((a,b)=>b.date-a.date).slice(0,4)),`<a data-act="mTab" data-t="doc" data-d="lib">전체</a>`)}
+ return `<div class="mpad">${h}</div>`}
+
+/* ---------- 일정 탭: 마일스톤 · 로드맵 · 일정 ---------- */
+function mPlan(){if(!isStaff())return mHd('일정','날짜순 · 오늘 '+fmtD(ymd(today())))+`<div class="mpad">${mSched(true)}</div>`;
+ S.mp=S.mp||'trk';const seg=`<div class="mseg dk">${[['trk','마일스톤'],['road','로드맵'],['sched','일정']].map(x=>`<button class="${S.mp===x[0]?'on':''}" data-act="mSub" data-s="${x[0]}">${x[1]}</button>`).join('')}</div>`;
+ return S.mp==='road'?mRoad(seg):S.mp==='sched'?mHd('일정','날짜순 · 오늘 '+fmtD(ymd(today())))+seg+`<div class="mpad">${mSched()}</div>`+(isAdmin()?mFab('mSchNew'):''):mTrkList(seg)}
+function mTrkList(seg){const all=R('trk'),f=S.mf_trk||'',T=ymd(today()),W=addD(T,7),c=s=>all.filter(r=>r.st===s).length;
+ const late=r=>r.st!=='완료'&&r.b&&r.b<T;
+ const rows=all.filter(r=>!f||(f==='wk'?(r.st!=='완료'&&(r.b||r.a)>=T&&(r.a||r.b)<=W):f==='late'?late(r)||r.st==='지연':f.startsWith('w:')?whoK(r.who)===f.slice(2):r.st===f));
+ const done=all.filter(r=>r.st==='완료').length,grps=[...new Set(rows.map(r=>r.grp))];
+ return mHd('마일스톤 트래커',`${all.length}개 · 완료 ${pct(done,all.length)}% · 지연 ${all.filter(late).length}`)+seg
+  +mChips('trk',[['','전체'],['진행중','진행중 '+c('진행중')],['late','지연 '+all.filter(r=>late(r)||r.st==='지연').length],['wk','이번 주'],['w:mp','운영사무국'],['w:mkt','주관사'],['w:co','공통']],f)
+  +`<div class="mpad">${grps.length?grps.map(g=>{const rs=rows.filter(r=>r.grp===g),dn=all.filter(r=>r.grp===g&&r.st==='완료').length,tt=all.filter(r=>r.grp===g).length;
+   return `<div class="mgrp"><span>${esc(g||'기타')}</span><span>${dn}/${tt} 완료</span></div>`+rs.map(r=>`<div class="mmc" data-act="mTrk" data-id="${r.id}"><div class="h"><b>${esc(r.title||'(제목 없음)')}</b>${mDd(r.b||r.a,r.st==='완료')}</div><div class="r">${mPill(r.st)}${mTag(whoK(r.who))}<span>${r.a?fmtD(r.a):''}${r.b&&r.b!==r.a?' – '+fmtD(r.b):''}</span>${r.key?`<span>· ${esc(r.key)}</span>`:''}</div></div>`).join('')}).join(''):mEmpty('조건에 맞는 마일스톤이 없습니다')}</div>`
+  +(canEdit('trk',null,'__row')?mFab('mNew','data-rt="trk"'):'')}
+function mTrkOpen(id){const r=rowById(id);if(!r)return;const cs=canEdit('trk',r,'st'),any=TRKC().some(c=>!c.f&&canEdit('trk',r,c.k));
+ modal(esc(r.title||'마일스톤'),`<div class="msh"><div class="msh-k">${esc(r.grp||'')}</div>
+  <div class="mstchips">${OPT.trk.map(s=>`<button class="mpill t-${toneOf(s)} ${r.st===s?'sel':''}" ${cs?`data-act="mSet" data-id="${r.id}" data-k="st" data-v="${s}"`:'disabled'}>${s}</button>`).join('')}</div>
+  <dl class="mdl"><dt>기간</dt><dd>${r.a?fmtD(r.a):'—'}${r.b&&r.b!==r.a?' – '+fmtD(r.b):''} ${mDd(r.b||r.a,r.st==='완료')}</dd><dt>구분</dt><dd>${mTag(whoK(r.who))}</dd><dt>담당 키맨</dt><dd>${esc(r.key||'—')}</dd><dt>비고</dt><dd>${esc(r.note||'—')}</dd></dl>
+  <div class="mbts wide">${any?`<button class="mbtn" data-act="mEdit" data-id="${r.id}">수정</button>`:''}${cs&&r.st!=='완료'?`<button class="mbtn dk" data-act="mSet" data-id="${r.id}" data-k="st" data-v="완료">✓ 완료로 표시</button>`:''}${!any&&!cs?'<span class="msubt">보기 전용입니다</span>':''}</div></div>`);mSheet()}
+function mRoad(seg){const grps=[...new Set(R('trk').map(r=>r.grp))],g=S.mf_road||'',rows=R('trk').filter(r=>r.a&&r.b&&(!g||r.grp===g));
+ const head=mHd('준비 로드맵',`행사일 ${fmtD(P().date)} · 오늘 ${fmtD(ymd(today()))}`)+seg+mChips('road',[['','전체']].concat(grps.map(x=>[x,esc(x)])),g);
+ if(!rows.length)return head+`<div class="mpad">${mEmpty('기간이 입력된 마일스톤이 없습니다')}</div>`;
+ const D=s=>new Date(s+'T00:00:00'),s0=new Date(Math.min(...rows.map(r=>+D(r.a))));s0.setDate(1);const e0=new Date(Math.max(...rows.map(r=>+D(r.b)),+D(P().date||ymd(today()))));const e1=new Date(e0.getFullYear(),e0.getMonth()+1,1);
+ const ms=[];for(let d=new Date(s0);d<e1;d.setMonth(d.getMonth()+1))ms.push(new Date(d));const tot=+e1-+s0,x=t=>(t-+s0)/tot*100,tp=x(+today()),W=Math.max(100,ms.length*24);
+ let last=null;const body=rows.map(r=>{let gh='';if(!g&&r.grp!==last){gh=`<div class="mgr-g">${esc(r.grp||'')}</div>`;last=r.grp}const l=x(+D(r.a)),w=Math.max(1.4,x(+D(r.b)+864e5)-l);
+  return gh+`<div class="mgr" data-act="mTrk" data-id="${r.id}"><b>${esc(r.title)}</b><div class="mgb"><i class="${r.st==='완료'?'done':''} ${r.st==='지연'?'late':''}" style="left:${l}%;width:${w}%;background:${WHO_COL[r.who]||'#8a93a3'}"></i></div></div>`}).join('');
+ return head+`<div class="mpad"><div class="mgantt"><div class="mgw" style="width:${W}%"><div class="mgm">${ms.map(m=>`<span>${m.getMonth()+1}월</span>`).join('')}</div><div class="mgbody" style="background-image:repeating-linear-gradient(to right,#eef0f4 0,#eef0f4 1px,transparent 1px,transparent ${100/ms.length}%)">${tp>=0&&tp<=100?`<div class="mtoday" style="left:${tp}%"></div>`:''}${body}</div></div></div>
+  <div class="mleg"><span><i style="background:#7c8dd8"></i>주관사</span><span><i style="background:#009ddf"></i>운영사무국</span><span><i style="background:#34b37e"></i>공통</span><span><i style="background:#e5484d;width:2px"></i>오늘</span></div><div class="msubt">막대를 누르면 그 마일스톤 상세 창이 열립니다${ms.length>4?' · 옆으로 밀어서 이동':''}</div></div>`}
+function mSched(sp){const T=ymd(today()),off=S.mWk||0,t=today(),mon=new Date(t);mon.setDate(t.getDate()-((t.getDay()+6)%7)+off*7);const days=[...Array(7)].map((_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return ymd(d)});
+ let its=DB.sched.filter(m=>m.pid===S.pid&&(isStaff()||m.sp)).map(m=>({id:m.id,title:m.title,a:m.a||m.b,b:m.b||m.a,who:isStaff()?whoK(m.who):'co',whoL:m.who,note:m.note,sp:m.sp,sch:1}));
+ if(sp)reqs().forEach(r=>{if(r.due)its.push({id:r.id,title:r.title+' 제출 마감',a:r.due,b:r.due,who:'sp',rid:r.id,st:stOf(r.id,mySid())})});
+ its=its.filter(i=>i.a).sort((a,b)=>a.a<b.a?-1:a.a>b.a?1:0);const sel=S.mDay||'',hide=S.mHidePast!==false;
+ const col={mkt:'#7c8dd8',mp:'#009ddf',co:'#34b37e',sp:'#d97706'};
+ const strip=`<div class="mwkh"><button data-act="mWk" data-d="-1">‹</button><span>${days[0].slice(5).replace('-','/')} – ${days[6].slice(5).replace('-','/')}</span><button data-act="mWk" data-d="1">›</button>${off?'<button data-act="mWk" data-d="0">오늘</button>':''}</div><div class="mwk">${days.map(d=>{const ev=its.filter(i=>i.a<=d&&i.b>=d),dt=new Date(d+'T00:00:00');
+  return `<button class="${d===T?'td':''} ${sel===d?'on':''}" data-act="mDay" data-d="${d}">${DOW[dt.getDay()]}<b>${dt.getDate()}</b><u>${ev.slice(0,3).map(i=>`<i style="background:${col[i.who]||'#94a3b8'}"></i>`).join('')}</u></button>`}).join('')}</div>`;
+ const list=sel?its.filter(i=>i.a<=sel&&i.b>=sel):its.filter(i=>!hide||i.b>=T);let lm='';
+ const rows=list.map(i=>{const m=i.a.slice(0,7);let mh='';if(m!==lm&&!sel){mh=`<div class="mmon">${+m.slice(5)}월</div>`;lm=m}const past=i.b<T,now=i.a<=T&&i.b>=T;
+  const act=i.rid?`data-act="mSubOpen" data-rid="${i.rid}"`:(isAdmin()?`data-act="mSch" data-id="${i.id}"`:'');
+  return mh+`<div class="mti ${past?'past':''} ${now?'now':''}"><div class="mmc" ${act}><div class="h"><b>${esc(i.title)}</b>${now?'<span class="mdd t1">진행중</span>':past?'':mDd(i.a)}</div><div class="r"><span>${fmtD(i.a)}${i.b!==i.a?' – '+fmtD(i.b):''}</span>${i.rid?(i.st?stBadge(i.st):''):isStaff()?`${mTag(i.who)}${i.sp?'<span>· 스폰서 노출</span>':''}`:''}</div>${i.note?`<div class="msubt">${esc(i.note)}</div>`:''}</div></div>`}).join('');
+ return strip+(sel?`<div class="mgrp"><span>${fmtD(sel)}</span><a data-act="mDay" data-d="">전체 보기</a></div>`:`<div class="mgrp"><span></span><a data-act="mHidePast">${hide?'지난 일정 보기':'지난 일정 숨기기'}</a></div>`)+`<div class="mtl">${rows||mEmpty(sel?'이 날은 일정이 없습니다':'일정이 없습니다')}</div>`}
+function mSchOpen(id,isNew){const m=isNew?{id:'',title:'',a:ymd(today()),b:ymd(today()),who:'공통',sp:false,note:''}:DB.sched.find(x=>x.id===id);if(!m)return;
+ modal(isNew?'일정 추가':'일정 수정',`<div class="msh mform"><label>일정명<input id="ms_title" value="${esc(m.title)}"></label><div class="m2"><label>시작일<input type="date" id="ms_a" value="${esc(m.a||'')}"></label><label>종료일<input type="date" id="ms_b" value="${esc(m.b||'')}"></label></div>
+  <label>담당<input id="ms_who" value="${esc(m.who||'')}" list="ms_wl"><datalist id="ms_wl">${['공통','마플','MKT','메가존','스폰서'].map(x=>`<option value="${x}">`).join('')}</datalist></label><label>비고<input id="ms_note" value="${esc(m.note||'')}"></label>
+  <label class="mchk"><input type="checkbox" id="ms_sp" ${m.sp?'checked':''}> 스폰서에게도 보이기</label>
+  <div class="mbts wide">${isNew?'':`<button class="mbtn red" data-act="mSchDel" data-id="${m.id}">삭제</button>`}<button class="mbtn dk" data-act="mSchSave" data-id="${m.id}">저장</button></div></div>`);mSheet()}
+
+/* ---------- 아젠다 ---------- */
+function mAgenda(){const rows=agRows();agFix(rows);const L=agLayout(rows),tabs=agTabs(L,rows),pj=P();
+ if(!tabs.length)return mHd('아젠다','')+`<div class="mpad">${mEmpty('아젠다가 아직 없습니다')}</div>`;
+ const i=Math.min(S.mAgT||0,tabs.length-1),tb=tabs[i],rs=tb.rows.slice().sort((a,b)=>(mOf(a.start)??9999)-(mOf(b.start)??9999)),ses=agSess().length;
+ return mHd('아젠다',`${fmtD(pj.date)} · 세션 ${ses}`)+`<div class="mseg dk scroll">${tabs.map((t,k)=>`<button class="${k===i?'on':''}" data-act="mAgT" data-i="${k}">${esc(t.label)}</button>`).join('')}</div>`
+  +`<div class="mpad">${tb.room||tb.desc?`<div class="msubt" style="margin:0 2px 8px">${esc([tb.room,tb.desc].filter(Boolean).join(' · '))}</div>`:''}<section class="mcd">${rs.map(r=>{const brk=AG_NS.includes(r.kind)&&r.kind!=='진행',sp=(r.spks||[]).map(s=>[s.n,s.r,s.o].filter(Boolean).join(' · ')).filter(Boolean);
+   return `<div class="mag ${brk?'brk':''}" data-act="mAg" data-id="${r.id}"><div class="tm">${esc(r.start||'')}<small>${esc(r.end||'')}</small></div><div class="bx">${r.tag||(r.kind&&r.kind!=='세션')?`<div class="tg" style="color:${KC[r.kind]||'#6d28d9'}">${esc(r.tag||r.kind)}</div>`:''}<b>${esc(r.title||'(제목 미정)')}</b>${sp.length?`<div class="sp">${sp.map(esc).join('<br>')}</div>`:''}</div></div>`}).join('')||mEmpty('세션이 없습니다')}</section></div>`
+  +(canEdit('agenda')?mFab('mNew','data-rt="ag"'):'')}
+function mAgOpen(id){const r=rowById(id);if(!r)return;if(canEdit('agenda',r,'title'))return mEdit(id);const sp=(r.spks||[]);
+ modal(esc(r.title||'세션'),`<div class="msh"><dl class="mdl"><dt>시간</dt><dd>${esc(r.start||'')}${r.end?' – '+esc(r.end):''}</dd><dt>구분</dt><dd>${esc(r.tag||r.kind||'')}</dd>${r.track&&r.track!=='*'?`<dt>트랙</dt><dd>${esc(r.track)}</dd>`:''}${sp.length?`<dt>연사</dt><dd>${sp.map(s=>esc([s.n,s.r,s.o].filter(Boolean).join(' · '))).join('<br>')}</dd>`:''}${r.topic?`<dt>내용</dt><dd>${esc(r.topic)}</dd>`:''}</dl></div>`);mSheet()}
+
+/* ---------- 자료 ---------- */
+function mFiles(list){if(!list.length)return mEmpty('표시할 자료가 없습니다');
+ const col=e=>({pdf:'#ef4444',ppt:'#ea580c',pptx:'#ea580c',ai:'#f59e0b',psd:'#2563eb',xls:'#16a34a',xlsx:'#16a34a',doc:'#2563eb',docx:'#2563eb',zip:'#64748b',mp4:'#7c3aed'}[e]||(/png|jpe?g|gif|svg|webp/.test(e)?'#10b981':'#64748b'));
+ return list.map(f=>`<div class="mfl"><div class="mfi" style="background:${col(f.ext)}" data-act="prevLib" data-id="${f.id}">${f.thumb?`<img src="${f.thumb}" alt="">`:esc(String(f.ext||'?').toUpperCase().slice(0,4))}</div><div class="x" data-act="prevLib" data-id="${f.id}"><b>${esc(f.name)}</b><small>${esc(f.folder||'')} · ${fmtSize(f.size)} · ${fmtDT(f.date)}${f.up!=null?' · 전송 중 '+Math.round(f.up)+'%':''}</small></div><button class="mic" data-act="dlLib" data-id="${f.id}">${ico('download',17)}</button>${canDelLib(f)?`<button class="mic" data-act="delLib" data-id="${f.id}">${ico('trash',16)}</button>`:''}</div>`).join('')}
+function mDoc(){const staff=isStaff();S.md=S.md||(staff?'lib':'sub');
+ const seg=`<div class="mseg dk">${(staff?[['lib','자료실'],['st','제출 현황']]:[['sub','제출하기'],['lib','공유 자료']]).map(x=>`<button class="${S.md===x[0]?'on':''}" data-act="mDocT" data-d="${x[0]}">${x[1]}${x[0]==='st'||x[0]==='sub'?(mBadge()?` <b class="mbd">${mBadge()}</b>`:''):''}</button>`).join('')}</div>`;
+ if(S.md==='st')return mHd('제출 현황','스폰서별 진행률 · 칸을 누르면 검수')+seg+mStatus();
+ if(S.md==='sub'){const rs=reqs();return mHd('자료 제출',`${esc((sp(mySid())||{}).name||'')} · 마플·주관사만 볼 수 있습니다`)+seg+`<div class="mpad"><section class="mcd">${rs.map(r=>{const st=stOf(r.id,mySid());return `<div class="mit"><div class="mxx" data-act="mSubOpen" data-rid="${r.id}"><b>${esc(r.title)}</b><div class="mm">${stBadge(st)}<span>${fmtD(r.due)} 마감</span></div></div>${['approved','submitted'].includes(st)?'':mDd(r.due)}</div>`}).join('')||mEmpty('요청받은 항목이 없습니다')}</section></div>`}
+ const all=libFiles(),f=S.folder||'전체',q=(S.mq||'').toLowerCase(),list=all.filter(x=>(f==='전체'||x.folder===f)&&(!q||(x.name+(x.note||'')).toLowerCase().includes(q))).sort((a,b)=>b.date-a.date);
+ return mHd(staff?'자료실':'공유 자료',`${all.length}개 파일`)+seg+`<div class="mchips light">${['전체',...DB.folders].map(x=>`<button class="${f===x?'on':''}" data-act="folder" data-f="${esc(x)}">${esc(x)}</button>`).join('')}</div>`
+  +`<div class="mpad"><input class="msearch" placeholder="파일명 검색" value="${esc(S.mq||'')}" data-inp="mq"><section class="mcd" id="mlib">${mFiles(list)}</section></div>`+(staff?mFab('libUp'):'')}
+function mStatus(){const rs=reqs(),ss=sponsors(),srt=S.mf_st||'';if(!rs.length||!ss.length)return `<div class="mpad">${mEmpty(!ss.length?'참여 스폰서가 없습니다':'요청 항목이 없습니다')}</div>`;
+ const C={approved:['ok','✓'],submitted:['wt','!'],rejected:['rj','✕'],none:['no','']};
+ let cards=ss.map(s=>{let t=0,d=0,w=0;const cells=rs.map(r=>{if(!canSee(r.target,s.id))return '';t++;const st=stOf(r.id,s.id)||'none';if(st==='submitted'||st==='approved')d++;if(st==='submitted')w++;const c=C[st]||C.none;
+   return `<div class="msq"><span class="${c[0]}" ${st!=='none'?`data-act="openSub" data-rid="${r.id}" data-sid="${s.id}"`:''}>${c[1]}</span>${esc(r.title.length>5?r.title.slice(0,5)+'…':r.title)}</div>`}).join(''),p=t?Math.round(d/t*100):0;return {s,p,w,h:`<section class="mcd"><div class="msph"><b>${esc(s.name)} <small>${esc(s.tier||'')}</small></b><span>${p}%</span></div><div class="mbar"><i style="width:${p}%"></i></div><div class="msqs">${cells}</div>${isAdmin()&&p<100?`<button class="mbtn sm" data-act="remind" data-sid="${s.id}">리마인드</button>`:''}</section>`}});
+ if(srt==='low')cards.sort((a,b)=>a.p-b.p);if(srt==='wait')cards=cards.filter(c=>c.w);
+ return mChips('st',[['','전체 '+ss.length],['low','미제출 많은 순'],['wait','검수 대기']],srt)+`<div class="mpad"><div class="mleg"><span><i class="ok"></i>승인</span><span><i class="wt"></i>검수 대기</span><span><i class="rj"></i>반려</span><span><i class="no"></i>미제출</span></div>${cards.map(c=>c.h).join('')||mEmpty('검수 대기 중인 스폰서가 없습니다')}</div>`}
+function mSub(rid,refresh){const r=DB.requests.find(x=>x.id===rid);if(!r)return;S.mSubRid=rid;
+ const sid=isStaff()?null:mySid();if(!sid)return;
+ modal(esc(r.title),`<div class="msub">${reqCard(r,sid)}</div>`);mSheet();if(!refresh)S.mSubRid=rid}
+
+/* ---------- 더보기 ---------- */
+const M_MENU=()=>{const st=isStaff(),it=[];const add=(k,ic,l,ok)=>{if(ok)it.push([k,ic,l])};
+ add('ovw','info','행사 정보',st&&canView('ovw'));add('prod','box','제작물',st&&canView('prod'));add('cost','chart','견적',canView('cost'));
+ add('status','check','스폰서 현황',st);add('cfm','check','컨펌 요청',st);add('spk','mic','스피커',st&&canView('spk'));add('req','list','세션 Requirement',st&&canView('req'));add('rha','clock','리허설 일정',st&&canView('reh'));add('rhb','clock','스피커 슬롯',st&&canView('reh'));
+ add('spn','star','스폰서',st&&canView('spn'));add('spc','users','스폰서 담당자',st&&canView('spc'));add('cln','layers','고객사',st&&canView('cln'));add('clc','users','고객사 담당자',st&&canView('clc'));add('ast','folder','에셋 폴더',st&&canView('ast'));
+ return it};
+function mMenu(){const u=S.user;return mHd('더보기','')+`<div class="mpad"><section class="mcd mme"><div class="mav big">${esc((u.org||'?')[0])}</div><div><b>${esc(u.org||'')}</b><small>${esc(u.name||'')} · ${wlOn()&&u.role==='admin'?'운영사무국':ROLE[u.role]}</small></div></section>
+ ${M_MENU().length?`<div class="mgrid">${M_MENU().map(m=>`<button data-act="mGo" data-s="${m[0]}"><i>${ico(m[1],20)}</i>${m[2]}</button>`).join('')}</div>`:''}
+ ${mNotice()?`<div style="margin:12px 0">${mNotice()}</div>`:''}
+ <section class="mcd mlinks">${isAdmin()?`<button data-act="noticeEd">${ico('edit',16)}공지 쓰기 · 수정</button>`:''}<button data-act="pwMe">${ico('lock',16)}비밀번호 변경</button><button data-act="mPC">${ico('grid',16)}PC 버전으로 보기</button><button data-act="logout" class="red">${ico('x',16)}로그아웃</button></section>
+ ${isAdmin()?'<div class="msubt" style="text-align:center;margin-top:10px">계정·프로젝트 관리와 파일 가져오기는 PC 버전에서 할 수 있습니다</div>':''}</div>`}
+function mMore(k){if(k==='status')return mHd('스폰서 현황','스폰서별 진행률 · 칸을 누르면 검수',1)+mStatus();
+ if(k==='cost')return mCost();if(k==='cfm')return mCfm();if(k==='ovw')return mOvw();return mTbl(k)}
+function mCfm(){const cs=R('cfm').sort((a,b)=>(a.st==='대기'?0:1)-(b.st==='대기'?0:1)||(b.at||0)-(a.at||0)),host=S.user.role==='host';
+ return mHd('컨펌 요청',`대기 ${cs.filter(c=>c.st==='대기').length}건`,1)+`<div class="mpad"><section class="mcd">${cs.map(c=>`<div class="mit"><div class="mxx"><b data-act="cfmOpen" data-id="${c.id}">${esc(c.title)}</b><div class="mm"><span class="mcst ${c.st==='컨펌'?'ok':c.st==='수정 요청'?'rj':'wt'}">${c.st}</span><span>${esc(c.by||'')}</span></div>${host&&c.st==='대기'?`<div class="mbts"><button class="mbtn ac" data-act="cfmAct" data-id="${c.id}" data-s="컨펌">컨펌</button><button class="mbtn" data-act="cfmAct" data-id="${c.id}" data-s="수정 요청">수정 요청</button></div>`:''}</div>${mDd(c.due,c.st==='컨펌')}</div>`).join('')||mEmpty('컨펌 요청이 없습니다')}</section></div>`+(isAdmin()?mFab('cfmNew'):'')}
+function mOvw(){const rs=R('ovw'),cx=R('coex'),ed=canEdit('ovw',null,'v');
+ return mHd('행사 정보',esc(P().name),1)+`<div class="mpad"><section class="mcd"><dl class="mdl wide">${rs.map(r=>`<dt>${esc(r.k)}</dt><dd ${ed?`data-act="mEdit" data-id="${r.id}"`:''}>${esc(r.v||'—')}${r.note?`<small>${esc(r.note)}</small>`:''}</dd>`).join('')}</dl></section>
+  ${cx.length?mCard('대관',cx.map(r=>`<div class="mit"><div class="mxx" ${ed?`data-act="mEdit" data-id="${r.id}"`:''}><b>${esc([r.floor,r.room].filter(Boolean).join(' '))}</b><div class="mm"><span>${esc(r.use||'')}</span>${r.period?`<span>${esc(r.period)}</span>`:''}</div></div></div>`).join('')):''}</div>`+(canEdit('ovw',null,'__row')?mFab('mNew','data-rt="ovw"'):'')}
+function mCost(){const c=costSum(),adm=isAdmin(),open=S.mCostOpen||{};
+ return mHd('견적',adm?'마플만 수정 · 단위 KRW':'보기 전용 · 단위 KRW',1)+`<div class="mpad"><section class="mcd mtotal"><small>견적금액 · VAT 별도</small><b>${won(c.final)}<em>원</em></b><div><span>소계 ${won(c.all)}</span><span>커미션 ${c.comm}% ${won(c.cm)}</span></div><div><span>VAT 포함</span><span>${won(Math.round(c.final*1.1))}원</span></div></section>
+  <section class="mcd">${c.secs.map(s=>{const v=c.tot(s),p=c.all?Math.round(v/c.all*1000)/10:0,rs=c.rs.filter(r=>r.sec===s);
+   return `<div class="mcs" data-act="mCostSec" data-s="${esc(s)}"><div><b>${esc(s||'(구분 없음)')}</b><b>${won(v)}</b></div><div class="mbar"><i style="width:${Math.min(100,p)}%"></i></div><small>${rs.length}개 항목 · ${p}% ${open[s]?'▴':'▾'}</small></div>`
+    +(open[s]?`<div class="mcl">${rs.map(r=>`<div class="mci" ${adm?`data-act="mEdit" data-id="${r.id}"`:''}><div><b>${esc(r.item||'')}</b><small>${esc(r.sub||'')}${r.qty!==''&&r.qty!=null?` · ${esc(r.qty)} × ${won(r.unit)}${r.days&&r.days!=1?' × '+esc(r.days):''}`:''}${r.st?` · <i class="mst-x">${esc(r.st)}</i>`:''}</small></div><b>${won(amtOf(r)||0)}</b></div>`).join('')}</div>`:'')}).join('')||mEmpty('견적 항목이 없습니다')}</section></div>`+(adm?mFab('mNew','data-rt="cost"'):'')}
+
+/* ---------- 표 공통: 카드 목록 + 아래에서 올라오는 편집 창 ---------- */
+const M_VIEW=()=>({agenda:vAgenda,road:vRoad,trk:vTrk,prod:vProd,ovw:vOvw,spk:vSpk,req:vReq,reh:vReh,spn:vSpn,spc:vSpc,cln:vCln,clc:vClc,ast:vAst,sync:vSync,cost:vCost});
+const M_AGC=()=>[C('start','시작',80,{ty:'time'}),C('end','종료',80,{ty:'time'}),C('tag','태그',90),C('title','세션 제목',300,{ty:'long'}),SEL('kind','구분',90,KINDS),C('speaker','연사 (쉼표로 구분)',200),C('topic','내용',300,{ty:'long'}),SEL('status','상태',90,OPT.ag.status),C('note','비고',200)];
+const M_REQC=()=>[C('sid','세션 No',80),C('fmt','발표 형식',120),C('pc','PC',100),SEL('video','영상',60,OPT.yn),SEL('sound','사운드',60,OPT.yn),SEL('demo','데모',60,OPT.yn),C('net','네트워크',100),C('mic','마이크',100),C('micN','마이크 수',60),C('prompt','프롬프터',100),C('interp','통역',100),C('qa','Q&A',100),C('props','소품',120),SEL('d1','발표자료 1차',90,OPT.d),SEL('dfin','발표자료 최종',90,OPT.d),C('note','비고',200,{ty:'long'})];
+function mCols(rt){if(rt==='trk'){GCOLS.trk=GCOLS.trk||TRKC();return TRKC().filter(c=>!c.f)}if(rt==='ag')return M_AGC();if(rt==='req')return M_REQC();if(!GCOLS[rt]){const mod=RT2MOD[rt],fn=M_VIEW()[mod],sv=[S.view,S.rehTab,S.costTab];try{if(rt==='rha')S.rehTab='a';if(rt==='rhb')S.rehTab='b';if(rt==='cost')S.costTab='est';S.view=mod;if(fn)fn(document.createElement('div'))}catch(e){console.warn('mCols',rt,e)}S.view=sv[0];S.rehTab=sv[1];S.costTab=sv[2]}return (GCOLS[rt]||[]).filter(c=>!c.f)}
+const M_TL={rha:'리허설 일정',rhb:'스피커 슬롯'};
+function mTbl(rt){const mod=RT2MOD[rt]||rt;if(!canView(mod))return mHd('권한 없음','',1)+mEmpty('볼 수 없는 화면입니다');
+ const cols=mCols(rt),rows=R(rt),q=(S.mq||'').toLowerCase(),PK=['title','name','nameKo','nameEn','item','k','co','room','sid'],tcs=PK.map(k=>cols.find(c=>c.k===k)).filter(Boolean).concat(cols.filter(c=>c.ty==='text'&&!PK.includes(c.k))),tc=tcs[0]||cols[0];
+ const bc=cols.filter(c=>c.ty==='sel'&&(c.bd||/^(st|status|attend|rev|dwg|d1|logo|content)$/.test(c.k))).slice(0,2),oc=cols.filter(c=>c!==tc&&!bc.includes(c)&&c.ty!=='file'&&c.ty!=='long').slice(0,3);
+ const list=rows.filter(r=>!q||cols.some(c=>String(r[c.k]==null?'':r[c.k]).toLowerCase().includes(q)));
+ const val=(c,r)=>{const v=r[c.k];if(v==null||v==='')return '';return c.ty==='num'?won(v):c.ty==='date'?fmtD(v):String(v)};
+ return mHd(M_TL[rt]||TBL_L[rt]||rt,`${rows.length}건`,1)+`<div class="mpad"><input class="msearch" placeholder="검색" value="${esc(S.mq||'')}" data-inp="mq">${list.map(r=>`<div class="mmc" data-act="mEdit" data-id="${r.id}"><div class="h"><b>${esc((tcs.map(c=>val(c,r)).find(Boolean))||'(빈 행)')}</b><span>${bc.map(c=>mPill(r[c.k])).join('')}</span></div><div class="r">${oc.map(c=>val(c,r)).filter(Boolean).map(v=>`<span>${esc(v.length>28?v.slice(0,28)+'…':v)}</span>`).join('<span>·</span>')}</div></div>`).join('')||mEmpty(q?'검색 결과가 없습니다':'행이 없습니다')}</div>`
+  +(canEdit(mod,null,'__row')?mFab('mNew',`data-rt="${rt}"`):'')}
+function mField(c,v,ed){const id='mf_'+c.k,val=v==null?'':v;if(!ed){let t=c.ty==='num'&&val!==''?won(val):c.ty==='date'&&val?fmtD(val):c.ty==='link'&&val?`<a href="${esc(val)}" target="_blank" rel="noopener">열기 ↗</a>`:esc(val);if(c.ty==='file')t=val&&val.name?`<a data-act="prevLib" data-id="${val.id}">${esc(val.name)}</a>`:'—';return `<label class="mro"><span>${esc(c.l)}</span><div>${t||'—'}</div></label>`}
+ if(c.ty==='file')return mField(c,v,false);
+ if(c.ty==='sel'){const o=c.opts.includes(val)?c.opts:c.opts.concat(val===''?[]:[val]);return `<label><span>${esc(c.l)}</span><select id="${id}" data-mk="${c.k}">${o.map(x=>`<option ${x===val?'selected':''}>${esc(x)}</option>`).join('')}</select></label>`}
+ if(c.ty==='long')return `<label><span>${esc(c.l)}</span><textarea id="${id}" data-mk="${c.k}" rows="3">${esc(val)}</textarea></label>`;
+ const ty=c.ty==='date'?'date':c.ty==='time'?'time':c.ty==='link'?'url':'text';return `<label><span>${esc(c.l)}</span><input id="${id}" data-mk="${c.k}" type="${ty}" ${c.ty==='num'?'inputmode="decimal"':''} value="${esc(val)}"></label>`}
+function mEdit(id,rt){const nw=!id,r=nw?(BLANK[rt]?BLANK[rt]():{}):rowById(id);if(!r)return;rt=rt||r.t;const mod=RT2MOD[rt]||rt,cols=mCols(rt);
+ if(rt==='ag'&&!nw&&!r.speaker&&r.spks&&r.spks.length)r.speaker=r.spks.map(s=>[s.n,s.r,s.o].filter(Boolean).join(' / ')).join(', ');
+ const edf=c=>nw?canEdit(mod,null,'__row')||canEdit(mod,null,c.k):canEdit(mod,r,c.k)&&!c.ro,any=cols.some(edf),del=!nw&&canEdit(mod,r,'__row');
+ S.mEd={id:nw?null:id,rt};
+ modal(nw?(TBL_L[rt]||'항목')+' 추가':esc(rowLab(r)||TBL_L[rt]||'상세'),`<div class="msh mform">${cols.map(c=>mField(c,r[c.k],edf(c))).join('')}
+  <div class="mbts wide">${del?`<button class="mbtn red" data-act="mDel" data-id="${id}">삭제</button>`:''}${any?`<button class="mbtn dk" data-act="mSave">${nw?'추가':'저장'}</button>`:'<button class="mbtn" data-act="close">닫기</button>'}</div></div>`);mSheet()}
+function mSheet(){const m=document.querySelector('#mroot .modal');if(m)m.classList.add('msheet')}
+
+/* ---------- 동작 ---------- */
+Object.assign(A,{
+ mTab:d=>{S.mt=d.t;S.ms=null;S.mq='';if(d.d)S.md=d.d;closeModal();mApp()},
+ mSub:d=>{S.mp=d.s;mApp()},
+ mGo:d=>{S.ms=d.s;S.mq='';closeModal();mApp()},
+ mBack:()=>{S.ms=null;S.mq='';mApp()},
+ mF:d=>{S['mf_'+d.k]=d.v;mApp()},
+ mDocT:d=>{S.md=d.d;mApp()},
+ mAgT:d=>{S.mAgT=+d.i;mApp()},
+ mAg:d=>mAgOpen(d.id),
+ mTrk:d=>mTrkOpen(d.id),
+ mWk:d=>{S.mWk=+d.d===0?0:(S.mWk||0)+(+d.d);S.mDay='';mApp()},
+ mDay:d=>{S.mDay=S.mDay===d.d?'':d.d;mApp()},
+ mHidePast:()=>{S.mHidePast=S.mHidePast===false;mApp()},
+ mCostSec:d=>{S.mCostOpen=S.mCostOpen||{};S.mCostOpen[d.s]=!S.mCostOpen[d.s];mApp()},
+ mSubOpen:d=>{if(isStaff())return A.mGo({s:'status'});mSub(d.rid)},
+ mSet:d=>{const r=rowById(d.id);if(!r)return;cellSet(d.id,d.k,d.v);if(r.t==='trk')mTrkOpen(d.id);mApp();if(r.t==='trk'&&d.v==='완료')closeModal()},
+ mEdit:d=>mEdit(d.id),
+ mNew:d=>{if(canEdit(RT2MOD[d.rt]||d.rt,null,'__row'))mEdit(null,d.rt)},
+ mSave:()=>{const e=S.mEd;if(!e)return;const vals={};document.querySelectorAll('#mroot [data-mk]').forEach(i=>vals[i.dataset.mk]=i.value);
+  if(e.rt==='ag'&&'speaker' in vals){const sp=String(vals.speaker||'').split(/\s*,\s*/).filter(Boolean).map(x=>{const p=x.split('/').map(y=>y.trim());return {n:p[0]||'',r:p[1]||'',o:p[2]||''}});vals._spks=sp}
+  const cols=mCols(e.rt),num=k=>{const c=cols.find(x=>x.k===k);return c&&c.ty==='num'};
+  if(!e.id){const o=Object.assign(BLANK[e.rt]?BLANK[e.rt]():{},vals);Object.keys(o).forEach(k=>{if(num(k)&&o[k]!==''){o[k]=Number(String(o[k]).replace(/[^\d.\-]/g,''))||0}});if(o._spks){o.spks=o._spks;delete o._spks}
+   if(e.rt==='ag'){const L=agL();o.blk=o.blk||(L[0]&&L[0].id)||'';if(!o.track)o.track='*'}
+   const r=newRow(e.rt,o);addLog('추가',(TBL_L[e.rt]||'')+' · '+rowLab(r));Store.save('추가')}
+  else{const r=rowById(e.id);if(!r)return;Object.keys(vals).forEach(k=>{if(k.startsWith('_'))return;const cur=r[k]==null?'':String(r[k]);if(cur!==vals[k])cellSet(e.id,k,vals[k])});
+   if(vals._spks&&canEdit('agenda',r,'title')){r.spks=vals._spks;Store.save('수정')}}
+  S.mEd=null;closeModal();toast('저장했습니다','success');mApp()},
+ mDel:d=>{const r=rowById(d.id);if(!r||!canEdit(RT2MOD[r.t],r,'__row'))return;confirmBox('이 항목을 삭제할까요?',()=>{rowFs(r).forEach(f=>{if(f.driveId&&Drive.on())Drive.del(f.driveId)});DB.rows=DB.rows.filter(x=>x!==r);addLog('삭제',(TBL_L[r.t]||'')+' · '+rowLab(r));Store.save('삭제');S.mEd=null;mApp()})},
+ mSch:d=>mSchOpen(d.id),
+ mSchNew:()=>{if(isAdmin())mSchOpen(null,true)},
+ mSchSave:d=>{if(!isAdmin())return;const g=k=>{const e=$('#ms_'+k);return e?(e.type==='checkbox'?e.checked:e.value.trim()):''};const o={title:g('title')||'새 일정',a:g('a'),b:g('b')||g('a'),who:g('who'),note:g('note'),sp:g('sp')};if(o.b<o.a)o.b=o.a;
+  if(d.id){const m=DB.sched.find(x=>x.id===d.id);if(!m)return;Object.assign(m,o);addLog('수정','일정 · '+o.title)}else{DB.sched.push(Object.assign({id:uid('m'),pid:S.pid,sec:''},o));addLog('추가','일정 · '+o.title)}
+  Store.save('일정');closeModal();mApp()},
+ mSchDel:d=>{if(!isAdmin())return;const m=DB.sched.find(x=>x.id===d.id);if(!m)return;confirmBox('이 일정을 삭제할까요?',()=>{DB.sched=DB.sched.filter(x=>x!==m);addLog('삭제','일정 · '+m.title);Store.save('일정');mApp()})},
+ mPC:(d,e)=>{if(e&&e.preventDefault)e.preventDefault();try{sessionStorage.setItem('erc_pc','1')}catch(_){}location.href=mUrl(false)}});
+
+if(MB.on){
+ renderLogin=mLogin;renderApp=mApp;renderView=mApp;
+ const navB=A.nav;A.nav=d=>{const v=d.v,m={dash:['home'],trk:['plan','trk'],road:['plan','road'],schedule:['plan','sched'],sync:['plan','trk'],agenda:['ag'],library:['doc'],submit:['doc'],requests:['doc'],status:['doc']}[v];
+  closeModal();S.ms=null;if(m){S.mt=m[0];if(v==='trk'||v==='road'||v==='schedule')S.mp=m[1];if(v==='library')S.md='lib';if(v==='submit')S.md='sub';if(v==='status')S.md='st'}else if(v==='cost'||isMod(v)){S.mt='more';S.ms=v==='reh'?'rha':v}else S.mt='home';mApp()};
+ A.navg=d=>{S.mt='home';mApp()};
+ A.folder=d=>{S.folder=d.f;mApp()};
+ const mq=e=>{const a=e.target.closest&&e.target.closest('[data-inp="mq"]');if(!a||e.isComposing)return;S.mq=a.value;const pos=a.selectionStart;mApp();const n=document.querySelector('[data-inp="mq"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}};
+ document.addEventListener('input',mq);document.addEventListener('compositionend',mq);
+ /* 열려 있는 아래 창은 백 버튼(휴대폰 뒤로 가기)으로 닫히게 */
+ window.addEventListener('popstate',()=>{if($('#mroot').classList.contains('open'))closeModal();else if(S.ms){S.ms=null;mApp()}});
+ const mdB=modal;modal=function(t,h,w){const was=$('#mroot').classList.contains('open');mdB(t,h,w);mSheet();if(!was)try{history.pushState({m:1},'')}catch(_){}};
+}
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';
@@ -2769,7 +3141,7 @@ document.addEventListener('dragleave',e=>{const d=e.target.closest('.upload-zone
 document.addEventListener('drop',async e=>{const d=e.target.closest('.upload-zone');if(!d)return;e.preventDefault();d.classList.remove('over');const fs=await readFiles(e.dataTransfer.files);if(!fs.length)return;const k=d.dataset.drop;
  if(k==='agenda'||k==='imp'&&S.view==='agenda'){agImport(fs[0].file)}else if(k==='imp'){impFiles(fs)}else if(k==='kv'){kvSet(fs[0].file)}else if(k==='lib'){upTmp.push(...fs);upList()}else if(k.includes('|')){const[r,s]=k.split('|');addSubFiles(r,s,fs,true)}else addSubFiles(k,mySid(),fs)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-const ADMIN_ONLY=new Set(['approve','unapprove','reject','remind','reqNew','reqEdit','reqSave','reqDel','accNew','accSave','accBulk','bulkSave','pwReset','accTog','pwShow','projNew','projSave','projGo','hostNew','hostSave','hostAcc','hostAccSave','hostEdit','hostEditSave','pickProxy','accEdit','accEditSave','diag','agPub','roadEdit','roadAdd','roadSave','costTab','costPub','schAdd','schDel','kvPick','kvDel','kvMove','membAdd','membSave','membDel','projDel','projDelOk']);
+const ADMIN_ONLY=new Set(['approve','unapprove','reject','remind','reqNew','reqEdit','reqSave','reqDel','accNew','accSave','accBulk','bulkSave','pwReset','accTog','pwShow','projNew','projSave','projGo','hostNew','hostSave','hostAcc','hostAccSave','hostEdit','hostEditSave','pickProxy','accEdit','accEditSave','diag','agPub','roadEdit','roadAdd','roadSave','costPub','schAdd','schDel','kvPick','kvDel','kvMove','membAdd','membSave','membDel','projDel','projDelOk']);
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(!a||!A[a.dataset.act])return;if(ADMIN_ONLY.has(a.dataset.act)&&!isAdmin())return toast('마플 관리자만 사용할 수 있습니다','error');A[a.dataset.act](a.dataset,e)});
 /* 서버와 동기화된 최신 데이터로 조용히 갱신 (입력·업로드·모달 중에는 건드리지 않음) */
 const busyUi=()=>Store.n||document.querySelector('.modal-overlay.open')||focusBusy()||DB.files.some(f=>f.up!=null)||DB.subs.some(u=>u.files.some(f=>f.up!=null))||(DB.rows||[]).some(r=>rowFs(r).some(x=>x.up!=null));

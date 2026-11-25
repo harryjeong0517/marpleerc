@@ -1,6 +1,1 @@
-{
-  "cleanUrls": false,
-  "rewrites": [
-    { "source": "/:slug([a-z0-9][a-z0-9-]*)", "destination": "/index.html" }
-  ]
-}
+{"cleanUrls":false,"rewrites":[{"source":"/m","destination":"/index.html"},{"source":"/:slug([a-z0-9][a-z0-9-]*)/m","destination":"/index.html"},{"source":"/:slug([a-z0-9][a-z0-9-]*)","destination":"/index.html"}]}

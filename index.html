@@ -741,6 +741,13 @@ html.mob .toast-container{bottom:calc(92px + env(safe-area-inset-bottom));left:5
 .mlf input{height:50px;border-radius:13px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);margin-bottom:10px;padding:0 15px;color:#fff;font-size:16px;font-family:inherit}.mlf input::placeholder{color:#9aa3bd}
 .mlerr{color:#fca5a5;font-size:12.5px;min-height:18px;margin-top:8px;text-align:center}.mlfoot{text-align:center;font-size:11px;color:#9aa3bd;margin-top:10px}.mlfoot a{color:#c9cfe0}
 .mdemo{display:flex;gap:6px;justify-content:center;margin-top:6px}.mdemo button{border:1px solid rgba(255,255,255,.25);background:none;color:#fff;border-radius:9px;padding:6px 10px;font-size:12px;font-family:inherit}
+/* 모바일 · 밝은 테마 */
+html.mob body.wl-light .mtop,html.mob body.wl-light .mhd,html.mob body.wl-light .mseg{color:#0f172a}
+html.mob body.wl-light .mtop{border-bottom:1px solid #eef0f4}html.mob body.wl-light .mhd p{color:#64748b}
+html.mob body.wl-light .mav,html.mob body.wl-light .mback,html.mob body.wl-light .mproj{background:#f1f5f9;color:#0f172a}
+html.mob body.wl-light .mseg button{background:#f1f5f9;color:#475569}html.mob body.wl-light .mseg button.on{background:var(--m-ac);color:var(--m-act)}
+html.mob body.wl-light .mname small{color:#94a3b8}
+html.mob body.wl .mkv{box-shadow:0 0 0 1px rgba(0,0,0,.04)}
 </style>
 </head>
 <body>
@@ -2890,11 +2897,11 @@ const mChips=(key,opts,cur)=>`<div class="mchips">${opts.map(([v,l])=>`<button c
 const mHd=(title,sub,back)=>`<div class="mhd">${back?`<button class="mback" data-act="mBack">‹</button>`:''}<div><h2>${esc(title)}</h2>${sub?`<p>${sub}</p>`:''}</div></div>`;
 
 function mTabs(){const t=[['home','grid','홈'],['plan','cal','일정']];if(canView('agenda'))t.push(['ag','mic','아젠다']);t.push(['doc','folder','자료'],['more','menu','더보기']);return t}
-function mBrand(){const pj=P(),th=wlOn()?thOf(pj):null;if(th&&th.logo)return `<img class="mlogo" src="${th.logo}" alt="">`;
- if(!wlOn())return `<img class="mlogo mlogo-m" src="${LOGO}" alt="marple">`;return `<b class="mname">${esc(pj.name)}<small>${esc((th&&th.sub)||'RESOURCE CENTER')}</small></b>`}
+function mBrand(){const pj=P();if(!S.pid)return `<img class="mlogo mlogo-m" src="${LOGO}" alt="marple">`;const th=thOf(pj);if(th.logo)return `<img class="mlogo" src="${th.logo}" alt="">`;return `<b class="mname">${esc(pj.name)}<small>${esc((th&&th.sub)||'RESOURCE CENTER')}</small></b>`}
 
 /* ---------- 로그인 ---------- */
-function mLogin(err){const bp=brandProj(),t=bp?thOf(bp):null;if(bp)wlApply(bp);else wlClear();const kv=bp?(t.lkv||kvEff(bp)):'';
+const mLast=()=>{try{const k=localStorage.getItem('erc_m_last');return k?DB.projects.find(p=>p.id===k)||null:null}catch(e){return null}};
+function mLogin(err){const bp=brandProj()||mLast(),t=bp?thOf(bp):null;if(bp)wlApply(bp);else wlClear();const kv=bp?(t.lkv||kvEff(bp)||''):'';
  $('#root').innerHTML=`<div class="mlogin ${kv?'has-kv':''}" ${kv?`style="background-image:url('${kv}')"`:''}><form class="mlf" id="lf">
   ${bp?(t.logo?`<img class="mlg-logo" src="${t.logo}" alt="">`:`<small>${esc(t.sub||'RESOURCE CENTER')}</small><h1>${esc(bp.name)}</h1>`):`<img class="mlg-logo" src="${LOGO}" alt="marple"><small>EVENT RESOURCE CENTER</small>`}
   ${bp?`<p>${fmtD(bp.date)} · ${esc(bp.venue||'')}</p>`:'<p>발급받은 계정으로 로그인해 주세요</p>'}
@@ -2907,7 +2914,7 @@ function mLogin(err){const bp=brandProj(),t=bp?thOf(bp):null;if(bp)wlApply(bp);e
 /* ---------- 앱 껍데기 ---------- */
 function mApp(){if(!S.user)return mLogin();fixPid();effUser();
  if(S.user.role==='admin'&&typeof presetFill==='function'&&(presetFill()|slugFill()))Store.save('프로젝트 링크');
- if(wlOn()&&S.pid)wlApply(P());else wlClear();
+ if(S.pid){wlApply(P());try{localStorage.setItem('erc_m_last',S.pid)}catch(e){}}else wlClear();
  if(!S.pid&&isAdmin()&&myProjects().length)S.pid=myProjects()[0].id;
  S.mt=S.mt||'home';if(!mTabs().some(t=>t[0]===S.mt))S.mt='home';
  const sy=window.scrollY,keep=S._mk===(S.mt+'|'+(S.ms||'')+'|'+(S.mp||''));
@@ -2923,8 +2930,8 @@ function mScreen(){if(S.ms)return mMore(S.ms);
  switch(S.mt){case 'plan':return mPlan();case 'ag':return mAgenda();case 'doc':return mDoc();case 'more':return mMenu();default:return mHome()}}
 
 /* ---------- 홈 ---------- */
-function mKv(h){const pj=P(),kv=kvEff(pj),th=thOf(pj),n=dd(pj.date);
- return `<div class="mkv" style="height:${h}px;${kv?`background-image:url('${kv}')`:''}"><div class="mkv-in">${th.logo&&wlOn()?`<img src="${th.logo}" alt="">`:`<b>${esc(pj.name)}</b>`}<i>${ddl(n)}</i><p>${fmtD(pj.date)} · ${esc((pj.venue||'').split(' ').slice(0,2).join(' '))}</p></div></div>`}
+function mKv(h){const pj=P(),th=thOf(pj),kv=kvEff(pj)||th.lkv||'',n=dd(pj.date);
+ return `<div class="mkv" style="height:${h}px;${kv?`background-image:url('${kv}')`:''}"><div class="mkv-in">${th.logo?`<img src="${th.logo}" alt="">`:`<b>${esc(pj.name)}</b>`}<i>${ddl(n)}</i><p>${fmtD(pj.date)} · ${esc((pj.venue||'').split(' ').slice(0,2).join(' '))}</p></div></div>`}
 function mItem(i,T){const tr=i.trk&&rowById(i.trk),chk=tr&&canEdit('trk');
  const open=i.cfm?`data-act="cfmOpen" data-id="${i.cfm}"`:i.trk?`data-act="mTrk" data-id="${i.trk}"`:i.rid?`data-act="mSubOpen" data-rid="${i.rid}"`:i.nav?`data-act="nav" data-v="${i.nav}"`:'';
  return `<div class="mit ${i.done?'done':''}">${chk?`<button class="mck ${i.done?'on':''}" data-act="dDone" data-id="${i.trk}">${i.done?'✓':''}</button>`:''}<div class="mxx" ${open}><b>${esc(i.title)}</b><div class="mm">${isStaff()?mTag(i.who):''}<span class="msrc">${i.src}</span>${i.meta?`<span>${esc(i.meta)}</span>`:''}</div></div>${mDd(i.due,i.done)}</div>`}

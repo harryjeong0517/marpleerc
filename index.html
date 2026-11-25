@@ -2986,9 +2986,9 @@ function mPlan(){if(!isStaff())return mHd('일정','날짜순 · 오늘 '+fmtD(y
  return S.mp==='road'?mRoad(seg):S.mp==='sched'?mHd('일정','날짜순 · 오늘 '+fmtD(ymd(today())))+seg+`<div class="mpad">${mSched()}</div>`+(isAdmin()?mFab('mSchNew'):''):mTrkList(seg)}
 /* 분야 이름 정리: '🎯'처럼 이모지만 있는 분야는 같은 이모지로 시작하는 분야('🎯 기획·계약')에 합쳐 보여 줌 */
 /* 엑셀에서 같이 딸려 온 범례·메모 줄(※ 구분: … 같은 것)과 내용 없는 줄은 모바일 목록에서 뺌 */
-const mNote=r=>{const t=String(r.title||'').trim(),g=String(r.grp||'').trim();if(r.a||r.b)return false;return !t||/^[※*#▶■●]/.test(t)||/^[※*#▶■●]/.test(g)||(/[:=]/.test(g)&&g.length>18)||(/[:=]/.test(t)&&t.length>30&&!r.st)};
+const mNote=r=>{const t=String(r.title||'').trim(),g=String(r.grp||'').trim();if(r.a||r.b)return false;return !t||!g||/^\p{Extended_Pictographic}/u.test(t)||/^[※*#▶■●]/.test(t)||/^[※*#▶■●]/.test(g)||(/[:=]/.test(g)&&g.length>18)||(/[:=]/.test(t)&&t.length>30&&!r.st)};
 const mTrkR=()=>R('trk').filter(r=>!mNote(r));
-const mGL=g=>{g=String(g||'').trim();const t=g.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim();if(t)return g;const em=g.replace(/\s/g,'');if(!em)return '기타';const hit=[...new Set(mTrkR().map(r=>String(r.grp||'').trim()))].find(x=>x!==g&&x.replace(/\s/g,'').startsWith(em)&&x.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim());return hit||g};
+const mGL=g=>{g=String(g||'').trim();const t=g.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim();if(t)return g;const em=g.replace(/\s/g,'');if(!em)return '기타';const hit=[...new Set(R('trk').flatMap(r=>[String(r.grp||'').trim(),String(r.title||'').trim()]))].find(x=>x!==g&&x.replace(/\s/g,'').startsWith(em)&&x.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim());return hit||g};
 function mTrkList(seg){const all=mTrkR(),f=S.mf_trk||'',T=ymd(today()),W=addD(T,7),c=s=>all.filter(r=>r.st===s).length;
  const late=r=>r.st!=='완료'&&r.b&&r.b<T;
  const rows=all.filter(r=>!f||(f==='wk'?(r.st!=='완료'&&(r.b||r.a)>=T&&(r.a||r.b)<=W):f==='late'?late(r)||r.st==='지연':f.startsWith('w:')?whoK(r.who)===f.slice(2):r.st===f));

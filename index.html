@@ -634,6 +634,8 @@ body.wl .cs2s-f{background:var(--wl-ac);color:var(--ac-tx)}
 .cs2s-v{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text2);padding:0 2px}.cs2s-v b{font-variant-numeric:tabular-nums}.cs2s-v.t{border-top:1px dashed var(--border);padding-top:10px;font-weight:700;color:var(--ink)}.cs2s-v.t b{font-size:15px}
 @media (max-width:1100px){.cs2{grid-template-columns:1fr}.cs2s{position:static}}
 @media (max-width:700px){.cs-bar{display:none}.cs2t th:nth-child(3){display:none}.cs-bar2{display:none}}
+.sync.bad i{background:#f59e0b!important}.sync.bad{color:#b45309}
+.bin-list{display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow:auto}.bin-row{display:flex;align-items:center;gap:12px;border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:10px 12px}.bin-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.bin-t span{font-size:12px;color:var(--muted,#64748b)}.bin-t small{font-size:11.5px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -1523,7 +1525,7 @@ function costTotals(){const c=costSum(),max=Math.max(1,...c.secs.map(s=>c.tot(s)
 const RATES=[[0,.03,300000,'0 ~ 1,000만 원 이하 · [최저 책정 기본금] 소형 행사'],[10000001,.023,700000,'1,000만 ~ 3,000만 원 · 소형 세미나 / 워크샵 / 소규모 사내 행사'],[30000001,.02,2000000,'3,000만 ~ 1억 원 · 중소형 기업 행사 / 단체 연수 / 중형 컨퍼런스'],[100000001,.015,3000000,'1억 ~ 2억 원 · 대형 컨퍼런스 / 기업 연례 행사'],[200000001,.0167,5000000,'2억 ~ 3억 원 · [주요 기준점] 대형 이벤트 / 박람회'],[300000001,.014,7000000,'3억 원 초과 · 초대형 포럼 / 국제 행사 (협의 요율 적용)']];
 function rateFee(b){let r=RATES[0];RATES.forEach(x=>{if(b>=x[0])r=x});return Math.max(300000,Math.round(b*r[1]))}
 function vCost(v){const t=S.costTab||'sum';queueMicrotask(()=>{if((S.costTab||'sum')==='est')costSubPaint()});
- const pub=!!CF_().costPub;v.innerHTML=head('견적',isAdmin()?'마플만 수정할 수 있습니다. [주관사에 공개]를 누르면 주관사가 보기 전용으로 볼 수 있습니다. 스폰서에게는 항상 보이지 않습니다.':'마플이 공개한 견적입니다. (보기 전용)',isAdmin()?`<span class="badge ${pub?'badge-green':'badge-gray'}">${ico(pub?'eye':'lock',12)}주관사 ${pub?'공개 중':'비공개'}</span><button class="btn ${pub?'':'btn-primary'}" data-act="costPub">${pub?'주관사 공개 중지':'주관사에 공개'}</button>`:`<span class="badge badge-gray">${ico('eye',12)}보기 전용</span>`)
+ const pub=!!CF_().costPub;v.innerHTML=head('견적',isAdmin()?'마플만 수정할 수 있습니다. [주관사에 공개]를 누르면 주관사가 보기 전용으로 볼 수 있습니다. 스폰서에게는 항상 보이지 않습니다.':'마플이 공개한 견적입니다. (보기 전용)',isAdmin()?`<button class="btn" data-act="binOpen" title="실수로 지워진 견적·표 행을 되살립니다">${ico('clock',13)}지운 데이터 복구</button><span class="badge ${pub?'badge-green':'badge-gray'}">${ico(pub?'eye':'lock',12)}주관사 ${pub?'공개 중':'비공개'}</span><button class="btn ${pub?'':'btn-primary'}" data-act="costPub">${pub?'주관사 공개 중지':'주관사에 공개'}</button>`:`<span class="badge badge-gray">${ico('eye',12)}보기 전용</span>`)
   +`<div class="tabs" style="max-width:520px"><div class="tab ${t==='sum'?'active':''}" data-act="costTab" data-t="sum">견적 Summary</div><div class="tab ${t==='est'?'active':''}" data-act="costTab" data-t="est">견적서</div><div class="tab ${t==='rate'?'active':''}" data-act="costTab" data-t="rate">기획요율표</div></div>`
   +(t==='sum'?`<div class="filter-bar"><label class="form-label" style="margin:0">에이전시 커미션(%)</label><input class="form-input" type="number" style="width:90px" value="${costSum().comm}" data-chg="comm"><span class="sub">견적서 항목에서 자동 계산됩니다 · 단위: KRW / VAT 별도</span></div><div id="csum"><div>${costTotals()}</div></div>`
   :t==='est'?`<div class="filter-bar"><span class="sub">금액 = 수량 × 단가 × 일수. 구분이 [메가존 진행 / 협의사항 / 삭제 / 제외]이면 합계에서 빠집니다.</span><div style="flex:1"></div>${addBtn('cost','항목 추가')}</div><datalist id="dl-cs">${[...new Set(R('cost').map(r=>r.sub))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist>`+gridTbl('cost',COSTC(),R('cost'),{del:true,grp:r=>`<span data-sub="${esc(r.sec)}|${esc(r.sub)}">${esc(r.sec)}${r.sub?' · '+esc(r.sub):''} <b class="gsum"></b></span>`})+`<div class="cest-tot" id="cestt">${costEstTot()}</div>`
@@ -2678,6 +2680,84 @@ Object.assign(A,{cimpApply:()=>{if(!cImp)return;const R0=cImp.all[cImp.i],mode=(
 /* 견적 화면에서 파일을 놓으면 견적서 전용 읽기 */
 const impFilesBase=impFiles;
 impFiles=async function(fs){if(S.view==='cost'&&isAdmin()&&fs&&fs.length){const f=fs.find(x=>!IMGX.test(x.ext||extOf(x.name)))||fs[0];return costImport(f.file||f)}return impFilesBase(fs)};
+/* =====================================================================
+   동기화 안전장치 (p21)
+   1) 화면에 아직 서버로 안 올라간 변경이 있으면 서버 데이터로 덮어쓰지 않음 (gen·dirty)
+   2) 서버에서 받은 스냅샷은 DB와 '같은 순간'에만 교체 (adopt) → 엇갈린 스냅샷 때문에 생기던 일괄 삭제 차단
+   3) 권한상 안 받아온 종류(견적 등)는 '삭제'로 보지 않음 (scope 가드)
+   4) 저장 실패 시 자동 재시도 + 창 닫기 경고
+   5) 지운 행은 'bin'으로 백업 → 관리자 [지운 데이터 복구]
+   ===================================================================== */
+const SYNC_META=new WeakMap();
+Object.assign(Remote,{gen:0,dirty:false,pend:0,synced:false,fails:0,retryT:null,
+ async fetchKinds(kinds){let rows=[],off=0;const kf=kinds?'&kind=in.('+kinds.join(',')+')':'';
+  for(;;){const r=await fetch(this.url('?select=kind,id,data&order=kind,id'+kf),{headers:this.hdr({'Range-Unit':'items',Range:off+'-'+(off+999)})});
+   if(!r.ok)throw new Error(r.status===404?'테이블 없음':(r.status===401||r.status===403)?'권한 없음':'pull '+r.status);
+   const a=await r.json();rows=rows.concat(a);if(a.length<1000)break;off+=1000}
+  return rows},
+ /* 읽기만 함 — 스냅샷은 adopt()에서 DB와 함께 바꿈 */
+ async pull(kinds){const g=this.gen,rows=await this.fetchKinds(kinds),d=this.build(rows);SYNC_META.set(d,{g,rows,kinds:kinds||null});return d},
+ fresh(d){const m=SYNC_META.get(d);return !!m&&m.g===this.gen&&!this.dirty&&!this.pend},
+ adopt(d,force){const m=SYNC_META.get(d);if(!m||(!force&&!this.fresh(d)))return false;DB=d;DB.rows=DB.rows||[];
+  if(m.kinds){const ks=new Set(m.kinds);[...this.snap.keys()].forEach(k=>{if(ks.has(k.slice(0,k.indexOf('|'))))this.snap.delete(k)})}else this.snap.clear();
+  m.rows.forEach(r=>this.snap.set(r.kind+'|'+r.id,canon(r.data)));this.synced=true;return true},
+ /* 로그인·프로젝트 전환 때 추가 종류를 받음 — 올리는 중인 변경이 끝난 뒤, 그 사이 변경이 없을 때만 반영 */
+ async more(kinds){for(let i=0;;i++){await this.chain;const g=this.gen,rows=await this.fetchKinds(kinds);
+   if(i<5&&(g!==this.gen||this.dirty||this.pend))continue;
+   const ks=new Set(kinds),lg=rows.filter(x=>/log$/.test(x.kind)),rw=rows.filter(x=>!/log$/.test(x.kind));
+   if(this.dirty){/* 마지막 시도인데도 못 올린 변경이 있으면 로컬 행을 살리고 서버 행만 보탬 */
+    const have=new Set((DB.rows||[]).filter(x=>ks.has(KR(x))).map(x=>x.id));DB.rows=(DB.rows||[]).concat(rw.map(x=>x.data).filter(x=>!have.has(x.id)))}
+   else{DB.rows=(DB.rows||[]).filter(x=>!ks.has(KR(x))).concat(rw.map(x=>x.data));DB.logs=DB.logs.filter(l=>!ks.has(LK(l))).concat(lg.map(x=>x.data))}
+   [...this.snap.keys()].forEach(k=>{if(ks.has(k.slice(0,k.indexOf('|'))))this.snap.delete(k)});rows.forEach(x=>this.snap.set(x.kind+'|'+x.id,canon(x.data)));return}},
+ async post(rows){for(let i=0;i<rows.length;i+=200){const r=await fetch(this.url('?on_conflict=kind,id'),{method:'POST',headers:this.hdr({Prefer:'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(rows.slice(i,i+200))});if(!r.ok)throw new Error('push '+r.status)}},
+ async push(){if(!this.synced)throw new Error('아직 서버 데이터를 받지 못했습니다');
+  const sc=new Set(this.scope()),cur=this.flat(),up=[],del=[];
+  cur.forEach((r,k)=>{const c=canon(r.data);if(this.snap.get(k)!==c)up.push([k,r,c])});
+  [...this.snap.keys()].forEach(k=>{if(cur.has(k))return;const kd=k.slice(0,k.indexOf('|'));if(sc.has(kd))del.push(k);else this.snap.delete(k)});
+  if(up.length){await this.post(up.map(x=>x[1]));up.forEach(x=>this.snap.set(x[0],x[2]))}
+  if(!del.length)return;
+  /* 지우기 전에 휴지통(bin)에 한 벌 남김 — 로그는 제외 */
+  const at=Date.now(),who=S.user?S.user.name+(S.user.org?' · '+S.user.org:''):'',bin=[];
+  del.forEach(k=>{const i=k.indexOf('|'),kd=k.slice(0,i);if(/log$/.test(kd))return;let d=null;try{d=JSON.parse(this.snap.get(k))}catch(e){}if(!d)return;bin.push({kind:'bin',id:'b'+at.toString(36)+Math.random().toString(36).slice(2,8),pid:d.pid||null,data:{k:kd,id:k.slice(i+1),pid:d.pid||null,at,who,d}})});
+  if(bin.length)await this.post(bin);
+  const by={};del.forEach(k=>{const i=k.indexOf('|');(by[k.slice(0,i)]=by[k.slice(0,i)]||[]).push(k.slice(i+1))});
+  const q=v=>'"'+String(v).replace(/\\/g,'\\\\').replace(/"/g,'\\"')+'"';
+  for(const kd of Object.keys(by)){const ids=by[kd];for(let i=0;i<ids.length;i+=60){const part=ids.slice(i,i+60),r=await fetch(this.url('?kind=eq.'+encodeURIComponent(kd)+'&id=in.('+encodeURIComponent(part.map(q).join(','))+')'),{method:'DELETE',headers:this.hdr()});if(!r.ok)throw new Error('del '+r.status);part.forEach(id=>this.snap.delete(kd+'|'+id))}}}});
+
+Object.assign(Store,{
+ save(label){Remote.gen++;this.persist();
+  if(!Remote.on()){this.n++;this.ui();setTimeout(()=>{this.n=Math.max(0,this.n-1);this.ui()},350+Math.random()*500);return}
+  Remote.dirty=true;Remote.pend++;this.n++;this.ui();clearTimeout(Remote.retryT);
+  Remote.queue().then(()=>{Remote.pend--;this.n=Math.max(0,this.n-1);if(!Remote.pend){Remote.dirty=false;if(Remote.fails)toast('밀려 있던 변경 내용을 서버에 저장했습니다','success');Remote.fails=0}this.ui()},
+   e=>{Remote.pend--;this.n=Math.max(0,this.n-1);console.error('save failed',e);Remote.fails++;
+    if(Remote.fails===1)toast('서버 저장에 실패했습니다. 화면의 내용은 그대로 두고 자동으로 다시 저장합니다 — 창을 닫지 마세요','error',7000);
+    if(!Remote.pend){clearTimeout(Remote.retryT);Remote.retryT=setTimeout(()=>Store.save('재시도'),Math.min(60000,3000*Math.pow(2,Remote.fails-1)))}this.ui()})},
+ ui(){const e=$('#sync');if(!e)return;const bad=Remote.on()&&Remote.dirty&&Remote.fails&&!this.n;e.className='sync'+(this.n?' busy':'')+(bad?' bad':'');e.innerHTML='<i></i>'+(this.n?'저장 중':bad?'저장 대기 · 재시도 중':'저장됨')}});
+window.addEventListener('beforeunload',e=>{if(Remote.on()&&(Remote.dirty||Remote.pend)){e.preventDefault();e.returnValue='';return ''}});
+
+/* 주기적 갱신: 저장 대기·입력 중이면 건너뛰고, 받는 사이 로컬 변경이 생겼으면 버림 */
+poll=function(){if(!Remote.on()||!S.user||!Remote.synced||busyUi()||Remote.dirty||Remote.pend)return;
+ Remote.pull(Remote.scope()).then(d=>{if(busyUi()||!Remote.fresh(d))return;const before=canon([...Remote.flat()].map(x=>x[1].data)),keep=DB;DB=d;const after=canon([...Remote.flat()].map(x=>x[1].data));DB=keep;
+  if(after!==before){Remote.adopt(d);Store.persist();reconcile()}else Remote.adopt(d)&&(DB=keep)}).catch(()=>{})};
+
+/* ---- 지운 데이터 복구 (마플 관리자) ---- */
+const BIN_L={xc:'견적',x:'표 행',ag:'아젠다',cfg:'설정',host:'주관사',project:'프로젝트',account:'계정',sponsor:'스폰서',folder:'폴더',file:'자료',request:'요청 항목',sub:'제출물',sched:'일정'};
+let binRows=[];
+function binLabel(b){const d=b.d||{};return d.item||d.title||d.name||d.nameKo||d.sub||d.cat||d.id||b.id}
+Object.assign(A,{
+ binOpen:async()=>{if(!isAdmin())return;if(!Remote.on())return toast('서버 연결 모드에서만 사용할 수 있습니다');modal('지운 데이터 복구','<div class="sub">불러오는 중…</div>',true);
+  try{const r=await Remote.fetchKinds(['bin']);binRows=r.map(x=>Object.assign({bid:x.id},x.data)).filter(b=>!b.pid||b.pid===S.pid).sort((a,b)=>b.at-a.at)}catch(e){return modal('지운 데이터 복구',`<div class="sub">불러오지 못했습니다 (${esc(e.message)})</div>`)}
+  const g=[];binRows.forEach(b=>{const key=Math.floor(b.at/60000)+'|'+b.who+'|'+b.k;let x=g.find(y=>y.key===key);if(!x)g.push(x={key,at:b.at,who:b.who,k:b.k,items:[]});x.items.push(b)});
+  const fmt=t=>{const d=new Date(t);return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`};
+  modal('지운 데이터 복구',`<div class="sub" style="margin-bottom:10px">이 프로젝트에서 지워진 행입니다. 묶음 단위로 되살릴 수 있습니다. 같은 행이 이미 있으면 지워지기 직전 내용으로 덮어씁니다.</div>
+  ${g.length?`<div class="bin-list">${g.slice(0,80).map((x,i)=>`<div class="bin-row"><div class="bin-t"><b>${fmt(x.at)} · ${esc(BIN_L[x.k]||x.k)} ${x.items.length}개</b><span>${esc(x.who||'-')}</span><small>${x.items.slice(0,4).map(b=>esc(String(binLabel(b)).slice(0,30))).join(' · ')}${x.items.length>4?' …':''}</small></div><button class="btn btn-sm btn-primary" data-act="binRestore" data-i="${i}">되살리기</button></div>`).join('')}</div>`:'<div class="empty" style="padding:30px;text-align:center;color:var(--muted)">지워진 데이터가 없습니다</div>'}
+  ${mfoot('<button class="btn" data-act="close">닫기</button>')}`,true);A._binG=g},
+ binRestore:async d=>{const x=(A._binG||[])[+d.i];if(!x)return;await Remote.chain;
+  try{await Remote.post(x.items.map(b=>({kind:b.k,id:b.id,pid:b.pid||null,data:b.d})));
+   const ids=x.items.map(b=>'"'+b.bid+'"').join(',');await fetch(Remote.url('?kind=eq.bin&id=in.('+encodeURIComponent(ids)+')'),{method:'DELETE',headers:Remote.hdr()});
+   const ks=[...new Set(x.items.map(b=>b.k))],extra=ks.filter(k=>!BASE_KINDS.includes(k));
+   if(ks.some(k=>BASE_KINDS.includes(k))){const dd=await Remote.pull(Remote.scope());Remote.adopt(dd,true)}else if(extra.length)await Remote.more(extra);
+   closeModal();toast(`${x.items.length}개를 되살렸습니다`,'success');renderApp()}catch(e){toast('복구하지 못했습니다 ('+e.message+')','error')}}});
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';
@@ -2697,8 +2777,8 @@ function reconcile(){if(!S.user)return;const a=DB.accounts.find(x=>x.id===S.user
 function poll(){if(!Remote.on()||!S.user||busyUi())return;Remote.pull(Remote.scope()).then(d=>{if(busyUi())return;const before=canon([...Remote.flat()].map(x=>x[1].data));const keep=DB;DB=d;if(canon([...Remote.flat()].map(x=>x[1].data))!==before){Store.persist();reconcile()}else DB=keep}).catch(()=>{})}
 function boot(){const had=Store.load();
  if(!Remote.on()){if(!had)seedDB();renderLogin();return}
- if(!had)DB=emptyDB();Remote.ready=had;renderLogin();
- Remote.pull(BASE_KINDS).then(d=>{DB=d;Remote.ready=true;Store.persist();if(S.user)reconcile();else renderLogin()}).catch(e=>{if(!had)renderLogin(String(e.message).includes('테이블')?'Supabase에 erc_records 테이블이 없습니다. supabase_schema.sql을 먼저 실행해 주세요.':String(e.message).includes('권한')?'Supabase 접근이 거부되었습니다(401). SQL의 GRANT 문을 실행했는지, 키가 맞는지 확인해 주세요.':'서버에 연결하지 못했습니다. 새로고침해 주세요. ('+e.message+')')});
+ if(!had)DB=emptyDB();Remote.ready=false;renderLogin();
+ Remote.pull(BASE_KINDS).then(d=>{Remote.adopt(d,true);Remote.ready=true;Store.persist();if(S.user)reconcile();else renderLogin()}).catch(e=>{Remote.ready=true;renderLogin(String(e.message).includes('테이블')?'Supabase에 erc_records 테이블이 없습니다. supabase_schema.sql을 먼저 실행해 주세요.':String(e.message).includes('권한')?'Supabase 접근이 거부되었습니다(401). SQL의 GRANT 문을 실행했는지, 키가 맞는지 확인해 주세요.':'서버에 연결하지 못했습니다. 새로고침해 주세요. ('+e.message+')')});
  setInterval(poll,CFG.POLL_MS)}
 boot();
 </script>

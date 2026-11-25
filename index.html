@@ -564,6 +564,33 @@ body.wl .dst.hi{background:var(--wl-ac);color:var(--ac-tx)}body.wl .dst.hi .l,bo
 .kvh-logo{height:56px;max-height:none;width:auto}.wl-llogo{height:96px;max-height:none;width:auto}
 @media (max-width:760px){.kvh-logo{height:36px}.wl-llogo{height:56px}}
 .kvh-logo{margin-bottom:6px}
+/* ===== 파일 뷰어 ===== */
+body.fv-on{overflow:hidden}
+#fv{position:fixed;inset:0;z-index:2000;background:#1b1d22;color:#e5e7eb;display:flex;flex-direction:column;animation:fvIn .14s ease-out}
+@keyframes fvIn{from{opacity:0}to{opacity:1}}
+.fv-top{height:56px;flex-shrink:0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:0 12px;background:#24272e;border-bottom:1px solid #2f333b}
+.fv-l,.fv-r,.fv-c{display:flex;align-items:center;gap:4px;min-width:0}.fv-r{justify-content:flex-end}
+.fv-nm{display:flex;flex-direction:column;min-width:0;margin-left:6px}.fv-nm b{font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fv-nm span{font-size:11.5px;color:#9aa1ad}
+.fv-b{min-width:34px;height:34px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:#d1d5db;font-size:18px;font-weight:600;padding:0 6px}.fv-b:hover{background:#343843;color:#fff}.fv-b.on{background:#3b4150;color:#fff}.fv-b:disabled{opacity:.3;cursor:default;background:none}
+.fv-zv{min-width:70px;height:30px;border-radius:7px;background:#1b1d22;color:#e5e7eb;font-size:12.5px;font-weight:700;border:1px solid #3a3f4a}.fv-zv:hover{border-color:#5b6270}
+.fv-sep{width:1px;height:20px;background:#3a3f4a;margin:0 6px}
+.fv-pg{display:flex;align-items:center;gap:6px;font-size:13px;color:#9aa1ad}.fv-pg input{width:44px;height:30px;border-radius:7px;border:1px solid #3a3f4a;background:#1b1d22;color:#fff;text-align:center;font-weight:700;font-size:13px}.fv-pg i{font-style:normal}
+.fv-dl{height:34px;border-radius:8px;background:var(--wl-ac,var(--marple));color:var(--ac-tx,#fff);font-weight:700;font-size:13px;padding:0 14px;display:inline-flex;align-items:center;gap:6px;margin-left:4px}
+.fv-body{flex:1;display:flex;min-height:0}
+.fv-th{width:190px;flex-shrink:0;overflow:auto;background:#202329;border-right:1px solid #2f333b;padding:12px 0;transition:margin .2s}.fv-th.off{margin-left:-190px}
+.fv-tp{margin:0 auto 12px;width:150px;cursor:pointer;text-align:center}.fv-tp canvas{width:150px;height:auto;display:block;background:#fff;border-radius:3px;border:2px solid transparent;box-shadow:0 1px 4px rgba(0,0,0,.4);min-height:90px}.fv-tp span{display:block;font-size:11px;color:#9aa1ad;margin-top:4px}.fv-tp.on canvas{border-color:var(--wl-ac,#38bdf8)}.fv-tp.on span{color:#fff;font-weight:700}
+.fv-main{flex:1;overflow:auto;position:relative;min-width:0}
+.fv-pages{display:flex;flex-direction:column;align-items:center;gap:16px;padding:16px 24px 40px}
+.fv-page{position:relative;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.45);flex-shrink:0}.fv-page:not(.ok){background:#2a2d34}.fv-page canvas{display:block}
+.fv-pn{position:absolute;right:-34px;bottom:0;font-size:11px;color:#6b7280}
+.fv-info{width:280px;flex-shrink:0;background:#202329;border-left:1px solid #2f333b;padding:18px;overflow:auto;transition:margin .2s}.fv-info.off{margin-right:-280px}
+.fv-info h4{font-size:13px;color:#fff;margin-bottom:12px}.fv-info dl{display:grid;grid-template-columns:72px 1fr;gap:8px 10px;font-size:12.5px}.fv-info dt{color:#8b93a1}.fv-info dd{color:#e5e7eb;word-break:break-all}
+.fv-load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px;color:#9aa1ad;font-size:13px}.fv-spin{width:18px;height:18px;border:2px solid #3a3f4a;border-top-color:#e5e7eb;border-radius:50%;animation:fvSp .8s linear infinite}@keyframes fvSp{to{transform:rotate(360deg)}}
+.fv-img{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:grab;background:repeating-conic-gradient(#25282e 0 25%,#1f2227 0 50%) 0 0/20px 20px}.fv-img.drag{cursor:grabbing}.fv-img img{max-width:none;transform-origin:center;user-select:none;transition:transform .08s}
+.fv-media{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px}.fv-media video{max-width:100%;max-height:100%;border-radius:8px;background:#000}
+.fv-txt{margin:24px auto;max-width:1000px;background:#fff;color:#111;padding:28px;border-radius:6px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-all}
+.fv-card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px}.fv-card b{color:#fff;font-size:15px}.fv-card p{color:#9aa1ad;font-size:13px;max-width:420px;line-height:1.6}.fv-ic{transform:scale(1.6);margin-bottom:10px}.fv-ph{max-width:60%;max-height:50%;border-radius:8px;opacity:.7}
+@media (max-width:760px){.fv-top{grid-template-columns:1fr auto;height:auto;padding:8px}.fv-c{grid-column:1/-1;justify-content:center;order:3}.fv-nm span{display:none}.fv-th,.fv-info{display:none}.fv-pages{padding:10px 8px 30px}.fv-pn{display:none}.fv-dl span{display:none}}
 </style>
 </head>
 <body>
@@ -2419,6 +2446,93 @@ Object.assign(A,{
  noticeDel:()=>{delete P().notice;addLog('공지 내림','');Store.save('공지');closeModal();renderView()}
 });
 const confirm2=true;
+
+/* ================= ERC 파일 뷰어 (전체 화면) =================
+   PDF: 썸네일 + 연속 스크롤 + 확대/축소/맞춤 · 이미지: 확대·끌어서 이동 · 영상/음성/텍스트
+   같은 폴더의 앞/뒤 파일로 바로 넘기기, 정보 패널, 키보드(← → Esc + -) */
+const PDFJS='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+async function pdfjsReady(){if(!window.pdfjsLib)await loadScript(PDFJS+'pdf.min.js');pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+'pdf.worker.min.js';return pdfjsLib}
+const FV_IMG=['png','jpg','jpeg','gif','webp','svg','bmp'],FV_VID=['mp4','webm','mov','m4v'],FV_AUD=['mp3','wav','m4a','aac','ogg'],FV_TXT=['txt','csv','md','json','log'];
+let FV=null;
+function fvSiblings(f){const lib=DB.files.filter(x=>x.pid===f.pid&&(x.folder||'')===(f.folder||'')&&!x.del);if(lib.some(x=>x.id===f.id))return lib.sort((a,b)=>b.date-a.date).filter(x=>findFile(x.id));return [f]}
+async function fvBlob(f){const ca=cachedBlob(f);if(ca)return ca;if(f.dataUrl&&/^data:/.test(f.dataUrl)){return await (await fetch(f.dataUrl)).blob()}if(Drive.on()&&f.driveId)return await Drive.blob(f);return null}
+preview=function(id){const r=findFile(id);if(!r)return toast('열람 권한이 없습니다','error');const f=r.f;if(f.up!=null&&!cachedBlob(f))return toast('전송이 끝난 뒤 열 수 있습니다');
+ addLog('열람',f.name);Store.save('열람');fvOpen(f)};
+function fvOpen(f){fvClose(true);const sib=fvSiblings(f),i=sib.findIndex(x=>x.id===f.id);
+ FV={f,sib,i,scale:0,fit:'width',info:S.fvInfo!==false&&innerWidth>1100,thumbs:innerWidth>900,doc:null,rot:0,obs:null,tobs:null,url:null,tok:Math.random()};
+ const el=document.createElement('div');el.id='fv';el.innerHTML=fvShell();document.body.appendChild(el);document.body.classList.add('fv-on');fvLoad()}
+function fvShell(){const {f,sib,i}=FV,ext=(f.ext||'').toLowerCase(),pdf=ext==='pdf';
+ return `<div class="fv-top"><div class="fv-l"><button class="fv-b" data-act="fvClose" title="닫기 (Esc)">${ico('x',18)}</button>${pdf?`<button class="fv-b ${FV.thumbs?'on':''}" data-act="fvThumbs" title="페이지 목록">${ico('list',16)}</button>`:''}<div class="fv-nm"><b title="${esc(f.name)}">${esc(f.name)}</b><span>${fmtSize(f.size)} · v${f.v||1}${sib.length>1?` · ${i+1}/${sib.length}`:''}</span></div></div>
+ <div class="fv-c">${pdf?`<div class="fv-pg"><input id="fvp" value="1" inputmode="numeric"><span>/ <i id="fvn">–</i></span></div><span class="fv-sep"></span>`:''}${pdf||FV_IMG.includes(ext)?`<button class="fv-b" data-act="fvZoom" data-d="-1" title="축소 (-)">−</button><button class="fv-zv" data-act="fvFit" id="fvz" title="맞춤 전환">맞춤</button><button class="fv-b" data-act="fvZoom" data-d="1" title="확대 (+)">+</button>${pdf?`<button class="fv-b" data-act="fvFitW" title="폭 맞춤">${ico('grid',15)}</button>`:''}<button class="fv-b" data-act="fvRot" title="회전">⟳</button>`:''}</div>
+ <div class="fv-r">${sib.length>1?`<button class="fv-b" data-act="fvSib" data-d="-1" title="이전 파일" ${i<=0?'disabled':''}>‹</button><button class="fv-b" data-act="fvSib" data-d="1" title="다음 파일" ${i>=sib.length-1?'disabled':''}>›</button><span class="fv-sep"></span>`:''}<button class="fv-b ${FV.info?'on':''}" data-act="fvInfo" title="정보">${ico('info',16)}</button><button class="fv-dl" data-act="dl" data-id="${f.id}">${ico('download',14)}다운로드</button></div></div>
+ <div class="fv-body">${pdf?`<div class="fv-th ${FV.thumbs?'':'off'}" id="fvth"></div>`:''}<div class="fv-main" id="fvm"><div class="fv-load"><span class="fv-spin"></span>불러오는 중…</div></div><aside class="fv-info ${FV.info?'':'off'}">${fvInfoHtml(f)}</aside></div>`}
+function fvInfoHtml(f){const sub=DB.subs.find(u=>u.files&&u.files.some(x=>x.id===f.id)),rq=sub&&DB.requests.find(r=>r.id===sub.rid);
+ return `<h4>파일 정보</h4><dl>${[['이름',esc(f.name)],['크기',fmtSize(f.size)],['형식',esc((f.ext||'').toUpperCase())],['버전','v'+(f.v||1)],['폴더',esc(f.folder||(rq?'제출 자료':''))],['올린 곳',esc(f.by||'')],['등록일',fmtDT(f.date)],rq?['요청 항목',esc(rq.title)]:null,f.note?['메모',esc(f.note)]:null].filter(x=>x&&x[1]).map(x=>`<dt>${x[0]}</dt><dd>${x[1]}</dd>`).join('')}</dl>`}
+async function fvLoad(){const tok=FV.tok,{f}=FV,ext=(f.ext||'').toLowerCase(),m=$('#fvm');let b=null;
+ try{b=await fvBlob(f)}catch(e){b=null}if(!FV||FV.tok!==tok)return;
+ if(!b){m.innerHTML=fvCard(f,f.thumb?`<img class="fv-ph" src="${f.thumb}" alt="">`:'','원본 파일을 불러올 수 없습니다. 다운로드로 확인해 주세요.');return}
+ FV.url=URL.createObjectURL(b);
+ if(ext==='pdf')return fvPdf(b,tok);
+ if(FV_IMG.includes(ext)){m.innerHTML=`<div class="fv-img" id="fvi"><img src="${FV.url}" alt="" draggable="false"></div>`;const im=m.querySelector('img');im.onload=()=>{FV.iw=im.naturalWidth;FV.ih=im.naturalHeight;fvImgFit()};fvPanInit();return}
+ if(FV_VID.includes(ext)){m.innerHTML=`<div class="fv-media"><video src="${FV.url}" controls autoplay playsinline></video></div>`;return}
+ if(FV_AUD.includes(ext)){m.innerHTML=`<div class="fv-media">${fvCard(f,'','')}<audio src="${FV.url}" controls autoplay></audio></div>`;return}
+ if(FV_TXT.includes(ext)){const t=await b.text();m.innerHTML=`<pre class="fv-txt">${esc(t.slice(0,400000))}</pre>`;return}
+ m.innerHTML=fvCard(f,'',['pptx','ppt','key'].includes(ext)?'PowerPoint 파일은 다운로드해서 열어 주세요. PDF로 올리면 바로 볼 수 있습니다.':['docx','doc','hwp','xlsx','xls'].includes(ext)?'문서 파일은 다운로드해서 열어 주세요. PDF로 올리면 바로 볼 수 있습니다.':'이 형식은 미리보기를 지원하지 않습니다. 다운로드로 확인해 주세요.')}
+function fvCard(f,extra,msg){return `<div class="fv-card">${extra||`<div class="fv-ic">${ficon(f.ext,true)}</div>`}<b>${esc(f.name)}</b>${msg?`<p>${msg}</p>`:''}<button class="btn btn-primary" data-act="dl" data-id="${f.id}">${ico('download',14)}다운로드</button></div>`}
+/* ----- PDF ----- */
+async function fvPdf(b,tok){const m=$('#fvm');try{await pdfjsReady()}catch(e){m.innerHTML=fvCard(FV.f,'','PDF 뷰어를 불러오지 못했습니다. 인터넷 연결을 확인하거나 다운로드해 주세요.');return}
+ let doc;try{doc=await pdfjsLib.getDocument({data:new Uint8Array(await b.arrayBuffer())}).promise}catch(e){m.innerHTML=fvCard(FV.f,'','PDF를 열지 못했습니다. 다운로드로 확인해 주세요.');return}
+ if(!FV||FV.tok!==tok)return;FV.doc=doc;const p1=await doc.getPage(1),vp=p1.getViewport({scale:1});FV.pw=vp.width;FV.ph=vp.height;$('#fvn').textContent=doc.numPages;
+ m.innerHTML=`<div class="fv-pages" id="fvps">${[...Array(doc.numPages)].map((_,i)=>`<div class="fv-page" data-p="${i+1}"><canvas></canvas><span class="fv-pn">${i+1}</span></div>`).join('')}</div>`;
+ const th=$('#fvth');if(th)th.innerHTML=[...Array(doc.numPages)].map((_,i)=>`<div class="fv-tp ${i?'':'on'}" data-act="fvGo" data-p="${i+1}"><canvas></canvas><span>${i+1}</span></div>`).join('');
+ fvLayout(false);m.scrollTop=0;
+ FV.obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)fvRender(+e.target.dataset.p)}),{root:m,rootMargin:'600px 0px'});m.querySelectorAll('.fv-page').forEach(el=>FV.obs.observe(el));
+ if(th){FV.tobs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)fvThumb(+e.target.dataset.p)}),{root:th,rootMargin:'300px 0px'});th.querySelectorAll('.fv-tp').forEach(el=>FV.tobs.observe(el))}
+ m.addEventListener('scroll',fvOnScroll,{passive:true})}
+function fvScaleCalc(){const m=$('#fvm');if(!m||!FV.pw)return 1;const rot=FV.rot%180!==0,w=rot?FV.ph:FV.pw,h=rot?FV.pw:FV.ph,aw=m.clientWidth-48,ah=m.clientHeight-32;
+ if(FV.fit==='width')return Math.max(.2,Math.min(aw/w,3));if(FV.fit==='page')return Math.max(.2,Math.min(aw/w,ah/h));return FV.scale}
+function fvLayout(keep){if(!FV||!FV.doc)return;const m=$('#fvm'),cur=fvCur(),s=fvScaleCalc();FV.scale=s;const rot=FV.rot%180!==0,w=(rot?FV.ph:FV.pw)*s,h=(rot?FV.pw:FV.ph)*s;
+ m.querySelectorAll('.fv-page').forEach(el=>{el.style.width=w+'px';el.style.height=h+'px';el.dataset.r='';const c=el.querySelector('canvas');c.style.width=w+'px';c.style.height=h+'px'});
+ const z=$('#fvz');if(z)z.textContent=FV.fit==='width'?'폭 맞춤':FV.fit==='page'?'쪽 맞춤':Math.round(s*100)+'%';
+ m.querySelectorAll('.fv-page').forEach(el=>{const r=el.getBoundingClientRect(),mr=m.getBoundingClientRect();if(r.bottom>mr.top-600&&r.top<mr.bottom+600)fvRender(+el.dataset.p)});
+ if(keep!==false&&cur>1)fvGo(cur,true)}
+async function fvRender(p){if(!FV||!FV.doc)return;const el=$(`#fvps .fv-page[data-p="${p}"]`);if(!el)return;const key=FV.scale.toFixed(3)+'/'+FV.rot;if(el.dataset.r===key)return;el.dataset.r=key;
+ try{const pg=await FV.doc.getPage(p),dpr=Math.min(2,window.devicePixelRatio||1),vp=pg.getViewport({scale:FV.scale*dpr,rotation:FV.rot}),c=el.querySelector('canvas');
+  const off=document.createElement('canvas');off.width=Math.floor(vp.width);off.height=Math.floor(vp.height);await pg.render({canvasContext:off.getContext('2d'),viewport:vp}).promise;if(el.dataset.r!==key)return;c.width=off.width;c.height=off.height;c.getContext('2d').drawImage(off,0,0);el.classList.add('ok')}catch(e){el.dataset.r=''}}
+async function fvThumb(p){const el=$(`#fvth .fv-tp[data-p="${p}"]`);if(!el||el.dataset.r)return;el.dataset.r=1;try{const pg=await FV.doc.getPage(p),vp=pg.getViewport({scale:1}),s=150/vp.width,v2=pg.getViewport({scale:s*1.5}),c=el.querySelector('canvas');c.width=v2.width;c.height=v2.height;await pg.render({canvasContext:c.getContext('2d'),viewport:v2}).promise}catch(e){el.dataset.r=''}}
+function fvCur(){const m=$('#fvm');if(!m)return 1;const ps=[...m.querySelectorAll('.fv-page')],mid=m.getBoundingClientRect().top+m.clientHeight*.35;let c=1;for(const el of ps){if(el.getBoundingClientRect().top<=mid)c=+el.dataset.p;else break}return c}
+let fvST=0;function fvOnScroll(){cancelAnimationFrame(fvST);fvST=requestAnimationFrame(()=>{const c=fvCur(),pi=$('#fvp');if(pi&&document.activeElement!==pi)pi.value=c;const th=$('#fvth');if(th){th.querySelectorAll('.fv-tp.on').forEach(x=>x.classList.remove('on'));const t=th.querySelector(`.fv-tp[data-p="${c}"]`);if(t){t.classList.add('on');const tr=t.getBoundingClientRect(),hr=th.getBoundingClientRect();if(tr.top<hr.top||tr.bottom>hr.bottom)t.scrollIntoView({block:'nearest'})}}})}
+function fvGo(p,instant){const m=$('#fvm'),el=m&&m.querySelector(`.fv-page[data-p="${p}"]`);if(!el)return;m.scrollTo({top:el.offsetTop-16,behavior:instant?'auto':'smooth'})}
+/* ----- 이미지 ----- */
+function fvImgFit(){const m=$('#fvm'),im=m&&m.querySelector('.fv-img img');if(!im||!FV.iw)return;const rot=FV.rot%180!==0,w=rot?FV.ih:FV.iw,h=rot?FV.iw:FV.ih;
+ if(FV.fit)FV.scale=Math.min(1,(m.clientWidth-48)/w,(m.clientHeight-48)/h);FV.px=FV.px||0;FV.py=FV.py||0;if(FV.fit){FV.px=0;FV.py=0}fvImgApply()}
+function fvImgApply(){const im=$('#fvm .fv-img img');if(!im)return;im.style.transform=`translate(${FV.px}px,${FV.py}px) scale(${FV.scale}) rotate(${FV.rot}deg)`;const z=$('#fvz');if(z)z.textContent=FV.fit?'맞춤':Math.round(FV.scale*100)+'%'}
+function fvPanInit(){const box=$('#fvi');if(!box)return;let d=null;box.addEventListener('pointerdown',e=>{d={x:e.clientX,y:e.clientY,px:FV.px,py:FV.py};box.setPointerCapture(e.pointerId);box.classList.add('drag')});
+ box.addEventListener('pointermove',e=>{if(!d)return;FV.px=d.px+e.clientX-d.x;FV.py=d.py+e.clientY-d.y;FV.fit='';fvImgApply()});box.addEventListener('pointerup',()=>{d=null;box.classList.remove('drag')});box.addEventListener('dblclick',()=>{if(FV.fit){FV.fit='';FV.scale=1}else{FV.fit='fit'}fvImgFit()})}
+/* ----- 확대/축소 ----- */
+function fvZoomBy(dir){const ext=(FV.f.ext||'').toLowerCase(),st=[.25,.33,.5,.67,.75,.9,1,1.1,1.25,1.5,1.75,2,2.5,3,4];let s=FV.scale||1;let n=dir>0?st.find(x=>x>s+.001):[...st].reverse().find(x=>x<s-.001);if(n==null)return;FV.scale=n;
+ if(ext==='pdf'){FV.fit='';fvLayout()}else{FV.fit='';fvImgApply()}}
+function fvClose(silent){if(!FV)return;try{FV.obs&&FV.obs.disconnect();FV.tobs&&FV.tobs.disconnect();FV.doc&&FV.doc.destroy();FV.url&&URL.revokeObjectURL(FV.url)}catch(e){}FV=null;const el=$('#fv');if(el)el.remove();document.body.classList.remove('fv-on')}
+Object.assign(A,{
+ fvClose:()=>fvClose(),
+ fvZoom:d=>fvZoomBy(+d.d),
+ fvFit:()=>{const ext=(FV.f.ext||'').toLowerCase();if(ext==='pdf'){FV.fit=FV.fit==='width'?'page':'width';fvLayout()}else{FV.fit='fit';fvImgFit()}},
+ fvFitW:()=>{FV.fit='width';fvLayout()},
+ fvRot:()=>{FV.rot=(FV.rot+90)%360;const ext=(FV.f.ext||'').toLowerCase();if(ext==='pdf')fvLayout();else{FV.fit='fit';fvImgFit()}},
+ fvThumbs:()=>{FV.thumbs=!FV.thumbs;const t=$('#fvth');if(t)t.classList.toggle('off',!FV.thumbs);document.querySelector('[data-act=fvThumbs]').classList.toggle('on',FV.thumbs);setTimeout(()=>fvLayout(),220)},
+ fvInfo:()=>{FV.info=!FV.info;S.fvInfo=FV.info;const t=document.querySelector('.fv-info');if(t)t.classList.toggle('off',!FV.info);document.querySelector('[data-act=fvInfo]').classList.toggle('on',FV.info);setTimeout(()=>{const ext=(FV.f.ext||'').toLowerCase();ext==='pdf'?fvLayout():fvImgFit()},220)},
+ fvGo:d=>fvGo(+d.p),
+ fvSib:d=>{const n=FV.sib[FV.i+(+d.d)];if(n){addLog('열람',n.name);fvOpen(n)}}
+});
+document.addEventListener('keydown',e=>{if(!FV)return;const tg=e.target;if(tg&&tg.id==='fvp'){if(e.key==='Enter'){const n=Math.max(1,Math.min(FV.doc?FV.doc.numPages:1,parseInt(tg.value)||1));tg.value=n;fvGo(n);tg.blur()}return}
+ if(e.key==='Escape'){e.preventDefault();e.stopPropagation();fvClose();return}
+ const pdf=!!FV.doc;
+ if(e.key==='+'||e.key==='='){e.preventDefault();fvZoomBy(1)}else if(e.key==='-'){e.preventDefault();fvZoomBy(-1)}
+ else if(e.key==='ArrowRight'||e.key==='PageDown'){if(pdf){e.preventDefault();fvGo(Math.min(FV.doc.numPages,fvCur()+1))}else if(FV.sib.length>1)A.fvSib({d:1})}
+ else if(e.key==='ArrowLeft'||e.key==='PageUp'){if(pdf){e.preventDefault();fvGo(Math.max(1,fvCur()-1))}else if(FV.sib.length>1)A.fvSib({d:-1})}
+ else if(e.key==='Home'&&pdf){e.preventDefault();fvGo(1)}else if(e.key==='End'&&pdf){e.preventDefault();fvGo(FV.doc.numPages)}},true);
+document.addEventListener('wheel',e=>{if(!FV||!(e.ctrlKey||e.metaKey))return;if(!e.target.closest('#fvm'))return;e.preventDefault();fvZoomBy(e.deltaY<0?1:-1)},{passive:false});
+window.addEventListener('resize',()=>{if(!FV)return;clearTimeout(FV.rz);FV.rz=setTimeout(()=>{if(!FV)return;(FV.f.ext||'').toLowerCase()==='pdf'?(FV.fit&&fvLayout()):FV.fit&&fvImgFit()},150)});
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';

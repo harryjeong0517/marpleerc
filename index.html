@@ -1479,9 +1479,9 @@ const amtOf=r=>r.st?null:(Number(r.qty)||0)*(Number(r.unit)||0)*(Number(r.days)|
 const trunc=n=>n>=1e8?Math.floor(n/1e4)*1e4:Math.floor(n/1e3)*1e3;
 const COSTC=()=>[C('sub','분류',90,{list:'dl-cs'}),C('item','항목',330),C('qty','수량',70,{ty:'num'}),C('unit','단가(원)',100,{ty:'num'}),C('days','일수·횟수',76,{ty:'num'}),SEL('st','구분',104,OPT.cost),{k:'amt',l:'금액(원)',w:110,f:r=>{const a=amtOf(r);return a==null?`<span class="mute">${esc(r.st)}</span>`:won(a)},cls:'num'},C('note','비고',300)];
 function costSum(){const rs=R('cost'),secs=[...new Set(rs.map(r=>r.sec))],cf=cfgRow()||{},comm=cf.comm==null?10:cf.comm;
- const tot=r=>rs.filter(x=>x.sec===r).reduce((a,x)=>a+(amtOf(x)||0),0),all=secs.reduce((a,s)=>a+tot(s),0),plan=tot('기획/디자인'),cm=Math.round((all-plan)*comm/100);
+ const tot=r=>rs.filter(x=>x.sec===r).reduce((a,x)=>a+(amtOf(x)||0),0),all=secs.reduce((a,s)=>a+tot(s),0),plan=secs.filter(x=>/^기획(\s*\/\s*디자인)?$|^planning/i.test(String(x).replace(/\s+/g,' ').trim())||String(x).replace(/\s+/g,'')==='기획/디자인').reduce((a,x)=>a+tot(x),0),cm=Math.round((all-plan)*comm/100);
  return {secs,tot,all,plan,cm,comm,final:trunc(all+cm),rs}}
-function costTotals(){const c=costSum();return `<table class="gtbl cs"><thead><tr><th style="min-width:140px">구분</th><th style="min-width:220px">세부항목</th><th style="text-align:right;min-width:130px">금액 (KRW)</th></tr></thead><tbody>${c.secs.map(s=>{const subs=[...new Set(c.rs.filter(x=>x.sec===s).map(x=>x.sub))],sm=subs.length>1?subs.map(b=>[b,c.rs.filter(x=>x.sec===s&&x.sub===b).reduce((a,x)=>a+(amtOf(x)||0),0)]):[];
+function costTotals(){const c=costSum();return `<table class="gtbl cs"><thead><tr><th style="min-width:140px">구분</th><th style="min-width:220px">세부항목</th><th style="text-align:right;min-width:130px">금액 (KRW)</th></tr></thead><tbody>${c.secs.map(s=>{const kf=x=>x.sub||(x.item!==s?x.item:''),subs=[...new Set(c.rs.filter(x=>x.sec===s).map(kf))].filter(Boolean),sm=subs.length>1?subs.map(b=>[b,c.rs.filter(x=>x.sec===s&&kf(x)===b).reduce((a,x)=>a+(amtOf(x)||0),0)]):[];
   return `<tr><td><b>${esc(s)}</b></td><td class="sub">${sm.map(x=>esc(x[0])+' '+won(x[1])).join(' · ')}</td><td class="num"><b>${won(c.tot(s))}</b></td></tr>`}).join('')}
   <tr class="tt"><td colspan="2">소 계</td><td class="num">${won(c.all)}</td></tr><tr><td colspan="2">에이전시 커미션 (${c.comm}% · 기획/디자인 제외)</td><td class="num">${won(c.cm)}</td></tr><tr class="tt fin"><td colspan="2">견적금액 (VAT 별도 · ${c.all+c.cm>=1e8?'만원':'천원'} 단위 절사)</td><td class="num">${won(c.final)}</td></tr></tbody></table>`}
 const RATES=[[0,.03,300000,'0 ~ 1,000만 원 이하 · [최저 책정 기본금] 소형 행사'],[10000001,.023,700000,'1,000만 ~ 3,000만 원 · 소형 세미나 / 워크샵 / 소규모 사내 행사'],[30000001,.02,2000000,'3,000만 ~ 1억 원 · 중소형 기업 행사 / 단체 연수 / 중형 컨퍼런스'],[100000001,.015,3000000,'1억 ~ 2억 원 · 대형 컨퍼런스 / 기업 연례 행사'],[200000001,.0167,5000000,'2억 ~ 3억 원 · [주요 기준점] 대형 이벤트 / 박람회'],[300000001,.014,7000000,'3억 원 초과 · 초대형 포럼 / 국제 행사 (협의 요율 적용)']];
@@ -2595,7 +2595,7 @@ function costParseSheet(s){const g=(s.g||[]).map(r=>(r||[]).slice()),H=costHeade
  const txtOf=r=>r.map(cStr).filter(Boolean);
  for(let i=start;i<g.length;i++){const row=g[i]||[],cells=txtOf(row);if(!cells.length){if(++blank>15)break;continue}blank=0;
   const item=cStr(row[M.item]),qv=M.qty!=null?row[M.qty]:null,uv=M.unit!=null?row[M.unit]:null,dv=M.days!=null?row[M.days]:null,av=M.amt!=null?row[M.amt]:null;
-  const q=cNum(qv),u=cNum(uv),d=cNum(dv),a=cNum(av),anyNum=[q,u,a].some(x=>x!=null&&x!==0);
+  const q=cNum(qv),u=cNum(uv),d=cNum(dv),a=cNum(av),anyNum=[q,u,a].some(x=>x!=null);
   const label=(item||cells.find(x=>cNum(x)==null)||'').replace(/\s+/g,' ');
   const tot=cells.find(x=>cNum(x)==null&&(CTOT.test(x.replace(/\s+/g,''))||CTOT.test(x.trim())));
   if(tot){const nums=row.map(cNum).filter(x=>x!=null&&x>0),v=a!=null&&a>0?a:nums.length?Math.max(...nums):null;if(v!=null&&!/부가|vat|커미션|commission|수수료/i.test(tot))tots.push({l:tot.replace(/\s+/g,''),v});skipped.push(tot);continue}
@@ -2610,7 +2610,7 @@ function costParseSheet(s){const g=(s.g||[]).map(r=>(r||[]).slice()),H=costHeade
   if(unit==null&&a!=null){unit=Math.round(a/((qty||1)*(days||1)));if(!qty)qty=1}
   if(unit!=null&&a!=null&&qty){const calc=qty*unit*days;if(Math.abs(calc-a)>Math.max(10,Math.abs(a)*.005)){/* 일수 열이 없거나 다른 계산식 → 금액 기준으로 맞춤 */if(M.days==null&&unit&&Math.abs(a/(qty*unit)-Math.round(a/(qty*unit)))<.01&&Math.round(a/(qty*unit))>1){days=Math.round(a/(qty*unit))}else{note=[note,`원본 금액 ${won(a)}원`].filter(Boolean).join(' · ');unit=Math.round(a/(qty*days))}}}
   if(unit==null&&!st&&!item)continue;
-  if(!st&&!(unit>0)&&(item===sec||item===sub||!item)&&!(qty>1))continue;
+  if(!st&&!anyNum&&(item===sec||item===sub||!item))continue;
   const o={sec:(sec||'기타').replace(/\s+/g,' '),sub:(sub||'').replace(/\s+/g,' '),item:(item||label).replace(/[ \t]+/g,' '),qty:qty||0,unit:unit||0,days,st:st||'',note};if(!o.qty&&o.unit)o.qty=1;rows.push(o);if(!o.st)fileSub+=o.qty*o.unit*o.days}
  {const eq=tots.filter(t=>Math.abs(t.v-fileSub)<=Math.max(1000,fileSub*.001));const pick=eq.length?eq[eq.length-1]:tots.filter(t=>/총|grand|견적|최종/i.test(t.l)).pop()||tots.slice().sort((a,b)=>b.v-a.v)[0];if(pick){fileTotal=pick.v;fileTotalL=pick.l}}
  if(fileTotal==null){for(let r=0;r<H.r;r++){const row=g[r]||[],lb=row.map(cStr).find(x=>/견적\s*금액|총\s*액|합\s*계\s*금액|total/i.test(x));if(lb){const n=row.map(cNum).filter(x=>x!=null&&x>1000);if(n.length){fileTotal=n[0];break}}}}

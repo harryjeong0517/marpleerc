@@ -793,6 +793,9 @@ textarea.gi:focus{max-height:none;min-height:34px;field-sizing:content}
 .th-mkv{width:40px;height:70px;border-radius:7px;background:#111 center/cover;box-shadow:0 0 0 1px rgba(0,0,0,.1);flex-shrink:0}
 .mkv{aspect-ratio:12/5;width:100%}
 .th-mhkv{width:96px;height:40px;border-radius:7px;background:#111 center/cover;box-shadow:0 0 0 1px rgba(0,0,0,.1);flex-shrink:0}
+/* 글자 잘림 없음: 캘린더 일정·로드맵 이름은 줄바꿈 */
+.dev{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;word-break:keep-all;overflow-wrap:anywhere}
+td.rl{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;word-break:keep-all;overflow-wrap:anywhere;line-height:1.35}
 </style>
 </head>
 <body>
@@ -2933,6 +2936,12 @@ if(TA_FIT){document.addEventListener('input',e=>{if(e.target.matches&&e.target.m
  new MutationObserver(()=>{document.querySelectorAll('textarea.gi:not([data-fit])').forEach(t=>{t.dataset.fit=1;taFit(t)})}).observe(document.documentElement,{childList:true,subtree:true})}
 /* 한 줄 칸에서 바뀐 글상자: Enter는 줄바꿈 대신 입력 확정 */
 document.addEventListener('keydown',e=>{const t=e.target;if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing&&t&&t.classList&&t.classList.contains('g1')){e.preventDefault();t.blur()}});
+/* 표 안 선택칸: 고른 글자(운영사무국 등)가 다 보이도록 폭을 글자에 맞춤 */
+const SEL_CV=(()=>{try{return document.createElement('canvas').getContext('2d')}catch(e){return null}})();let selT=0;
+function selFit(){if(!SEL_CV)return;document.querySelectorAll('select.gi,.gtbl select').forEach(e=>{const o=e.options[e.selectedIndex];if(!o)return;const cs=getComputedStyle(e);SEL_CV.font=cs.fontWeight+' '+cs.fontSize+' '+cs.fontFamily;
+ const w=Math.ceil(SEL_CV.measureText(o.text).width+parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight)+4);if(e.clientWidth&&e.clientWidth<w)e.style.minWidth=w+'px'})}
+new MutationObserver(()=>{clearTimeout(selT);selT=setTimeout(selFit,60)}).observe(document.documentElement,{childList:true,subtree:true,characterData:true});
+document.addEventListener('change',e=>{if(e.target.tagName==='SELECT')setTimeout(selFit,0)});
 /* =====================================================================
    모바일 버전 (p22) — 주소 끝 /m (예: /icon2027/m) · 휴대폰은 자동으로 /m
    같은 데이터·같은 권한·같은 저장 엔진을 쓰고, 화면만 휴대폰용으로 다시 그림
@@ -3350,6 +3359,27 @@ Object.assign(A,{
 /* 운영사무국 대시보드: 최근 3일 주관사 리마인드 알림 */
 {const vD=vDash;vDash=function(v){vD(v);if(!isAdmin())return;const t0=Date.now()-3*864e5,ls=DB.logs.filter(l=>l.pid===S.pid&&l.action==='리마인드 발송 (주관사)'&&l.t>t0);if(!ls.length)return;
  const el=document.createElement('div');el.className='rm-dnote';el.innerHTML=`${ico('mail',14)}<b>주관사가 리마인드 메일을 보냈습니다</b><span>${ls.slice(0,3).map(l=>esc(String(l.target).split(' · ')[0])+' · '+fmtDT(l.t)).join(' / ')}${ls.length>3?' 외 '+(ls.length-3)+'건':''}</span>`;v.insertBefore(el,v.firstChild)}}
+/* =====================================================================
+   마일스톤 분야 정리 (p24) — 엑셀 가져오기에서 생긴
+   ① "🎯 기획·계약"처럼 이름만 있는 머리 줄(제목·날짜 없음)  ② 아이콘만 남은 분야("🎯")
+   ③ "※ 구분: …" 같은 범례 줄 을 정리: ②는 ①의 이름으로 합치고, ①·③의 빈 줄은 지움(휴지통에 백업)
+   ===================================================================== */
+const PICT=/[\p{Extended_Pictographic}️‍⃣]/gu;
+const gTxt=g=>String(g||'').replace(PICT,'').trim();
+const gEmo=g=>{const m=String(g||'').trim().match(/^[\p{Extended_Pictographic}️‍⃣\d#*]+/u);return m?m[0].replace(/\s/g,''):''};
+function trkNormalize(){const rows=R('trk');if(!rows.length)return {m:0,d:0};
+ const blank=r=>!String(r.title||'').trim()&&!r.a&&!r.b&&!String(r.key||'').trim()&&!String(r.note||'').trim()&&(!r.st||r.st==='미착수');
+ const named={};
+ rows.forEach(r=>{[r.grp,blank(r)?'':'',(!String(r.grp||'').trim()&&!r.a&&!r.b)?r.title:''].forEach(g=>{g=String(g||'').trim();const e=gEmo(g);if(e&&gTxt(g)&&!/^[※*]/.test(g)&&!named[e])named[e]=g})});
+ let m=0;const last={};rows.forEach(r=>{const g=String(r.grp||'').trim(),e=gEmo(g),t=String(r.title||'').trim();
+  if(e&&gTxt(g)&&!/^[※*]/.test(g))last[e]=g;else if(!g&&!r.a&&!r.b&&gEmo(t)&&gTxt(t))last[gEmo(t)]=t;
+  if(e&&!gTxt(g)){const nm=last[e]||named[e];if(nm&&r.grp!==nm){r.grp=nm;m++}}});
+ const junk=rows.filter(r=>{const g=String(r.grp||'').trim(),t=String(r.title||'').trim();
+  if(!blank(r)&&!(t&&!r.a&&!r.b&&!g&&gEmo(t)&&gTxt(t)&&named[gEmo(t)]===t))return false;
+  return true});
+ if(junk.length){const ids=new Set(junk.map(r=>r.id));DB.rows=DB.rows.filter(r=>!ids.has(r.id))}
+ return {m,d:junk.length}}
+{const rA=renderApp;let sig='';renderApp=function(...a){const r=rA.apply(this,a);try{if(S.user&&isAdmin()&&S.pid){const s=S.pid+':'+R('trk').length+':'+R('trk').filter(x=>!gTxt(x.grp)).length;if(s!==sig){sig=s;const o=trkNormalize();if(o.m||o.d){addLog('정리',`마일스톤 분야 정리 · ${o.m}행 분야 이름 합침 · 빈 머리줄·범례 ${o.d}개 정리`,{x:1,v:'trk'});Store.save('분야 정리');sig=S.pid+':'+R('trk').length+':'+R('trk').filter(x=>!gTxt(x.grp)).length;toast(`마일스톤 분야를 정리했습니다 — ${o.m}행을 이름 있는 분야로 합치고, 빈 머리줄·범례 ${o.d}개를 지웠습니다 (견적 > 지운 데이터 복구에서 되살릴 수 있음)`,'success',8000);rA.apply(this,a)}}}}catch(e){console.warn('trkNormalize',e)}return r}}
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';

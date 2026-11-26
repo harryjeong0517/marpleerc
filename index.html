@@ -790,6 +790,7 @@ textarea.gi:focus{max-height:none;min-height:34px;field-sizing:content}
 .rm-all{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}.rm-row{display:grid;grid-template-columns:20px 1fr auto;gap:2px 8px;align-items:center;border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:9px 12px;cursor:pointer}
 .rm-row b{font-size:13.5px}.rm-row span{font-size:12px;color:#b45309;font-weight:700}.rm-row small{grid-column:2/4;font-size:11.5px;color:#64748b}.rm-row small em{color:#b91c1c;font-style:normal}.rm-row i{grid-column:2/4;font-style:normal;font-size:11px;color:#b91c1c}
 .rm-dnote{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13px}.rm-dnote span{color:#475569;font-size:12px}
+.th-mkv{width:40px;height:70px;border-radius:7px;background:#111 center/cover;box-shadow:0 0 0 1px rgba(0,0,0,.1);flex-shrink:0}
 </style>
 </head>
 <body>
@@ -2537,6 +2538,8 @@ function projThemeModal(){const p=DB.projects.find(x=>x.id===thTmp.id),t=thTmp.t
  <div class="form-row"><div class="form-group"><label class="form-label">메뉴 톤</label><div class="seg"><button class="${t.mode!=='light'?'on':''}" data-act="thMode" data-m="dark">어둡게</button><button class="${t.mode==='light'?'on':''}" data-act="thMode" data-m="light">밝게</button></div></div>
  <div class="form-group"><label class="form-label">로그인 화면 행사명</label><label class="chk" style="margin-top:8px"><input type="checkbox" ${t.showName?'checked':''} data-chg="thf" data-k="showName"> KV 위에 행사명·날짜 표시 <span class="sub">(KV에 로고가 있으면 끄기)</span></label></div></div>
  <div class="form-group"><label class="form-label">로그인 화면 KV <span class="sub">— 없으면 대시보드 KV를 씁니다</span></label><div style="display:flex;gap:8px;align-items:center"><button class="btn btn-sm" data-act="thKv">${ico('upload',13)}${t.lkv?'변경':'올리기'}</button>${t.lkv?`<button class="btn btn-sm btn-danger-ghost" data-act="thKvDel">로그인 KV 삭제</button>`:''}</div></div>
+ <div class="form-group"><label class="form-label">모바일 KV <span class="sub">— 휴대폰(/m) 로그인 화면·홈 상단에 씁니다 · 권장 1080×1920px(세로 9:16), 글자·로고는 위쪽 60% 안에 · 없으면 로그인 화면 KV</span></label><div style="display:flex;gap:10px;align-items:center">${t.mkv?`<div class="th-mkv" style="background-image:url('${t.mkv}')"></div>`:''}<button class="btn btn-sm" data-act="thMkv">${ico('upload',13)}${t.mkv?'변경':'올리기'}</button>${t.mkv?`<button class="btn btn-sm btn-danger-ghost" data-act="thMkvDel">모바일 KV 삭제</button>`:''}</div></div>
+
  <div class="form-group"><label class="form-label">행사 로고 (선택) <span class="sub">— 넣으면 로그인 화면·대시보드 KV의 행사명 글자 대신 로고가 나옵니다. 투명 배경 PNG·SVG 권장</span></label><div class="wl-lg">${t.logo?`<span class="wl-lgp"><img src="${t.logo}" alt=""></span>`:''}<button class="btn btn-sm" data-act="thLogo">${ico('upload',13)}${t.logo?'로고 변경':'로고 올리기'}</button>${t.logo?`<button class="btn btn-sm btn-danger-ghost" data-act="thLogoDel">로고 삭제</button>`:'<span class="sub">없으면 지금처럼 행사명 글자로 표시</span>'}</div></div>
  <div class="form-group"><label class="form-label">문의처 문구</label><input class="form-input" value="${esc(t.contact)}" data-chg="thf" data-k="contact" placeholder="예) 문의 · 운영사무국 02-000-0000"></div>
  </div><div class="wl-ed-p"><div class="sub" style="margin-bottom:6px">미리보기 (로그인 · 메뉴)</div>
@@ -2556,6 +2559,8 @@ Object.assign(A,{
   const im=new Image();im.onload=()=>{const k=Math.min(1,900/im.naturalWidth,300/im.naturalHeight),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.naturalWidth*k));c.height=Math.max(1,Math.round(im.naturalHeight*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);const cc=logoTrim(c);thTmp.t.logo=cc.toDataURL(f.ext==='png'||f.ext==='webp'?'image/png':'image/jpeg',.9);projThemeModal()};im.src=f.dataUrl||URL.createObjectURL(f.file)}),
  thLogoDel:()=>{delete thTmp.t.logo;projThemeModal()},
  thKvDel:()=>{delete thTmp.t.lkv;thTmp.sw=null;projThemeModal();thSwLoad()},
+ thMkv:()=>pickFiles(fs=>{const f=fs[0];if(!f||!/^(png|jpe?g|webp)$/.test(f.ext))return toast('PNG·JPG 이미지를 골라 주세요','error');const im=new Image();im.onload=()=>{const k=Math.min(1,1920/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);thTmp.t.mkv=c.toDataURL('image/jpeg',.82);if(im.naturalHeight<im.naturalWidth)toast('가로 이미지입니다 — 휴대폰 화면에서는 가운데가 잘려 보일 수 있어요 (세로 1080×1920 권장)','info',6000);projThemeModal()};im.src=f.dataUrl||URL.createObjectURL(f.file)}),
+ thMkvDel:()=>{delete thTmp.t.mkv;projThemeModal()},
  thSave:d=>{if(!thTmp)return false;const p=DB.projects.find(x=>x.id===thTmp.id),s=thTmp.slug;if(!slugOk(s))return toast('접속 링크를 확인해 주세요 (영문 소문자·숫자·하이픈, 2자 이상)','error'),false;if(DB.projects.some(x=>x.id!==p.id&&x.slug===s))return toast('다른 프로젝트가 이미 쓰는 링크입니다','error'),false;
   p.slug=s;const t=Object.assign({},thTmp.t);Object.keys(t).forEach(k=>{if(t[k]===''||t[k]==null)delete t[k]});p.th=t;addLog('사이트 꾸미기',p.name);Store.save('사이트 꾸미기');if(!(d&&d.keep)){closeModal();thTmp=null}toast('저장했습니다','success');renderApp();return true},
  thPrev:()=>{const id=thTmp&&thTmp.id;if(A.thSave({keep:1})===false)return;closeModal();thTmp=null;if(id&&S.pid!==id){S.pid=id}S.wlPrev=true;S.view='dash';renderApp()},
@@ -2953,7 +2958,7 @@ function mTabs(){const t=[['home','grid','홈'],['plan','cal','일정']];if(canV
 function mBrand(){const pj=P();if(!S.pid||!wlOn())return `<img class="mlogo mlogo-m" src="${LOGO}" alt="marple">`;const th=thOf(pj);if(th.logo)return `<img class="mlogo" src="${th.logo}" alt="">`;return `<b class="mname">${esc(pj.name)}<small>${esc((th&&th.sub)||'RESOURCE CENTER')}</small></b>`}
 
 /* ---------- 로그인 ---------- */
-function mLogin(err){const bp=brandProj(),t=bp?thOf(bp):null;if(bp)wlApply(bp);else wlClear();const kv=bp?(t.lkv||kvEff(bp)||''):'';
+function mLogin(err){const bp=brandProj(),t=bp?thOf(bp):null;if(bp)wlApply(bp);else wlClear();const kv=bp?(t.mkv||t.lkv||kvEff(bp)||''):'';
  $('#root').innerHTML=`<div class="mlogin ${kv?'has-kv':''}" ${kv?`style="background-image:url('${kv}')"`:''}><form class="mlf" id="lf">
   ${bp?(t.logo?`<img class="mlg-logo" src="${t.logo}" alt="">`:`<small>${esc(t.sub||'RESOURCE CENTER')}</small><h1>${esc(bp.name)}</h1>`):`<img class="mlg-logo" src="${LOGO}" alt="marple"><small>EVENT RESOURCE CENTER</small>`}
   ${bp?`<p>${fmtD(bp.date)} · ${esc(bp.venue||'')}</p>`:'<p>발급받은 계정으로 로그인해 주세요</p>'}
@@ -2982,8 +2987,8 @@ function mScreen(){if(S.ms)return mMore(S.ms);
  switch(S.mt){case 'plan':return mPlan();case 'ag':return mAgenda();case 'doc':return mDoc();case 'more':return mMenu();default:return mHome()}}
 
 /* ---------- 홈 ---------- */
-function mKv(h){const pj=P(),th=thOf(pj),kv=kvEff(pj)||th.lkv||'',n=dd(pj.date);
- return `<div class="mkv" style="height:${h}px;${kv?`background-image:url('${kv}')`:''}"><div class="mkv-in">${th.logo&&wlOn()?`<img src="${th.logo}" alt="">`:`<b>${esc(pj.name)}</b>`}<i>${ddl(n)}</i><p>${fmtD(pj.date)} · ${esc((pj.venue||'').split(' ').slice(0,2).join(' '))}</p></div></div>`}
+function mKv(h){const pj=P(),th=thOf(pj),mk=wlOn()&&th.mkv,kv=mk||kvEff(pj)||th.lkv||'',n=dd(pj.date);
+ return `<div class="mkv" style="height:${h}px;${kv?`background-image:url('${kv}');${mk?'background-position:center 22%':''}`:''}"><div class="mkv-in">${th.logo&&wlOn()?`<img src="${th.logo}" alt="">`:`<b>${esc(pj.name)}</b>`}<i>${ddl(n)}</i><p>${fmtD(pj.date)} · ${esc((pj.venue||'').split(' ').slice(0,2).join(' '))}</p></div></div>`}
 function mItem(i,T){const tr=i.trk&&rowById(i.trk),chk=tr&&canEdit('trk');
  const open=i.cfm?`data-act="cfmOpen" data-id="${i.cfm}"`:i.trk?`data-act="mTrk" data-id="${i.trk}"`:i.rid?`data-act="mSubOpen" data-rid="${i.rid}"`:i.nav?`data-act="nav" data-v="${i.nav}"`:'';
  return `<div class="mit ${i.done?'done':''}">${chk?`<button class="mck ${i.done?'on':''}" data-act="dDone" data-id="${i.trk}">${i.done?'✓':''}</button>`:''}<div class="mxx" ${open}><b>${esc(i.title)}</b><div class="mm">${isStaff()?mTag(i.who):''}<span class="msrc">${i.src}</span>${i.meta?`<span>${esc(i.meta)}</span>`:''}</div></div>${mDd(i.due,i.done)}</div>`}

@@ -872,6 +872,22 @@ a.ops-v{text-decoration:none;color:var(--marple,#6d28d9)}a.ops-v:hover{text-deco
 .vc-col{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 9px 0 4px;border:1px solid var(--border);border-radius:var(--r);background:#fff;font-size:12px;cursor:pointer}
 .vc-col input{width:22px;height:22px;border:0;padding:0;background:none;cursor:pointer}
 .vcard.is-ok.has-bc{border-top-color:var(--bc)}
+/* p30 cards everywhere */
+.vm-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;padding:8px 10px 8px 14px;background:#fff;border:1px solid var(--border);border-radius:12px}
+.vm-cnt{font-size:12.5px;color:#64748b;font-weight:600}.vm-cnt b{font-size:15px;color:#0f172a;font-weight:800;margin-right:4px}
+.vm-hint{font-size:12px;color:#94a3b8}.vm-bar .vm-seg{margin-left:auto}
+.vm-seg button{padding:6px 13px;font-size:12px}
+.pcard .vc-h{align-items:flex-start}
+.vc-av{flex-shrink:0;width:42px;height:42px;border-radius:50%;background:var(--bc,#e2e8f0);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px}
+.vcard:not(.has-bc) .vc-av{background:#e2e8f0;color:#475569}
+.vc-who{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.vc-who b{font-size:15px;font-weight:800;color:#0f172a;overflow-wrap:anywhere}.vc-who small{font-size:12px;color:#64748b;overflow-wrap:anywhere}
+.vc-role{flex-shrink:0;font-size:11px;font-weight:700;background:#f1f5f9;color:#475569;border-radius:6px;padding:3px 8px}
+.vc-co{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:10px;background:#f8fafc;font-size:13px;font-weight:700;color:#334155;min-width:0}.vc-co .vc-coname{flex:1;min-width:0;overflow-wrap:anywhere}
+.vc-co .vc-logo{width:26px;height:26px;border-radius:7px}.vc-co .vc-logo i{font-size:12px}
+.vc-okb.sm{font-size:10.5px;padding:2px 7px 2px 5px}
+.vc-ct{display:flex;flex-direction:column;gap:5px;font-size:13px}.vc-ct a{display:flex;align-items:center;gap:7px;color:#0f172a;text-decoration:none;min-width:0}.vc-ct a span{overflow-wrap:anywhere}.vc-ct a:hover{color:var(--marple)}.vc-ct a svg{flex-shrink:0;opacity:.6!important}.vc-ct .mute{font-size:12px;color:#cbd5e1}
+.vc-upd{font-size:11px;color:#94a3b8}
+.pcard.co-ok{box-shadow:inset 3px 0 0 #16a34a}
 </style>
 </head>
 <body>
@@ -3740,6 +3756,30 @@ function vcModalHead(r){return `<div class="vc-mh" data-id="${r.id}" style="${r.
 /* 스폰서 도구 줄에 일괄 버튼 */
 {const vS=vSpn;vSpn=function(v){vS(v);if(!isStaff())return;const t=v.querySelector('.spn-tools');if(t&&!t.querySelector('[data-act="brandAll"]'))t.insertAdjacentHTML('afterbegin',`<button class="btn btn-sm" data-act="brandAll" title="홈페이지 URL이 있는 스폰서의 로고·색상을 한 번에 가져옵니다">${ico('globe',13)}로고·색상 가져오기</button>`);
  const ok=R('spn').filter(r=>r.st==='확정').length,sb=v.querySelector('.filter-bar .sub');if(sb&&!v.querySelector('.spn-okc'))sb.insertAdjacentHTML('afterend',`<span class="spn-okc">${ico('check',12)}확정 ${ok}곳</span>`)}}
+/* p30 컨택포인트·고객사 Nomination 에도 LIST/CARD */
+Object.assign(IC,{phone:'<rect x="4.5" y="1.5" width="7" height="13" rx="1.6"/><path d="M7 12.3h2"/>'});
+VCARD_RT.push('spc','cln','clc');
+const VC_PEOPLE=['spc','clc'],VC_LBL={spc:'담당자',cln:'고객사',clc:'담당자'};
+const coRow=(rt,co)=>{co=String(co||'').trim().toLowerCase();if(!co)return null;return R(rt==='spc'?'spn':'cln').find(r=>String(r.name||'').trim().toLowerCase()===co)||null};
+function vCardPerson(rt,cols,r){const nm=String(r.name||'').trim(),co=String(r.co||'').trim(),cr=coRow(rt,co),bc=cr&&cr.brandColor||'',sub=[r.pos,r.dept].filter(x=>String(x||'').trim()).map(esc).join(' · ');
+ const stop='onclick="event.stopPropagation()"',tel=String(r.tel||'').trim(),mail=String(r.mail||'').trim();
+ const meta=[['담당 범위',r.scope],['선호 연락',r.pref],['마플 담당',r.mp]].filter(x=>String(x[1]||'').trim()).map(x=>`<span><em>${x[0]}</em>${esc(x[1])}</span>`).join('');
+ return `<div class="vcard spc pcard${bc?' has-bc':''}${cr&&cr.st==='확정'?' co-ok':''}" style="${bc?`--bc:${bc}`:''}" data-act="vcOpen" data-rt="${rt}" data-id="${r.id}" tabindex="0">
+  <div class="vc-h"><span class="vc-av" style="${bc?`--bc:${bc}`:''}">${esc((nm||co||'?')[0])}</span><div class="vc-who"><b>${esc(nm||'(이름 없음)')}</b>${sub?`<small>${sub}</small>`:''}</div>${r.role?`<span class="vc-role">${esc(r.role)}</span>`:''}</div>
+  ${co?`<div class="vc-co">${cr?brandMark(cr):''}<span class="vc-coname">${esc(co)}</span>${cr&&cr.st==='확정'?`<span class="vc-okb sm">${ico('check',11)}확정</span>`:''}</div>`:''}
+  <div class="vc-ct">${tel?`<a href="tel:${esc(tel.replace(/[^\d+]/g,''))}" ${stop}>${ico('phone',13)}<span>${esc(tel)}</span></a>`:'<span class="mute">휴대폰 미등록</span>'}${mail?`<a href="mailto:${esc(mail)}" ${stop}>${ico('mail',13)}<span>${esc(mail)}</span></a>`:'<span class="mute">이메일 미등록</span>'}</div>
+  ${meta?`<div class="vc-meta">${meta}</div>`:''}${r.upd?`<div class="vc-foot"><span class="vc-upd">최종 업데이트 ${esc(r.upd)}</span></div>`:''}</div>`}
+{const vc=vCard;vCard=function(rt,cols,r){if(VC_PEOPLE.includes(rt))return vCardPerson(rt,cols,r);let h=vc(rt,cols,r);if(rt!=='cln')return h;const ok=r.st==='확정',cx=r.st==='취소';
+ h=h.replace('<div class="vcard"',`<div class="vcard spc${ok?' is-ok':''}${cx?' is-cx':''}"`).replace('<div class="vc-h">',`<div class="vc-h">${brandMark(r)}`);if(ok)h=h.replace(/(<div class="vc-h">[\s\S]*?<\/b>)/,`$1<span class="vc-okb">${ico('check',12)}확정</span>`);return h}}
+/* 팝업 제목: 담당자는 성명 */
+{const vo=A.vcOpen;A.vcOpen=d=>{vo(d);if(!VC_PEOPLE.includes(d.rt))return;const r=rowById(d.id),t=document.querySelector('#mroot .modal-title');if(r&&t)t.textContent=[r.name,r.co].filter(Boolean).join(' · ')||'담당자'}}
+/* 표 위에 보기 전환 막대 (스폰서 Nomination 은 필터 줄에 이미 있음) */
+{const gT=gridTbl;gridTbl=function(rt,cols,rows,o){const h=gT(rt,cols,rows,o);if(MB.on||rt==='spn'||!VCARD_RT.includes(rt))return h;
+ const ok=rt==='cln'?rows.filter(r=>r.st==='확정').length:-1;
+ return `<div class="vm-bar"><span class="vm-cnt"><b>${rows.length}</b>${VC_LBL[rt]}</span>${ok>=0?`<span class="spn-okc">${ico('check',12)}확정 ${ok}곳</span>`:''}<span class="vm-hint">${vmode(rt)==='card'?'카드를 누르면 전체 정보가 열립니다':'표에서 바로 수정할 수 있습니다'}</span>${vmSeg(rt)}</div>`+h}}
+/* 고객사 Nomination 리스트: 확정·취소 행 */
+{const gT=gridTbl;gridTbl=function(rt,cols,rows,o){let h=gT(rt,cols,rows,o);if(rt!=='cln'||!h.includes('<tr data-rid'))return h;
+ rows.forEach(r=>{const cl=r.st==='확정'?'is-ok':r.st==='취소'?'is-cx':'';if(cl)h=h.replace(`<tr data-rid="${r.id}" data-rt="cln">`,`<tr data-rid="${r.id}" data-rt="cln" class="${cl}">`)});return h}}
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';

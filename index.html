@@ -832,7 +832,7 @@ a.ops-v{text-decoration:none;color:var(--marple,#6d28d9)}a.ops-v:hover{text-deco
 .side-site>span{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.side-site b{font-size:13px;font-weight:700;overflow-wrap:anywhere}.side-site small{font-size:10.5px;color:#8b95a7;word-break:keep-all;overflow-wrap:break-word}
 .side-site.add{border-style:dashed;opacity:.75}.side-site.add:hover{opacity:1}
 /* p28 fit + card view */
-.gtbl.fit{width:max-content;min-width:0}
+.gtbl.fit{width:100%;min-width:0}.gtbl.fit .gfill{width:100%;padding:0!important;min-width:0}
 .gtbl.fit th{white-space:normal;word-break:keep-all;line-height:1.3;vertical-align:bottom}
 .gtbl.fit td>input.gi:has(+a.link){display:inline-block;vertical-align:middle}.gtbl.fit td:has(>input.gi+a.link){white-space:nowrap}.gtbl.fit td>input.gi+a.link{margin:0 0 0 6px;vertical-align:middle}
 .gtbl.fit textarea.gi{word-break:keep-all;overflow-wrap:break-word}
@@ -3692,7 +3692,7 @@ function vCard(rt,cols,r){const t=cols[0],title=String(r[t.k]||'').trim()||'(이
 {const gT=gridTbl;gridTbl=function(rt,cols,rows,o){o=o||{};
  if(VCARD_RT.includes(rt)&&vmode(rt)==='card'&&!MB.on){GCOLS[rt]=cols;GRT.add(rt);if(!rows.length)return gT(rt,cols,rows,o);
   return `<div class="vcards">${rows.map(r=>vCard(rt,cols,r)).join('')}</div>`}
- const h=gT(rt,MB.on?cols:fitCols(cols,rows),rows,o);if(MB.on)return h;return h.replace('<table class="gtbl">','<table class="gtbl fit">').replace(/(class="gi(?! dti)[^"]*"[^>]*?)style="min-width:(\d+)px"/g,(x,a,n)=>`${a}style="min-width:${n}px;width:${n}px;max-width:${n}px"`)}}
+ const h=gT(rt,MB.on?cols:fitCols(cols,rows),rows,o);if(MB.on)return h;return h.replace('<table class="gtbl">','<table class="gtbl fit">').replace('</tr></thead>','<th class="gfill"></th></tr></thead>').replace(/<\/tr>(?=<tr|<\/tbody>)/g,'<td class="gfill"></td></tr>').replace(/(class="gi(?! dti)[^"]*"[^>]*?)style="min-width:(\d+)px"/g,(x,a,n)=>`${a}style="min-width:${n}px;width:${n}px;max-width:${n}px"`)}}
 Object.assign(A,{
  vmSet:d=>{vmodeSet(d.rt,d.m);refresh()},
  vcOpen:d=>{const r=rowById(d.id);if(!r)return;const cols=GCOLS[d.rt]||[];if(!cols.length)return;const ed=true,canDel=canEdit(RT2MOD[r.t],r,'__row');

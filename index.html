@@ -799,6 +799,15 @@ td.rl{white-space:normal!important;overflow:visible!important;text-overflow:clip
 .ops-pl{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px dashed var(--border,#e5e7eb);margin-top:10px;padding-top:10px}
 .ops-pl>div{display:flex;flex-direction:column;gap:2px;min-width:0}.ops-l{font-size:11.5px;color:#64748b;font-weight:700;display:flex;align-items:center;gap:4px}
 .ops-v{font-size:12.5px;font-weight:600;color:#0f172a;word-break:break-all}.ops-v.none{color:#94a3b8;font-weight:500}.ops-v i{font-style:normal;font-size:10.5px;background:#fef3c7;color:#b45309;border-radius:5px;padding:0 5px;margin-left:4px}
+/* 스폰서 리뷰 반영 */
+.tf-opts{display:flex;flex-wrap:wrap;gap:6px}.tf-o{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border,#e5e7eb);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;background:#fff;user-select:none}
+.tf-o input{margin:0;accent-color:var(--marple)}.tf-o.on{border-color:var(--marple);background:#eef8fd;color:#0369a1;font-weight:600}
+.tg-cell{display:flex;flex-wrap:wrap;gap:4px;align-items:center}.tg-chip{display:inline-block;font-size:11px;font-weight:600;background:#eef2ff;color:#3730a3;border-radius:6px;padding:2px 7px;margin:1px 3px 1px 0;white-space:nowrap}
+.tg-ed{border:1px dashed #cbd5e1;background:#fff;border-radius:6px;width:24px;height:22px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#64748b}
+.spn-tools{display:flex;gap:8px;justify-content:flex-end;margin:-4px 0 10px}
+.filter-bar{flex-wrap:wrap}
+.sp-al{border:1px solid #bfdbfe;background:#f8fbff;border-radius:14px;padding:12px 14px;margin-bottom:14px}.sp-al-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;color:#1e40af}.sp-new{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:99px;padding:1px 8px}
+.sp-al-l>div{display:flex;gap:10px;align-items:center;font-size:12.5px;padding:5px 0;border-top:1px solid #e5edf9;flex-wrap:wrap}.sp-al-l>div:first-child{border-top:0}.sp-al-l .t{color:#94a3b8;font-size:11.5px;min-width:90px}.sp-al-l .a{font-size:10.5px;font-weight:800;border-radius:5px;padding:1px 6px;background:#d1fae5;color:#047857}.sp-al-l .a.m{background:#fef3c7;color:#b45309}.sp-al-l .new b{color:#1d4ed8}.sp-al-l .new::before{content:'';width:6px;height:6px;border-radius:50%;background:#ef4444}
 </style>
 </head>
 <body>
@@ -1200,7 +1209,7 @@ function vSubmit(v){
 }
 function reqCard(r,sid){
  const u=subOf(r.id,sid),st=u?u.status:'none',lock=st==='approved';let body='';
- if(r.type==='text'){const t=(u&&u.text)||{};body=`<div>${r.fields.map(f=>`<div class="form-group"><label class="form-label">${esc(f.label)}</label>${f.max>60?`<textarea class="form-textarea" id="t_${r.id}_${f.k}" maxlength="${f.max}" ${lock?'disabled':''}>${esc(t[f.k]||'')}</textarea>`:`<input class="form-input" id="t_${r.id}_${f.k}" maxlength="${f.max}" value="${esc(t[f.k]||'')}" ${lock?'disabled':''}>`}</div>`).join('')}</div>${lock?'':`<div><button class="btn btn-primary btn-sm" data-act="saveText" data-rid="${r.id}">${ico('check',13)}${st==='none'?'제출':'수정 후 다시 제출'}</button></div>`}`}
+ if(r.type==='text'){const t=(u&&u.text)||{};body=`<div>${r.fields.map(f=>tfHtml(r,f,t,lock)).join('')}</div>${lock?'':`<div><button class="btn btn-primary btn-sm" data-act="saveText" data-rid="${r.id}">${ico('check',13)}${st==='none'?'제출':'수정 후 다시 제출'}</button></div>`}`}
  else body=`${u&&u.files.length?`<div class="files">${u.files.map(f=>`<div class="it" data-fid="${f.id}">${fic(f)}<div class="nm" style="cursor:default"><span data-act="prevSubF" data-id="${f.id}" style="cursor:pointer">${esc(f.name)}</span><div class="sub" style="font-weight:400">${fmtSize(f.size)} · ${fmtDT(f.date)}${upTxt(f)}</div>${upBar(f)}</div>${lock?'':`<button class="btn btn-icon del" title="삭제" data-act="delSubF" data-rid="${r.id}" data-fid="${f.id}">${ico('trash',14)}</button>`}</div>`).join('')}</div>`:''}
  ${lock?'':`<div class="upload-zone" data-drop="${r.id}" data-act="pickSub" data-rid="${r.id}"><b>${st==='rejected'?'수정한 파일을 다시 올려주세요':'파일을 끌어다 놓거나 클릭'}</b><div class="sub">${r.formats.length?esc(r.formats.join(' · '))+' 형식':'모든 형식'}</div></div>`}`;
  return `<div class="card req"><div><h4>${esc(r.title)} ${r.priv?`<span class="badge badge-purple" title="마플·주관사·해당 업체만 열람">${ico('lock',11)}개인정보</span>`:''}</h4><div class="meta">${stBadge(st)}<span class="badge badge-gray">${fmtD(r.due)} 마감</span>${ddBadge(r.due)}</div></div>
@@ -1259,7 +1268,7 @@ function vStatus(v){
 function openSub(rid,sid){
  const r=DB.requests.find(x=>x.id===rid),s=sp(sid),u=DB.subs.find(x=>x.rid===rid&&x.sid===sid),st=u?u.status:'none',busy=u&&u.files.some(f=>f.up!=null);
  let body='<div class="empty-state"><b>아직 제출되지 않았습니다</b></div>';
- if(u&&u.text)body=`<div>${r.fields.map(f=>`<div style="margin-bottom:10px"><div class="sub">${esc(f.label)}</div><div class="note" style="margin-top:3px">${esc(u.text[f.k]||'')}</div></div>`).join('')}</div>`;
+ if(u&&u.text)body=`<div>${r.fields.map(f=>`<div style="margin-bottom:10px"><div class="sub">${esc(f.label)}</div><div class="note" style="margin-top:3px">${tfShow(f,u.text[f.k])}</div></div>`).join('')}</div>`;
  else if(u&&u.files.length)body=`<div class="files">${u.files.map(f=>`<div class="it">${fic(f)}<div class="nm" style="cursor:default"><span data-act="prevSubF" data-id="${f.id}" style="cursor:pointer">${esc(f.name)}</span><div class="sub" style="font-weight:400">${fmtSize(f.size)} · v${f.v} · ${fmtDT(f.date)} · ${esc(f.by||'')}${upTxt(f)}</div>${upBar(f)}</div><button class="btn btn-icon" data-act="prevSubF" data-id="${f.id}">${ico('eye',14)}</button><button class="btn btn-icon" data-act="dl" data-id="${f.id}">${ico('download',14)}</button></div>`).join('')}</div>`;
  const can=isAdmin()&&u&&u.status!=='approved'&&(u.files.length||u.text);
  modal(esc(s.name)+' · '+esc(r.title),`<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:14px">${stBadge(st)}<span class="badge badge-gray">${fmtD(r.due)} 마감</span>${r.priv?`<span class="badge badge-purple">${ico('lock',11)}개인정보</span>`:''}${u?`<span class="sub">최종 ${fmtDT(u.updated)}</span>`:''}</div>${body}
@@ -1526,7 +1535,7 @@ function vAgenda(v){const rows=agRows(),staff=isStaff(),adm=isAdmin(),pub=!!CF_(
 AFTER.ag=()=>{const e=$('#agmx');if(e)e.innerHTML=agMain(canEdit('agenda'))};
 const agPaint=()=>{const e=$('#agmx');if(e)e.innerHTML=agMain(canEdit('agenda'));else renderView()};
 /* ---------- 필터 도우미 ---------- */
-const TF={trk:{g:'',who:'',st:'',q:''},spn:{floor:'',st:'',q:''}};
+const TF={trk:{g:'',who:'',st:'',q:''},spn:{floor:'',st:'',q:'',tier:'',award:'',logo:'',content:'',tag:'',mou:''}};
 const fsel=(grp,f,label,opts)=>`<select class="form-select" style="width:auto;min-width:112px" data-chg="tf" data-g="${grp}" data-f="${f}"><option value="">${label}</option>${opts.map(o=>`<option ${TF[grp][f]===o?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
 const fq=(grp)=>`<input class="form-input" placeholder="검색" value="${esc(TF[grp].q)}" data-chg="tf" data-g="${grp}" data-f="q" style="min-width:160px">`;
 const sessOf=sid=>agRows().find(a=>a.sid===sid);
@@ -1633,11 +1642,11 @@ function vReh(v){const tab=S.rehTab||'b';
   +(tab==='a'?gridTbl('rha',RHAC(),R('rha'),{del:true,idx:true}):sidList()+`<datalist id="dl-track">${agByTrack().map(t=>`<option value="${esc(t)}">`).join('')}</datalist>`+gridTbl('rhb',RHBC(),R('rhb'),{del:true,idx:true,grp:r=>fmtD(r.date)}))}
 
 /* ---------- 스폰서 Nomination (+현황) ---------- */
-const SPNC=()=>[C('name','스폰서사',140),SEL('tier','등급',84,OPT.tier),C('booth','부스 유형',150),SEL('floor','층',58,OPT.floor),C('boothNo','부스 No',70),SEL('session','세션 참여',76,OPT.yn),C('agNo','아젠다 No',80,{list:'dl-sid'}),SEL('award','어워드 후보',84,OPT.yn),SEL('logo','로고 수령',84,OPT.rcv,{bd:bdOK}),SEL('content','부스 컨텐츠',90,OPT.rcv,{bd:bdOK}),C('hpT','홈페이지 소제목',140),C('hpD','홈페이지 설명글',240,{ty:'long'}),C('tickets','입장권',64,{ty:'num'}),SEL('st','상태',84,OPT.spn,{bd:bdOK}),C('note','비고',160)];
+const SPNC=()=>[C('name','스폰서사',140),SEL('tier','등급',84,OPT.tier),C('booth','부스 유형',150),SEL('floor','층',58,OPT.floor),C('boothNo','부스 No',70),SEL('session','세션 참여',76,OPT.yn),C('agNo','아젠다 No',80,{list:'dl-sid'}),SEL('award','어워드 후보',84,OPT.yn),SEL('logo','로고 수령',84,OPT.rcv,{bd:bdOK}),SEL('content','부스 컨텐츠',90,OPT.rcv,{bd:bdOK}),C('hpT','홈페이지 소제목',140),C('hpD','홈페이지 설명글',240,{ty:'long'}),{k:'tags',l:'관심 분야',w:220,f:r=>spnTagsCell(r)},C('hpUrl','홈페이지 URL',200,{ty:'link'}),SEL('mou','보도자료·MOU',104,OPT.mou),C('mouNote','보도자료·MOU 메모',200,{ty:'long'}),C('tickets','입장권',64,{ty:'num'}),SEL('st','상태',84,OPT.spn,{bd:bdOK}),C('note','비고',160)];
 BOARD.spn=()=>{const rs=R('spn'),c=(k,v)=>rs.filter(r=>r[k]===v).length,fl=f=>rs.filter(r=>r.floor===f);return `<div class="stat-grid">${prog('스폰서 확정',c('st','확정'),rs.length)}${prog('로고 수령',rs.filter(r=>['수령','검수중','확정'].includes(r.logo)).length,rs.length)}${prog('부스 컨텐츠 최종',c('content','확정'),rs.length)}${stat('1F',fl('1F').filter(r=>r.st==='확정').length+' / '+fl('1F').length,'', '목공·Q부스')}${stat('2F',fl('2F').filter(r=>r.st==='확정').length+' / '+fl('2F').length,'', '독립 부스')}${stat('어워드 후보',c('award','Y'),'orange')}${stat('세션 참여',c('session','Y'),'blue')}</div>`};
-function vSpn(v){const all=R('spn'),f=TF.spn,q=f.q.toLowerCase(),rows=all.filter(r=>(!f.floor||r.floor===f.floor)&&(!f.st||r.st===f.st)&&(!q||(r.name+r.booth+r.note).toLowerCase().includes(q)));
+function vSpn(v){const all=R('spn'),f=TF.spn,q=f.q.toLowerCase(),rows=all.filter(r=>(!f.floor||r.floor===f.floor)&&(!f.st||r.st===f.st)&&(!f.tier||r.tier===f.tier)&&(!f.award||r.award===f.award)&&(!f.logo||r.logo===f.logo)&&(!f.content||r.content===f.content)&&(!f.tag||(r.tags||[]).includes(f.tag))&&(!f.mou||(r.mou||'')===f.mou)&&(!q||(r.name+r.booth+r.note+(r.tags||[]).join(' ')).toLowerCase().includes(q)));
  v.innerHTML=head('스폰서 Nomination','스폰서 확정 · 부스 배정 · 로고/컨텐츠 수령 현황을 한 표에서 관리합니다. Proposal 기준 1F 20개사 · 2F 10개사(총 30), 네트워킹 입장권은 스폰서사당 최대 2명입니다.',addBtn('spn','스폰서 추가'))+boardBox()
-  +`<div class="filter-bar">${fsel('spn','floor','층 전체',['1F','2F'])}${fsel('spn','st','상태 전체',OPT.spn)}${fq('spn')}<span class="sub">${rows.length} / ${all.length}건</span></div>`+sidList()+gridTbl('spn',SPNC(),rows,{del:true,idx:true})}
+  +`<div class="filter-bar">${fsel('spn','floor','층 전체',['1F','2F'])}${fsel('spn','st','상태 전체',OPT.spn)}${fsel('spn','tier','등급 전체',OPT.tier.filter(Boolean))}${fsel('spn','award','어워드 후보 전체',OPT.yn)}${fsel('spn','logo','로고 수령 전체',OPT.rcv)}${fsel('spn','content','부스 컨텐츠 전체',OPT.rcv)}${fsel('spn','tag','관심 분야 전체',spnInterests())}${fsel('spn','mou','보도자료·MOU 전체',OPT.mou)}${fq('spn')}<span class="sub">${rows.length} / ${all.length}건</span></div>`+sidList()+gridTbl('spn',SPNC(),rows,{del:true,idx:true})}
 
 /* ---------- 컨택포인트 · 고객사 Nomination · 에셋 폴더 ---------- */
 const warnPI='<div class="note" style="margin-bottom:14px">⚠️ 개인정보가 포함됩니다. 마플·주관사 실무자에게만 보이며 스폰서에게는 공개되지 않습니다. 파일로 외부에 전달할 때는 이 표를 제외해 주세요.</div>';
@@ -1924,7 +1933,7 @@ const A={
  rmode:d=>{document.querySelectorAll('.seg button[data-act=rmode]').forEach(b=>b.classList.toggle('on',b.dataset.m===d.m));$('#rpick').style.display=d.m==='pick'?'grid':'none'},
  reqSave:d=>{const t=$('#rt').value.trim(),due=$('#rdue').value;if(!t||!due)return toast('항목명과 마감일을 입력해 주세요','error');const type=$('#rty').value,pick=document.querySelector('.seg button[data-act=rmode].on').dataset.m==='pick',tg=pick?[...document.querySelectorAll('#rpick input:checked')].map(i=>i.value):'all';
   if(pick&&!tg.length)return toast('요청할 업체를 선택해 주세요','error');const fl=$('#rfl').value.split(',').map(x=>x.trim()).filter(Boolean);if(type==='text'&&!fl.length)return toast('텍스트 입력칸 이름을 입력해 주세요','error');
-  const o={title:t,desc:$('#rd').value.trim(),type,formats:type==='file'?$('#rf').value.split(',').map(x=>x.trim().toUpperCase()).filter(Boolean):[],rule:$('#rr').value.trim(),due,target:tg,priv:$('#rp').checked,fields:type==='text'?fl.map((l,i)=>({k:'f'+i,label:l,max:l.includes('설명')?200:60})):null};
+  const o={title:t,desc:$('#rd').value.trim(),type,formats:type==='file'?$('#rf').value.split(',').map(x=>x.trim().toUpperCase()).filter(Boolean):[],rule:$('#rr').value.trim(),due,target:tg,priv:$('#rp').checked,fields:type==='text'?fl.map((l,i)=>{const old=((DB.requests.find(x=>x.id===d.id)||{}).fields||[]).find(x=>x.label===l);return old||({k:'f'+i,label:l,max:l.includes('설명')?200:60})}):null};
   if(d.id){Object.assign(DB.requests.find(r=>r.id===d.id),o)}else DB.requests.push({id:uid('r'),pid:S.pid,required:true,...o});addLog(d.id?'요청 수정':'요청 추가',t);Store.save('요청 저장');toast('저장했습니다','success');closeModal();refresh()},
  reqDel:d=>{const r=DB.requests.find(x=>x.id===d.id);confirmBox(`<b>${esc(r.title)}</b> 요청을 삭제할까요? 업체들이 이미 제출한 자료 기록도 함께 삭제됩니다.`,()=>{DB.subs.filter(u=>u.rid===d.id).forEach(u=>u.files.forEach(f=>{if(f.driveId)Drive.del(f.driveId)}));DB.requests=DB.requests.filter(x=>x.id!==d.id);DB.subs=DB.subs.filter(u=>u.rid!==d.id);Store.save('삭제');toast('삭제했습니다');refresh()})},
  accNew:()=>modal('스폰서 계정 발급',`<div class="form-group"><label class="form-label">회사명</label><input class="form-input" id="an"></div><div class="form-row"><div class="form-group"><label class="form-label">등급</label><select class="form-select" id="at"><option>Platinum</option><option>Gold</option><option selected>Silver</option></select></div><div class="form-group"><label class="form-label">층</label><select class="form-select" id="af"><option>1F</option><option>2F</option></select></div></div>
@@ -2628,13 +2637,13 @@ function dNotice(){const p=P(),n=p.notice,role=S.user.role;if(!n||!n.text)return
 vDash=function(v){const role=S.user.role,T=ymd(today()),all=dItems(),its=dFilter(all),B=dBuckets(its);let h=projHead()+dNotice();
  const seg=(opts)=>`<div class="dseg">${opts.map(([k,l])=>`<button class="${(S.dF||'all')===k?'on':''}" data-act="dF" data-f="${k}">${l}</button>`).join('')}</div>`;
  if(isAdmin()){const subs=DB.subs.filter(u=>u.status==='submitted'&&reqs().some(r=>r.id===u.rid)).length,cw=R('cfm').filter(c=>c.st==='대기').length,cnt=k=>B.today.filter(i=>i.who===k).length;
-  h+=`<div class="dtop"><div class="sub">${fmtD(T)} 기준 · 마일스톤 '구분'·일정·요청 항목에서 자동으로 모읍니다</div>${seg([['all','전체'],['me','내 일만'],['mp','마플'],['mkt','주관사'],['sp','스폰서']])}</div>
+  h+=`<div class="dtop"><div class="sub">${fmtD(T)} 기준 · 마일스톤 '구분'·일정·요청 항목에서 자동으로 모읍니다</div>${seg([['all','전체'],['me','내 일만'],['mp','운영사무국'],['mkt',hostShort()],['sp','스폰서']])}</div>
   <div class="dstats">${dStat('오늘 할 일',B.today.length,{cls:'hi',u:'건',s:['mp','mkt','co','sp'].filter(k=>cnt(k)).map(k=>WHO_L[k]+' '+cnt(k)).join(' · ')||'오늘 마감 없음'})}${dStat('7일 안에 마감',B.week.length,{u:'건'})}${dStat('지연',B.late.length,{u:'건',cls:B.late.length?'red':''})}${dStat('검수 대기 (스폰서 제출)',subs,{u:'건',cls:subs?'amb':''})}${dStat('주관사 컨펌 대기',cw,{u:'건'})}</div>`;
   const a=dLimit(B.today,T,7),b=dLimit(B.week,T,7),c=dLimit(B.late,T,7);
   h+=`<div class="dcols">${dCol('오늘',B.today.length,a.rows,{side:fmtD(T),more:a.more,empty:'오늘 마감인 일이 없습니다'})}${dCol('7일 안에 마감',B.week.length,b.rows,{side:fmtD(addD(T,1))+' – '+fmtD(B.W),more:b.more})}${dCol('지연 · 확인 필요',B.late.length,c.rows,{cls:'red',more:c.more,empty:'지연된 일이 없습니다 👍'})}</div>`+dWeek(its)+`<div class="drow2">${dMatrix()}<div class="dstack">${dCfmList()}${dMiles()}</div></div>`}
  else if(role==='host'){const rs=reqs();let tot=0,sub=0;rs.forEach(r=>targetsOf(r).forEach(s=>{tot++;if(['submitted','approved'].includes(stOf(r.id,s.id)))sub++}));const tk=R('trk'),pr=tk.length?Math.round(tk.filter(r=>r.st==='완료').length/tk.length*100):0,cw=R('cfm').filter(c=>c.st==='대기').length;
   const mine=i=>i.who==='mkt'||i.who==='co',mT=B.today.filter(mine),mW=B.week.filter(mine),mL=B.late.filter(mine),mp=all.filter(i=>i.who==='mp'&&!i.done&&i.due<=addD(T,14)).sort((a,b)=>a.due<b.due?-1:1);
-  h+=`<div class="dtop"><div class="sub">${fmtD(T)} 기준</div>${seg([['all','전체'],['mine','우리 할 일'],['mp','운영사무국 진행']])}</div>
+  h+=`<div class="dtop"><div class="sub">${fmtD(T)} 기준</div>${seg([['all','전체'],['mp','운영사무국'],['mine',hostShort()]])}</div>
   <div class="dstats">${dStat('오늘 확인할 것',mT.length+cw,{cls:'hi',u:'건',s:`컨펌 요청 ${cw} · 할 일 ${mT.length}`})}${dStat('7일 안에 마감',mW.length,{u:'건'})}${dStat('지연',mL.length,{u:'건',cls:mL.length?'red':''})}${dStat('스폰서 제출률',tot?Math.round(sub/tot*100):0,{u:'%',s:`${sub} / ${tot}건`})}${dStat('전체 진행률',pr,{u:'%',s:'마일스톤 완료 기준'})}</div>`;
   const x=dLimit(mL.concat(mT,mW),T,8),y=dLimit(mp,T,8,{});
   h+=`<div class="dcols">${dCfmList()}${dCol('우리 할 일 · 7일',mL.length+mT.length+mW.length,x.rows,{side:fmtD(T)+' – '+fmtD(B.W),more:x.more,empty:'가까운 할 일이 없습니다'})}${dCol('운영사무국 진행 상황',mp.length,y.rows,{side:'2주 안 · 읽기 전용',more:y.more,empty:'진행 중인 일이 없습니다'})}</div>`+dWeek(its)+`<div class="drow2">${dMatrix()}${dMiles()}</div>`}
@@ -3407,6 +3416,99 @@ function trkNormalize(){const rows=R('trk');if(!rows.length)return {m:0,d:0};
  if(junk.length){const ids=new Set(junk.map(r=>r.id));DB.rows=DB.rows.filter(r=>!ids.has(r.id))}
  return {m,d:junk.length}}
 {const rA=renderApp;let sig='';renderApp=function(...a){const r=rA.apply(this,a);try{if(S.user&&isAdmin()&&S.pid){const s=S.pid+':'+R('trk').length+':'+R('trk').filter(x=>!gTxt(x.grp)).length;if(s!==sig){sig=s;const o=trkNormalize();if(o.m||o.d){addLog('정리',`마일스톤 분야 정리 · ${o.m}행 분야 이름 합침 · 빈 머리줄·범례 ${o.d}개 정리`,{x:1,v:'trk'});Store.save('분야 정리');sig=S.pid+':'+R('trk').length+':'+R('trk').filter(x=>!gTxt(x.grp)).length;toast(`마일스톤 분야를 정리했습니다 — ${o.m}행을 이름 있는 분야로 합치고, 빈 머리줄·범례 ${o.d}개를 지웠습니다 (견적 > 지운 데이터 복구에서 되살릴 수 있음)`,'success',8000);rA.apply(this,a)}}}}catch(e){console.warn('trkNormalize',e)}return r}}
+/* =====================================================================
+   ICON 2027 리뷰 반영 (p25)
+   ① 관심 분야(여러 개) ② 홈페이지 URL ③ 대시보드 [전체/운영사무국/주관사약칭]
+   ④ 스폰서 제출·수정 알림(대시보드 + 메일) · 홈페이지용 내보내기 ⑤ 보도자료·MOU 의향 ⑥ Nomination 필터
+   ===================================================================== */
+OPT.mou=['진행 희망','검토 중','진행 안 함'];
+const INTEREST_DEF=['AI·데이터','클라우드·인프라','보안','데브옵스·개발 도구','모니터링·운영','협업·생산성'];
+function spnInterests(){const c=(typeof CF_==='function'&&S.pid)?CF_():null;return (c&&c.interests&&c.interests.length)?c.interests:INTEREST_DEF}
+function hostShort(){const p=P();if(!p)return '주관사';if(p.hostShort)return p.hostShort;const h=(DB.hosts||[]).find(x=>x.id===p.hostId),n=(h&&h.name)||'';return /메가존/.test(n)?'MZC':(n||'주관사')}
+
+/* ---- 텍스트 요청 칸: 선택형(여러 개/하나)·URL ---- */
+function tfHtml(r,f,t,lock){const id=`t_${r.id}_${f.k}`,v=t[f.k],dis=lock?'disabled':'',lab=`<label class="form-label">${esc(f.label)}${f.opt?' <span class="sub">(선택)</span>':''}</label>`;
+ if(f.opts){const opts=f.k==='tags'?spnInterests():f.opts,cur=Array.isArray(v)?v:(v?[v]:[]);
+  return `<div class="form-group">${lab}<div class="tf-opts" id="${id}" data-multi="${f.multi?1:''}">${opts.map(o=>`<label class="tf-o ${cur.includes(o)?'on':''}"><input type="${f.multi?'checkbox':'radio'}" name="${id}" value="${esc(o)}" ${cur.includes(o)?'checked':''} ${dis}>${esc(o)}</label>`).join('')}</div>${f.multi?'<div class="sub" style="margin-top:4px">해당하는 분야를 모두 골라 주세요</div>':''}</div>`}
+ if(f.ty==='url')return `<div class="form-group">${lab}<input class="form-input" type="url" inputmode="url" id="${id}" maxlength="${f.max||300}" value="${esc(v||'')}" placeholder="https://www.example.com" ${dis}></div>`;
+ return `<div class="form-group">${lab}${f.max>60?`<textarea class="form-textarea" id="${id}" maxlength="${f.max}" ${dis}>${esc(v||'')}</textarea>`:`<input class="form-input" id="${id}" maxlength="${f.max}" value="${esc(v||'')}" ${dis}>`}</div>`}
+function tfShow(f,v){if(Array.isArray(v))return v.length?v.map(x=>`<span class="tg-chip">${esc(x)}</span>`).join(''):'<span class="mute">-</span>';if(f&&f.ty==='url'&&v)return `<a class="link" href="${esc(v)}" target="_blank" rel="noopener">${esc(v)} ↗</a>`;return esc(v||'')}
+document.addEventListener('change',e=>{const i=e.target;if(i.closest&&i.closest('.tf-opts')){const box=i.closest('.tf-opts');box.querySelectorAll('.tf-o').forEach(l=>l.classList.toggle('on',l.querySelector('input').checked))}});
+
+/* ---- 제출 저장 + Nomination 표 자동 반영 + 알림 ---- */
+const normCo=s=>String(s||'').replace(/\s|\(주\)|㈜|주식회사|inc\.?|corp\.?|co\.,?\s*ltd\.?/gi,'').toLowerCase();
+function spnRowOf(sid,make){const s=sp(sid);if(!s)return null;const rs=R('spn');let r=rs.find(x=>x.sid===sid)||rs.find(x=>normCo(x.name)&&normCo(x.name)===normCo(s.name))||rs.find(x=>{const a=normCo(x.name),b=normCo(s.name);return a&&b&&(a.includes(b)||b.includes(a))});
+ if(!r&&make){r=newRow('spn',Object.assign(BLANK.spn?BLANK.spn():{},{name:s.name,tier:s.tier||'',sid}))}if(r&&!r.sid)r.sid=sid;return r}
+function spnSync(r,sid,t){const map=r.sync||{};if(!Object.keys(map).length)return false;const row=spnRowOf(sid,true);if(!row)return false;let ch=false;
+ Object.keys(map).forEach(k=>{if(!(k in t))return;const col=map[k],v=Array.isArray(t[k])?t[k].slice():t[k];if(JSON.stringify(row[col])!==JSON.stringify(v)){row[col]=v;ch=true}});return ch}
+A.saveText=d=>{const r=DB.requests.find(x=>x.id===d.rid);if(!r)return;const t={};let miss=[];
+ r.fields.forEach(f=>{const id='t_'+r.id+'_'+f.k;if(f.opts){const ins=[...document.querySelectorAll(`#${CSS.escape(id)} input:checked`)].map(i=>i.value);t[f.k]=f.multi?ins:(ins[0]||'');if(!f.opt&&!ins.length)miss.push(f.label);return}
+  const el=$('#'+id);let v=el?el.value.trim():'';if(f.ty==='url'&&v&&!/^https?:\/\//i.test(v))v='https://'+v;if(f.ty==='url'&&v&&!/^https?:\/\/[^\s.]+\.[^\s]+$/i.test(v))miss.push(f.label+' (주소 형식)');t[f.k]=v;if(!f.opt&&!v)miss.push(f.label)});
+ if(miss.length)return toast('입력해 주세요: '+miss.join(', '),'error');
+ let u=DB.subs.find(x=>x.rid===r.id&&x.sid===mySid());const again=!!(u&&u.text);if(!u){u={id:uid('u'),rid:r.id,sid:mySid(),status:'none',files:[],text:null,comment:'',updated:0};DB.subs.push(u)}
+ u.text=t;u.status='submitted';u.updated=Date.now();spnSync(r,mySid(),t);addLog(again?'수정 제출':'제출',r.title);Store.save('제출');toast('제출했습니다','success');refresh();
+ spNotify(r,again?'수정':'제출',r.fields.map(f=>`${f.label}: ${Array.isArray(t[f.k])?t[f.k].join(', '):(t[f.k]||'-')}`).join('\n'))};
+/* 파일 제출도 알림 */
+{const aSF=addSubFiles;addSubFiles=function(rid,sid,files,proxy){const u0=DB.subs.find(x=>x.rid===rid&&x.sid===sid),had=!!(u0&&u0.files&&u0.files.length);const res=aSF.apply(this,arguments);
+ try{if(!proxy&&S.user&&S.user.role==='sponsor'){const r=DB.requests.find(x=>x.id===rid);if(r)spNotify(r,had?'수정':'제출','파일: '+[...files].map(f=>f.name).join(', '))}}catch(e){}return res}}
+const SPN_T={};
+async function spNotify(r,kind,summary){try{if(!S.user||S.user.role!=='sponsor')return;const p=P();if(p.notifyMail===false||!Drive.on())return;const k=r.id;if(SPN_T[k]&&Date.now()-SPN_T[k]<60000)return;SPN_T[k]=Date.now();
+ if(Remote.on())await Remote.chain;await Drive.rpc({a:'notify',pid:S.pid,sid:mySid(),rid:r.id,kind,title:r.title,summary:String(summary).slice(0,1500),url:siteUrl()})}catch(e){console.warn('notify',e)}}
+
+/* ---- 대시보드: 스폰서 제출·수정 알림 (운영사무국·주관사) ---- */
+const SEEN_K=()=>'erc_seen_'+(S.user&&S.user.id)+'_'+S.pid;
+function spAlerts(){const t0=Date.now()-14*864e5;let seen=0;try{seen=+localStorage.getItem(SEEN_K())||0}catch(e){}
+ const ls=DB.logs.filter(l=>l.pid===S.pid&&l.t>t0&&/^(제출|수정 제출)$/.test(l.action)&&l.role==='sponsor');return {ls,seen}}
+{const vD=vDash;vDash=function(v){vD(v);if(!S.user||!(isAdmin()||S.user.role==='host'))return;const {ls,seen}=spAlerts();if(!ls.length)return;const nw=ls.filter(l=>l.t>seen);
+ const el=document.createElement('div');el.className='sp-al';
+ el.innerHTML=`<div class="sp-al-h">${ico('mail',15)}<b>스폰서 제출·수정 알림</b>${nw.length?`<span class="sp-new">새 알림 ${nw.length}</span>`:''}<span class="sub">최근 14일</span><span style="flex:1"></span>${nw.length?'<button class="btn btn-sm" data-act="spSeen">모두 확인</button>':''}<button class="btn btn-sm" data-act="nav" data-v="status">제출 현황</button></div>
+ <div class="sp-al-l">${ls.slice(0,8).map(l=>`<div class="${l.t>seen?'new':''}"><span class="t">${fmtDT(l.t)}</span><b>${esc(l.org||l.who||'')}</b><span class="a ${l.action==='수정 제출'?'m':''}">${l.action==='수정 제출'?'수정':'제출'}</span><span>${esc(l.target||'')}</span></div>`).join('')}${ls.length>8?`<div class="sub">외 ${ls.length-8}건</div>`:''}</div>`;
+ const top=v.querySelector('.dtop');if(top)top.parentNode.insertBefore(el,top);else v.appendChild(el)}}
+A.spSeen=()=>{try{localStorage.setItem(SEEN_K(),String(Date.now()))}catch(e){}renderView()};
+
+/* ---- 관심 분야 칸 (Nomination 표) ---- */
+function spnTagsCell(r){const ts=r.tags||[],ed=canEdit('spn',r,'tags');return `<div class="tg-cell">${ts.map(x=>`<span class="tg-chip">${esc(x)}</span>`).join('')||'<span class="mute">-</span>'}${ed?`<button class="tg-ed" data-act="spnTags" data-id="${r.id}" title="관심 분야 선택">${ico('edit',12)}</button>`:''}</div>`}
+Object.assign(A,{
+ spnTags:d=>{const r=rowById(d.id);if(!r||!canEdit('spn',r,'tags'))return;const cur=r.tags||[];
+  modal('관심 분야 · '+esc(r.name||''),`<div class="tf-opts" id="tgpick" data-multi="1">${spnInterests().map(o=>`<label class="tf-o ${cur.includes(o)?'on':''}"><input type="checkbox" value="${esc(o)}" ${cur.includes(o)?'checked':''}>${esc(o)}</label>`).join('')}</div>
+   ${isAdmin()?`<div class="sub" style="margin-top:12px">분야 목록 바꾸기는 표 위 [관심 분야 항목] 버튼에서 할 수 있습니다.</div>`:''}${mfoot(`<button class="btn" data-act="close">취소</button><button class="btn btn-primary" data-act="spnTagsSave" data-id="${r.id}">저장</button>`)}`)},
+ spnTagsSave:d=>{const r=rowById(d.id);if(!r)return;const v=[...document.querySelectorAll('#tgpick input:checked')].map(i=>i.value);const old=(r.tags||[]).join(', ');r.tags=v;logEdit(r,'tags',old,v.join(', '));Store.save('관심 분야');closeModal();renderView()},
+ spnIntEdit:()=>{if(!isAdmin())return;modal('관심 분야 항목',`<div class="sub" style="margin-bottom:8px">한 줄에 하나씩 · 스폰서 제출 화면과 표·필터에 같이 쓰입니다</div><textarea class="form-textarea" id="intl" rows="8">${esc(spnInterests().join('\n'))}</textarea>${mfoot(`<button class="btn" data-act="close">취소</button><button class="btn btn-primary" data-act="spnIntSave">저장</button>`)}`)},
+ spnIntSave:()=>{const ls=[...new Set($('#intl').value.split('\n').map(x=>x.trim()).filter(Boolean))];if(!ls.length)return toast('분야를 하나 이상 입력해 주세요','error');const c=ensureCfg();c.interests=ls;addLog('수정','관심 분야 항목 · '+ls.join(', '));Store.save('관심 분야');closeModal();renderView()}});
+
+/* ---- 홈페이지용 내보내기 ---- */
+function spnExportRows(){const rs=R('spn'),logoReq=DB.requests.find(r=>r.pid===S.pid&&/로고/.test(r.title)&&r.type!=='text');
+ return rs.map(r=>{const s=r.sid?sp(r.sid):sponsors().find(x=>normCo(x.name)===normCo(r.name)),u=s&&logoReq?subOf(logoReq.id,s.id):null,lf=u?(u.files||[]):[];
+  return {'스폰서사':r.name||'','등급':r.tier||'','관심 분야':(r.tags||[]).join(', '),'홈페이지 소제목':r.hpT||'','홈페이지 설명글':r.hpD||'','홈페이지 URL':r.hpUrl||'','층':r.floor||'','부스 No':r.boothNo||'','부스 유형':r.booth||'','세션 참여':r.session||'','아젠다 No':r.agNo||'','어워드 후보':r.award||'','보도자료·MOU':r.mou||'','로고 파일':lf.map(f=>f.name).join(', '),'로고 링크':lf.map(f=>f.driveId?`https://drive.google.com/file/d/${f.driveId}/view`:'').filter(Boolean).join(' '),'상태':r.st||''}})}
+function dlBlob(name,blob){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+Object.assign(A,{
+ spnExport:()=>{const n=R('spn').length;modal('홈페이지용 스폰서 데이터 내보내기',`<div class="sub" style="margin-bottom:12px">스폰서 ${n}곳의 이름·등급·관심 분야·홈페이지 소제목·설명글·URL·부스·세션·로고 파일 링크를 한 번에 받습니다. 홈페이지 담당자에게 그대로 전달하세요.</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" data-act="spnExpGo" data-f="xlsx">${ico('download',14)}엑셀 (.xlsx)</button><button class="btn" data-act="spnExpGo" data-f="csv">${ico('download',14)}CSV</button><button class="btn" data-act="spnExpGo" data-f="json">${ico('download',14)}JSON (개발용)</button></div>
+  <label style="display:flex;gap:6px;align-items:center;margin-top:12px;font-size:13px"><input type="checkbox" id="expOk"> 상태가 '확정'인 스폰서만</label>${mfoot('<button class="btn" data-act="close">닫기</button>')}`)},
+ spnExpGo:async d=>{let rows=spnExportRows();if($('#expOk')&&$('#expOk').checked)rows=rows.filter(r=>r['상태']==='확정');const nm=`${P().name}_스폰서_홈페이지용_${ymd(today())}`;
+  if(d.f==='json')dlBlob(nm+'.json',new Blob([JSON.stringify(rows,null,2)],{type:'application/json'}));
+  else if(d.f==='csv'){const ks=Object.keys(rows[0]||{'스폰서사':''}),q=v=>'"'+String(v).replace(/"/g,'""')+'"';dlBlob(nm+'.csv',new Blob(['﻿'+[ks.map(q).join(',')].concat(rows.map(r=>ks.map(k=>q(r[k])).join(','))).join('\r\n')],{type:'text/csv'}))}
+  else{try{if(!window.XLSX)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)});
+   const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();ws['!cols']=Object.keys(rows[0]||{}).map(k=>({wch:/설명|링크/.test(k)?50:/URL|관심|파일/.test(k)?30:14}));XLSX.utils.book_append_sheet(wb,ws,'스폰서');XLSX.writeFile(wb,nm+'.xlsx')}catch(e){toast('엑셀을 만들지 못했습니다 — CSV로 받아 주세요','error');return}}
+  addLog('내보내기','스폰서 홈페이지용 데이터 · '+d.f.toUpperCase()+' · '+rows.length+'건');Store.save('내보내기');closeModal();toast('내려받았습니다','success')}});
+/* Nomination 화면에 버튼 */
+{const vS=vSpn;vSpn=function(v){vS(v);if(!isStaff())return;const fb=v.querySelector('.filter-bar');if(!fb)return;const box=document.createElement('div');box.className='spn-tools';
+ box.innerHTML=`<button class="btn btn-sm" data-act="spnExport">${ico('download',13)}홈페이지용 내보내기</button>${isAdmin()?`<button class="btn btn-sm" data-act="spnIntEdit">${ico('edit',13)}관심 분야 항목</button>`:''}`;fb.after(box)}}
+
+/* ---- 요청 항목 자동 준비 (프로젝트당 한 번, 마플 계정) ---- */
+function spnReqSetup(){if(!S.user||!isAdmin()||!S.pid)return false;const c=CF_();if(c&&c.spnReq25)return false;const cf=ensureCfg();cf.spnReq25=Date.now();
+ const reqs=DB.requests.filter(r=>r.pid===S.pid),hp=reqs.find(r=>r.type==='text'&&/홈페이지/.test(r.title)),due=(hp&&hp.due)||P().date||ymd(today());let n=0;
+ if(hp){if(!hp.fields.some(f=>f.ty==='url'||f.k==='url')){hp.fields.push({k:'url',label:'홈페이지 주소 (URL)',ty:'url',max:300});n++}const m=hp.sync||{};hp.fields.forEach(f=>{if(f.k==='url')m.url='hpUrl';else if(/소제목/.test(f.label))m[f.k]='hpT';else if(/설명/.test(f.label))m[f.k]='hpD'});hp.sync=m}
+ if(!reqs.some(r=>r.fields&&r.fields.some(f=>f.k==='tags'))){DB.requests.push({id:uid('r'),pid:S.pid,title:'관심 분야',desc:'행사 홈페이지 스폰서 소개에서 분야별 검색에 쓰입니다. 해당하는 분야를 모두 골라 주세요.',type:'text',formats:[],rule:'',due,target:'all',required:true,priv:false,fields:[{k:'tags',label:'관심 분야 (여러 개 선택)',opts:INTEREST_DEF,multi:true}],sync:{tags:'tags'}});n++}
+ if(!reqs.some(r=>r.fields&&r.fields.some(f=>f.k==='mou'))){DB.requests.push({id:uid('r'),pid:S.pid,title:'보도자료·MOU 진행 의향',desc:'행사 기간 중 보도자료 배포나 MOU 체결을 진행할 의향이 있는지 알려 주세요. (예: 26년 체크포인트, AVITA MOU 체결)',type:'text',formats:[],rule:'',due,target:'all',required:true,priv:false,fields:[{k:'mou',label:'진행 의향',opts:OPT.mou},{k:'memo',label:'협력 내용 · 담당자 (선택)',max:300,opt:true}],sync:{mou:'mou',memo:'mouNote'}});n++}
+ addLog('추가',`스폰서 요청 항목 준비 · 관심 분야 · 보도자료·MOU · 홈페이지 URL`);Store.save('요청 항목');return n}
+{const rA=renderApp;renderApp=function(...a){const r=rA.apply(this,a);try{if(spnReqSetup()){toast('스폰서 요청 항목에 「관심 분야」「보도자료·MOU 진행 의향」과 홈페이지 URL 칸을 추가했습니다','success',7000);rA.apply(this,a)}}catch(e){console.warn('spnReqSetup',e)}return r}}
+
+/* ---- 프로젝트 관리: 주관사 약칭 · 제출 알림 메일 ---- */
+{const oE=A.opsEdit;A.opsEdit=d=>{oE(d);const p=DB.projects.find(x=>x.id===d.id),m=document.querySelector('#mroot .rm');if(!p||!m)return;
+ m.insertAdjacentHTML('beforeend',`<div class="form-group" style="margin-top:12px"><label class="form-label">주관사 약칭 <span class="sub">(대시보드 [전체 / 운영사무국 / 약칭] 버튼에 표시 · 비우면 자동)</span></label><input class="form-input" id="opsShort" value="${esc(p.hostShort||'')}" placeholder="${esc(hostShort())}"></div>
+  <label style="display:flex;gap:8px;align-items:center;font-size:13px;cursor:pointer"><input type="checkbox" id="opsNotify" ${p.notifyMail===false?'':'checked'}> 스폰서가 자료를 제출·수정하면 위 메일과 marple_plan으로 알림 메일 보내기</label>`)}}
+{const oS=A.opsSave;A.opsSave=d=>{const p=DB.projects.find(x=>x.id===d.id);if(p&&$('#opsShort')){p.hostShort=$('#opsShort').value.trim();p.notifyMail=$('#opsNotify').checked}oS(d)}}
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';

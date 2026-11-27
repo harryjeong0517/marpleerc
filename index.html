@@ -891,6 +891,7 @@ a.ops-v{text-decoration:none;color:var(--marple,#6d28d9)}a.ops-v:hover{text-deco
 /* p31 sponsor sheet import */
 .sps-b{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;white-space:nowrap}.sps-b.up{background:#e0f2fe;color:#0369a1}.sps-b.nw{background:#fef3c7;color:#b45309}.sps-b.tbu{background:#f1f5f9;color:#64748b}.sps-b.ok{background:#dcfce7;color:#15803d}.sps-b.ok2{background:#f0fdf4;color:#16a34a;border:1px dashed #86efac}
 .sps-sum b{color:#0f172a}.sps-t td{padding:7px 10px;vertical-align:top}.sps-t td .sub{font-size:11px}
+.vc-logo.dark{background:#111827;border-color:#111827}
 </style>
 </head>
 <body>
@@ -3709,42 +3710,51 @@ function hexOf(c){c=String(c||'').trim();let m=c.match(/^#([0-9a-f]{3}|[0-9a-f]{
 function hsl3(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;if(mx===mn)return [0,0,l];const d=mx-mn,s=l>.5?d/(2-mx-mn):d/(mx+mn);const h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;return [h*60,s,l]}
 const hexHsl=h=>{const n=parseInt(h.slice(1),16);return hsl3(n>>16&255,n>>8&255,n&255)};
 const brUsable=h=>{if(!h)return false;const [,s,l]=hexHsl(h);return s>=.2&&l>.12&&l<.86};
-function imgLoad(src){return new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>no(new Error('img'));i.src=src})}
+function imgLoad(src,cors){return new Promise((ok,no)=>{const i=new Image();if(cors)i.crossOrigin='anonymous';i.onload=()=>ok(i);i.onerror=()=>no(new Error('img'));i.src=src})}
 /* 아이콘 → 128px PNG + 가장 많이 쓰인 선명한 색 */
-async function iconDigest(src){const im=await imgLoad(src),N=128,cv=document.createElement('canvas');cv.width=cv.height=N;const x=cv.getContext('2d');
+async function iconDigest(src,cors){const im=await imgLoad(src,cors),N=128,cv=document.createElement('canvas');cv.width=cv.height=N;const x=cv.getContext('2d');
  const w=im.naturalWidth||im.width||N,h=im.naturalHeight||im.height||N,sc=Math.min(N/w,N/h),dw=Math.round(w*sc),dh=Math.round(h*sc);x.imageSmoothingQuality='high';x.drawImage(im,(N-dw)/2,(N-dh)/2,dw,dh);
  let color='',dark=0,tot=0;try{const d=x.getImageData(0,0,N,N).data,bk={};for(let i=0;i<d.length;i+=8){if(d[i+3]<200)continue;tot++;const [,s,l]=hsl3(d[i],d[i+1],d[i+2]);if(l<.25)dark++;if(s<.2||l>.9||l<.1)continue;
    const k=(d[i]>>4)+','+(d[i+1]>>4)+','+(d[i+2]>>4),b=bk[k]||(bk[k]={w:0,c:0,r:0,g:0,b:0});b.w+=1+s;b.c++;b.r+=d[i];b.g+=d[i+1];b.b+=d[i+2]}
   const top=Object.values(bk).sort((a,b)=>b.w-a.w)[0];if(top&&top.c>=6)color='#'+[top.r,top.g,top.b].map(v=>Math.round(v/top.c).toString(16).padStart(2,'0')).join('');
   else if(tot&&dark/tot>.35)color='#1f2937'}catch(e){}
  let png='';try{png=cv.toDataURL('image/png')}catch(e){}return {png,color}}
+/* 로고가 흰색뿐이거나 비어 있는지 */
+async function brLook(src){try{const im=await imgLoad(src,/^https?:/i.test(src)),N=64,cv=document.createElement('canvas');cv.width=cv.height=N;const x=cv.getContext('2d');x.drawImage(im,0,0,N,N);const d=x.getImageData(0,0,N,N).data;let op=0,lt=0;
+ for(let i=0;i<d.length;i+=4){if(d[i+3]<60)continue;op++;if(d[i]>225&&d[i+1]>225&&d[i+2]>225)lt++}return {blank:op<20,white:op>=20&&lt/op>.82}}catch(e){return null}}
 const brHost=u=>{try{return new URL(/^https?:/i.test(u)?u:'https://'+u).hostname.replace(/^www\./,'')}catch(e){return ''}};
+/* 사이트 아이콘이 엉뚱한 곳: 아이콘 출처·색상 고정 */
+const BRAND_FIX={'aws.amazon.com':{icon:'https://www.google.com/s2/favicons?domain=aws.amazon.com&sz=128',color:'#ff9900'},'unity.com':{color:'#111111'},'zendesk.kr':{color:'#03363d'},'zendesk.com':{color:'#03363d'}};
+const brFixOf=u=>{try{const x=new URL(/^https?:/i.test(u)?u:'https://'+u),h=x.hostname.replace(/^www\./,'').toLowerCase();return BRAND_FIX[h]||null}catch(e){return null}};
 /* 한 행 가져오기 */
-async function brandFetch(id,quiet){const r=rowById(id);if(!r||!r.hpUrl||BR.busy[id])return false;const host=brHost(r.hpUrl);if(!host){quiet||toast('홈페이지 주소를 확인해 주세요','error');return false}
- BR.busy[id]=1;try{let icon='',theme='',generic=false;
-  if(Drive.on()){const j=await Drive.rpc({a:'brand',url:r.hpUrl});icon=j.icon||'';theme=hexOf(j.color);generic=!!j.generic}
-  else icon='https://www.google.com/s2/favicons?domain='+encodeURIComponent(host)+'&sz=128';
-  let png='',col='';if(icon){try{const g=await iconDigest(icon);png=g.png||'';col=g.color}catch(e){}}
-  if(!png&&icon&&!Drive.on())png=icon;
+async function brandFetch(id,quiet){const r=rowById(id);if(!r||!r.hpUrl||BR.busy[id])return false;if(r.brandLock)return true;const host=brHost(r.hpUrl);if(!host){quiet||toast('홈페이지 주소를 확인해 주세요','error');return false}
+ BR.busy[id]=1;try{let icon='',theme='',generic=false,remote=false;const fav='https://www.google.com/s2/favicons?domain='+encodeURIComponent(host)+'&sz=128';
+  const fx=brFixOf(r.hpUrl);if(fx&&fx.icon){r.brandLogo=fx.icon;r.brandColor=fx.color;r.brandTmp=0;r.brandFix=1;r.brandAuto=1;r.brandFrom=host;Store.save('로고·색상');return true}
+  if(Drive.on()){try{const j=await Drive.rpc({a:'brand',url:r.hpUrl});icon=j.icon||'';theme=hexOf(j.color);generic=!!j.generic;BR.err=''}catch(e){BR.err=e.message||String(e)}}
+  if(!icon){icon=fav;remote=true}
+  let png='',col='';if(icon){try{const g=await iconDigest(icon,remote);png=g.png||'';col=g.color}catch(e){}}
+  if(!png&&remote)png=fav;
   const color=brUsable(col)?col:brUsable(theme)?theme:(col||theme||'');
-  const rr=rowById(id);if(!rr)return false;rr.brandLogo=png||'';rr.brandColor=color||'';rr.brandAuto=1;rr.brandFrom=host;rr.brandAt=Date.now();if(generic&&!col)rr.brandLogo='';
+  const rr=rowById(id);if(!rr)return false;const an=png?await brLook(png):null;rr.brandLogo=an&&an.blank?'':(png||'');rr.brandDark=an&&an.white?1:0;rr.brandColor=(fx&&fx.color)||color||'';rr.brandAuto=1;rr.brandTmp=remote?1:0;rr.brandFrom=host;rr.brandAt=Date.now();if(generic&&!col)rr.brandLogo='';
   Store.save('로고·색상');return !!(png||color)}
  catch(e){quiet||toast('홈페이지에서 로고를 가져오지 못했습니다 ('+e.message+')','error');return false}finally{delete BR.busy[id]}}
 /* 홈페이지 URL 바꾸면 자동으로 */
 {const cs=cellSet;cellSet=function(id,k,val){const r=rowById(id),old=r&&r.hpUrl;const out=cs.apply(this,arguments);const r2=rowById(id);
  if(r2&&r2.t==='spn'&&k==='hpUrl'&&r2.hpUrl&&r2.hpUrl!==old&&isStaff())brandFetch(id,true).then(ok=>{if(ok){refresh();vcRefreshHead(id);toast(`${r2.name||'스폰서'} 로고·색상을 홈페이지에서 가져왔습니다`,'success')}});return out}}
 Object.assign(A,{
- brandGet:async d=>{const r=rowById(d.id);if(!r)return;if(!r.hpUrl)return toast('먼저 홈페이지 URL을 넣어 주세요','error');toast('홈페이지에서 로고·색상을 가져오는 중…');const ok=await brandFetch(d.id);refresh();vcRefreshHead(d.id);ok?toast('로고·색상을 적용했습니다','success'):toast('가져올 로고를 찾지 못했습니다 — 직접 색상을 골라 주세요','error')},
- brandAll:async()=>{const rs=R('spn').filter(r=>r.hpUrl&&!r.brandLogo&&!r.brandColor);if(!rs.length)return toast('가져올 스폰서가 없습니다 (홈페이지 URL이 있고 아직 로고가 없는 곳만 가져옵니다)');
-  let n=0,ok=0;toast(`${rs.length}곳 로고·색상 가져오는 중…`);for(const r of rs){if(await brandFetch(r.id,true))ok++;n++}refresh();toast(`${ok} / ${rs.length}곳 로고·색상을 적용했습니다`,'success')},
- brandClr:d=>{const r=rowById(d.id);if(!r)return;r.brandLogo='';r.brandColor='';r.brandAuto=0;Store.save('로고·색상');refresh();vcRefreshHead(d.id)}});
+ brandGet:async d=>{const r=rowById(d.id);if(!r)return;r.brandLock=0;if(!r.hpUrl)return toast('먼저 홈페이지 URL을 넣어 주세요','error');toast('홈페이지에서 로고·색상을 가져오는 중…');const ok=await brandFetch(d.id);refresh();vcRefreshHead(d.id);ok?toast('로고·색상을 적용했습니다','success'):toast('가져올 로고를 찾지 못했습니다 — 직접 색상을 골라 주세요','error');brErrNote()},
+ brandAll:async()=>{const rs=R('spn').filter(r=>r.hpUrl&&!r.brandLock&&(r.brandTmp||!r.brandLogo&&!r.brandColor));if(!rs.length)return toast('가져올 스폰서가 없습니다 (홈페이지 URL이 있고 아직 로고가 없는 곳만 가져옵니다)');
+  let n=0,ok=0;toast(`${rs.length}곳 로고·색상 가져오는 중…`);for(const r of rs){if(await brandFetch(r.id,true))ok++;n++}refresh();toast(`${ok} / ${rs.length}곳 로고·색상을 적용했습니다`,'success');brErrNote()},
+ brandUp:d=>{const inp=document.createElement('input');inp.type='file';inp.accept='image/*,.svg,.ico';inp.onchange=async()=>{const f=inp.files&&inp.files[0];if(!f)return;const url=await new Promise(ok=>{const fr=new FileReader();fr.onload=()=>ok(fr.result);fr.readAsDataURL(f)});
+  try{const g=await iconDigest(url);const r=rowById(d.id);if(!r)return;r.brandLogo=g.png||url;if(g.color)r.brandColor=g.color;const an=await brLook(r.brandLogo);r.brandDark=an&&an.white?1:0;r.brandLock=1;r.brandTmp=0;r.brandAuto=0;Store.save('로고 직접 등록');refresh();vcRefreshHead(d.id);toast('로고를 등록했습니다 — 이 업체는 홈페이지에서 다시 가져오지 않습니다','success')}catch(e){toast('이미지를 읽지 못했습니다 (PNG·JPG·SVG)','error')}};inp.click()},
+ brandClr:d=>{const r=rowById(d.id);if(!r)return;r.brandLogo='';r.brandColor='';r.brandAuto=0;r.brandTmp=0;r.brandLock=0;Store.save('로고·색상');refresh();vcRefreshHead(d.id)}});
 document.addEventListener('input',e=>{const a=e.target;if(!a.matches||!a.matches('[data-chg="brandCol"]'))return;const r=rowById(a.dataset.id);if(!r)return;r.brandColor=a.value;r.brandAuto=0;const h=document.querySelector('#mroot .vc-mh');if(h)h.style.setProperty('--bc',a.value)});
 document.addEventListener('change',e=>{const a=e.target;if(a.matches&&a.matches('[data-chg="brandCol"]')){Store.save('로고·색상');refresh()}});
 function brandMark(r,big){const c=r.brandColor||'',n=String(r.name||'?').trim();
- return `<span class="vc-logo${big?' big':''}" style="${c?`--bc:${c}`:''}">${r.brandLogo?`<img src="${esc(r.brandLogo)}" alt="">`:`<i>${esc((n[0]||'?').toUpperCase())}</i>`}</span>`}
+ return `<span class="vc-logo${big?' big':''}${r.brandDark?' dark':''}" style="${c?`--bc:${c}`:''}">${r.brandLogo?`<img src="${esc(r.brandLogo)}" alt="">`:`<i>${esc((n[0]||'?').toUpperCase())}</i>`}</span>`}
 function vcRefreshHead(id){const h=document.querySelector(`#mroot .vc-mh[data-id="${id}"]`);const r=rowById(id);if(!h||!r)return;h.outerHTML=vcModalHead(r)}
 function vcModalHead(r){return `<div class="vc-mh" data-id="${r.id}" style="${r.brandColor?`--bc:${r.brandColor}`:''}">${brandMark(r,1)}<div class="vc-mhx"><b>${esc(r.name||'(이름 없음)')}</b><small>${r.hpUrl?esc(brHost(r.hpUrl)):'홈페이지 URL 없음'}${r.st==='확정'?' · <em class="vc-ok">확정</em>':''}</small></div>
- ${isStaff()?`<div class="vc-mtools"><label class="vc-col" title="브랜드 색상 직접 고르기"><input type="color" data-chg="brandCol" data-id="${r.id}" value="${r.brandColor||'#64748b'}"><span>색상</span></label><button class="btn btn-sm" data-act="brandGet" data-id="${r.id}">${ico('globe',13)}${r.brandLogo||r.brandColor?'다시 가져오기':'홈페이지에서 가져오기'}</button>${r.brandLogo||r.brandColor?`<button class="btn btn-sm" data-act="brandClr" data-id="${r.id}">지우기</button>`:''}</div>`:''}</div>`}
+ ${isStaff()?`<div class="vc-mtools"><label class="vc-col" title="브랜드 색상 직접 고르기"><input type="color" data-chg="brandCol" data-id="${r.id}" value="${r.brandColor||'#64748b'}"><span>색상</span></label><button class="btn btn-sm" data-act="brandUp" data-id="${r.id}">${ico('upload',13)}로고 직접 올리기</button><button class="btn btn-sm" data-act="brandGet" data-id="${r.id}">${ico('globe',13)}${r.brandLogo||r.brandColor?'다시 가져오기':'홈페이지에서 가져오기'}</button>${r.brandLogo||r.brandColor?`<button class="btn btn-sm" data-act="brandClr" data-id="${r.id}">지우기</button>`:''}</div>`:''}</div>`}
 /* 카드에 반영 */
 {const vc=vCard;vCard=function(rt,cols,r){let h=vc(rt,cols,r);if(rt!=='spn')return h;const ok=r.st==='확정',cx=r.st==='취소';
  h=h.replace('<div class="vcard"',`<div class="vcard spc${ok?' is-ok':''}${cx?' is-cx':''}${r.brandColor?' has-bc':''}" style="${r.brandColor?`--bc:${r.brandColor}`:''}"`).replace('<div class="vc-h">',`<div class="vc-h">${brandMark(r)}`);
@@ -3756,9 +3766,15 @@ function vcModalHead(r){return `<div class="vc-mh" data-id="${r.id}" style="${r.
 {const gT=gridTbl;gridTbl=function(rt,cols,rows,o){let h=gT(rt,cols,rows,o);if(rt!=='spn'||!h.includes('<tr data-rid'))return h;
  rows.forEach(r=>{const cl=r.st==='확정'?'is-ok':r.st==='취소'?'is-cx':'';if(cl)h=h.replace(`<tr data-rid="${r.id}" data-rt="spn">`,`<tr data-rid="${r.id}" data-rt="spn" class="${cl}">`)});
  return h}}
+/* 이미 잘못 들어간 AWS 로고 바로잡기 */
+function brFixAll(){let n=0;R('spn').forEach(r=>{if(r.brandLock||r.brandFix||!r.hpUrl)return;const fx=brFixOf(r.hpUrl);if(fx){if(fx.icon)r.brandLogo=fx.icon;r.brandColor=fx.color;r.brandFix=1;r.brandTmp=0;n++}});if(n)Store.save('로고 바로잡기');
+ if(!BR.looked){BR.looked=1;const todo=R('spn').filter(r=>r.brandLogo&&r.brandDark==null);if(todo.length)(async()=>{let ch=0;for(const r of todo){const an=await brLook(r.brandLogo);if(!an){r.brandDark=0;continue}if(an.blank){r.brandLogo='';ch++}r.brandDark=an.white?1:0;if(an.white)ch++}Store.save('로고 확인');if(ch)refresh()})()}return n}
 /* 스폰서 도구 줄에 일괄 버튼 */
-{const vS=vSpn;vSpn=function(v){vS(v);if(!isStaff())return;const t=v.querySelector('.spn-tools');if(t&&!t.querySelector('[data-act="brandAll"]'))t.insertAdjacentHTML('afterbegin',`<button class="btn btn-sm" data-act="brandAll" title="홈페이지 URL이 있는 스폰서의 로고·색상을 한 번에 가져옵니다">${ico('globe',13)}로고·색상 가져오기</button>`);
+{const vS=vSpn;vSpn=function(v){if(isStaff())brFixAll();vS(v);if(!isStaff())return;const t=v.querySelector('.spn-tools');if(t&&!t.querySelector('[data-act="brandAll"]'))t.insertAdjacentHTML('afterbegin',`<button class="btn btn-sm" data-act="brandAll" title="홈페이지 URL이 있는 스폰서의 로고·색상을 한 번에 가져옵니다">${ico('globe',13)}로고·색상 가져오기</button>`);
  const ok=R('spn').filter(r=>r.st==='확정').length,sb=v.querySelector('.filter-bar .sub');if(sb&&!v.querySelector('.spn-okc'))sb.insertAdjacentHTML('afterend',`<span class="spn-okc">${ico('check',12)}확정 ${ok}곳</span>`)}}
+
+function brErrNote(){const e=BR.err;if(!e)return;const why=/action/.test(e)?'Apps Script(Code.gs)가 아직 새 버전으로 배포되지 않았습니다':/role/.test(e)?'마플·주관사 계정만 가져올 수 있습니다':/account|key/.test(e)?'Apps Script 계정 확인에 실패했습니다':'Apps Script 오류: '+e;
+ toast(why+' — 지금은 구글 아이콘으로 로고만 임시 표시하고, 색상은 Code.gs 새 버전 배포 후 [로고·색상 가져오기]를 다시 누르면 들어갑니다','error',10000)}
 /* p30 컨택포인트·고객사 Nomination 에도 LIST/CARD */
 Object.assign(IC,{phone:'<rect x="4.5" y="1.5" width="7" height="13" rx="1.6"/><path d="M7 12.3h2"/>'});
 VCARD_RT.push('spc','cln','clc');
@@ -3830,7 +3846,7 @@ Object.assign(A,{spsApply:async()=>{const T=spsTmp;if(!T)return;const ok=($('#sp
   touched.push(r.id)});
  addLog('가져오기',`스폰서 소개 시트 · ${T.file} · 추가 ${add} · 갱신 ${upd}`);Store.save('스폰서 시트 가져오기');closeModal();spsTmp=null;
  if(S.view!=='spn'){S.view='spn';renderApp()}else renderView();toast(`스폰서 ${add}곳 새로 추가 · ${upd}곳 갱신했습니다`,'success',6000);
- if(br){const ids=touched.filter(id=>{const r=rowById(id);return r&&r.hpUrl&&!r.brandLogo&&!r.brandColor});if(ids.length){toast(`${ids.length}곳 로고·색상 가져오는 중…`);let n=0;for(const id of ids){if(await brandFetch(id,true))n++}refresh();toast(`${n} / ${ids.length}곳 로고·색상을 적용했습니다`,'success')}}}});
+ if(br){const ids=touched.filter(id=>{const r=rowById(id);return r&&r.hpUrl&&(r.brandTmp||!r.brandLogo&&!r.brandColor)});if(ids.length){toast(`${ids.length}곳 로고·색상 가져오는 중…`);let n=0;for(const id of ids){if(await brandFetch(id,true))n++}refresh();toast(`${n} / ${ids.length}곳 로고·색상을 적용했습니다`,'success')}}}});
 /* 스폰서 표에 '세션 정보' 칸 (시트의 세션 정보를 그대로 보관) */
 {const gT=gridTbl;gridTbl=function(rt,cols,rows,o){if(rt==='spn'&&!cols.some(c=>c.k==='sessInfo')){const i=cols.findIndex(c=>c.k==='agNo');cols=cols.slice();cols.splice(i<0?cols.length:i+1,0,C('sessInfo','세션 정보',240,{ty:'long'}))}return gT(rt,cols,rows,o)}}
 

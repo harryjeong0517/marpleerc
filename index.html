@@ -888,6 +888,9 @@ a.ops-v{text-decoration:none;color:var(--marple,#6d28d9)}a.ops-v:hover{text-deco
 .vc-ct{display:flex;flex-direction:column;gap:5px;font-size:13px}.vc-ct a{display:flex;align-items:center;gap:7px;color:#0f172a;text-decoration:none;min-width:0}.vc-ct a span{overflow-wrap:anywhere}.vc-ct a:hover{color:var(--marple)}.vc-ct a svg{flex-shrink:0;opacity:.6!important}.vc-ct .mute{font-size:12px;color:#cbd5e1}
 .vc-upd{font-size:11px;color:#94a3b8}
 .pcard.co-ok{box-shadow:inset 3px 0 0 #16a34a}
+/* p31 sponsor sheet import */
+.sps-b{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;white-space:nowrap}.sps-b.up{background:#e0f2fe;color:#0369a1}.sps-b.nw{background:#fef3c7;color:#b45309}.sps-b.tbu{background:#f1f5f9;color:#64748b}.sps-b.ok{background:#dcfce7;color:#15803d}.sps-b.ok2{background:#f0fdf4;color:#16a34a;border:1px dashed #86efac}
+.sps-sum b{color:#0f172a}.sps-t td{padding:7px 10px;vertical-align:top}.sps-t td .sub{font-size:11px}
 </style>
 </head>
 <body>
@@ -3682,7 +3685,7 @@ function vCard(rt,cols,r){const t=cols[0],title=String(r[t.k]||'').trim()||'(이
   if(c.bd)pills.push(`<span class="pill t-${toneOf(v)}">${esc(c.l)} · ${esc(v)}</span>`);
   else if(isYN(c)){if(v==='Y')chips.push(`<span class="vc-yn">${esc(c.l.replace(/\s*(참여|후보)$/,'$&'))}</span>`)}
   else if(c.ty==='link')link=`<span class="vc-link">${ico('globe',12)}${esc(vHost(v))}</span>`;
-  else if(c.ty==='long'){if(!longT)longT=`<p class="vc-long">${esc(v)}</p>`}
+  else if(c.ty==='long'){if(!longT||c.k==='hpD')longT=`<p class="vc-long">${esc(v)}</p>`}
   else if(meta.length<4&&String(v).length<=40)meta.push(`<span><em>${esc(c.l)}</em>${esc(v)}</span>`)});
  return `<div class="vcard" data-act="vcOpen" data-rt="${rt}" data-id="${r.id}" tabindex="0"><div class="vc-h"><b>${esc(title)}</b>${pills.length?'':''}</div>${meta.length?`<div class="vc-meta">${meta.join('')}</div>`:''}${chips.length?`<div class="vc-chips">${chips.join('')}</div>`:''}${pills.length?`<div class="vc-pills">${pills.join('')}</div>`:''}${tags?`<div class="vc-tags">${tags}</div>`:''}${longT}${link?`<div class="vc-foot">${link}</div>`:''}</div>`}
 {const gT=gridTbl;gridTbl=function(rt,cols,rows,o){o=o||{};
@@ -3780,6 +3783,56 @@ function vCardPerson(rt,cols,r){const nm=String(r.name||'').trim(),co=String(r.c
 /* 고객사 Nomination 리스트: 확정·취소 행 */
 {const gT=gridTbl;gridTbl=function(rt,cols,rows,o){let h=gT(rt,cols,rows,o);if(rt!=='cln'||!h.includes('<tr data-rid'))return h;
  rows.forEach(r=>{const cl=r.st==='확정'?'is-ok':r.st==='취소'?'is-cx':'';if(cl)h=h.replace(`<tr data-rid="${r.id}" data-rt="cln">`,`<tr data-rid="${r.id}" data-rt="cln" class="${cl}">`)});return h}}
+/* p31 스폰서 소개 시트(홈페이지 소개글 양식) 끌어다 놓기 → 기존 업체 갱신 + 없는 업체 자동 생성 */
+const SPS_VIEWS=['spn','spc','cln','clc'];
+let spsTmp=null;
+const spsHosts=u=>{try{return new URL(/^https?:/i.test(u)?u:'https://'+u).hostname.replace(/^www\./,'').toLowerCase()}catch(e){return ''}};
+function spsDetect(grids){for(const s of grids){const g=s.g||[];for(let hr=0;hr<Math.min(8,g.length);hr++){const h=(g[hr]||[]).map(v=>String(v==null?'':v).replace(/\s+/g,' ').trim());
+  const f=re=>h.findIndex(x=>re.test(x)&&!/글자\s*수/.test(x));const name=f(/^(업체명|스폰서사|스폰서명|회사명|기업명)/);if(name<0)continue;
+  const ix={name,tier:f(/등급|tier/i),url:f(/홈페이지\s*(url|주소)|^url|공식\s*홈페이지/i),hpT:f(/소개글|소제목/),hpD:f(/설명글|본문/),tags:f(/관심\s*분야/),logo:f(/로고/),boothNo:f(/부스\s*(번호|no)/i),sess:f(/세션/),no:h.findIndex(x=>x==='#'||x==='No'||x==='번호')};
+  if(ix.url<0&&ix.hpD<0&&ix.hpT<0)continue;return {sheet:s.name,g,hr,ix}}}return null}
+function spsTags(v){const cats=spnInterests(),out=new Set();String(v||'').split(/[,，\n]+/).map(x=>x.replace(/#/g,'').trim()).filter(Boolean).forEach(tok=>{const t=nz(tok);
+  cats.forEach(c=>{if(nz(c)===t||c.split('·').some(p=>nz(p)===t))out.add(c)})});return cats.filter(c=>out.has(c))}
+function spsTier(v){v=String(v||'').trim();if(!v||v==='-')return '';const o=OPT.tier.find(x=>x&&x.toLowerCase()===v.toLowerCase());return o||v}
+function spsParse(d){const {g,hr,ix}=d,out=[];let tbu=false;const cell=(r,i)=>i<0?'':String(r[i]==null?'':r[i]).replace(/\r/g,'').trim();
+ for(let i=hr+1;i<g.length;i++){const r=g[i]||[],nm=cell(r,ix.name),first=String((r.find(v=>v!=null&&String(v).trim()!==''))||'').trim();
+  if(!nm){if(/TBU|TBD|미정|아래\s*업체/i.test(first))tbu=true;continue}
+  if(/^예시|^ex\b|^example/i.test(cell(r,0))||/^예시/.test(cell(r,ix.no)))continue;
+  const url=cell(r,ix.url),sess=cell(r,ix.sess),bno=cell(r,ix.boothNo);
+  out.push({name:nm,tier:spsTier(cell(r,ix.tier)),hpUrl:/^(-|n\/?a)$/i.test(url)?'':url,hpT:cell(r,ix.hpT),hpD:cell(r,ix.hpD),tags:spsTags(cell(r,ix.tags)),logoRef:cell(r,ix.logo),boothNo:bno,sessInfo:/^(-|n\/?a|없음)$/i.test(sess)?'':sess,sessNA:/^(n\/?a|없음)$/i.test(sess),tbu,row:i+1})}
+ return out}
+function spsMatch(o){const rs=R('spn'),k=nz(o.name),h=spsHosts(o.hpUrl);return rs.find(r=>nz(r.name)===k)||(h&&rs.find(r=>r.hpUrl&&spsHosts(r.hpUrl)===h))||null}
+/* 드롭 가로채기 */
+{const iF=impFile;impFile=async function(file){if(!SPS_VIEWS.includes(S.view)||!isStaff())return iF.apply(this,arguments);let grids;
+ try{grids=await impGrids(file)}catch(e){return iF.apply(this,arguments)}
+ grids=grids.map(s=>({name:s.name,g:(s.g||[]).map(r=>(r||[]).map(v=>typeof v==='string'?v.replace(/\r/g,'').trim():v))}));
+ const d=spsDetect(grids);if(!d)return iF.apply(this,arguments);const recs=spsParse(d);if(!recs.length)return iF.apply(this,arguments);
+ document.querySelectorAll('.toast').forEach(t=>{if(/분석하고/.test(t.textContent))t.remove()});
+ spsTmp={file:file.name,sheet:d.sheet,recs:recs.map(o=>Object.assign(o,{m:spsMatch(o)}))};spsPreview()}}
+function spsPreview(){const T=spsTmp,up=T.recs.filter(o=>o.m),nw=T.recs.filter(o=>!o.m),tb=T.recs.filter(o=>o.tbu).length,canBr=true;
+ const fl=o=>['hpUrl','hpT','hpD','boothNo'].filter(k=>o[k]).length+(o.tags.length?1:0)+(o.tier?1:0)+(o.sessInfo||o.sessNA?1:0);
+ const row=o=>`<tr><td>${o.m?'<span class="sps-b up">갱신</span>':'<span class="sps-b nw">새로 추가</span>'}</td><td><b>${esc(o.name)}</b>${o.m&&nz(o.m.name)!==nz(o.name)?`<div class="sub">← 기존 “${esc(o.m.name)}”</div>`:''}</td><td>${o.tier?esc(o.tier):'<span class="mute">—</span>'}</td><td>${o.tbu?'<span class="sps-b tbu">TBU</span>':o.m&&o.m.st==='확정'?'<span class="sps-b ok">확정</span>':'<span class="sps-b ok2">확정 예정</span>'}</td><td class="sub">${o.hpUrl?esc(spsHosts(o.hpUrl)):'—'}</td><td class="sub">${o.tags.join(', ')||'—'}</td><td class="sub">${fl(o)}칸</td></tr>`;
+ modal('스폰서 소개 시트 가져오기',`<div class="ag-pv-sum"><b>${esc(T.file)}</b>${T.sheet?`<span>시트 “${esc(T.sheet)}”</span>`:''}<span>${T.recs.length}개 업체</span><span class="sps-sum"><b>${up.length}</b> 갱신 · <b>${nw.length}</b> 새로 추가${tb?` · TBU ${tb}`:''}</span></div>
+  <div class="sub" style="margin:10px 0 8px">업체명(띄어쓰기·대소문자 무시)이나 홈페이지 주소로 기존 스폰서를 찾아 채우고, 없는 업체는 새로 만듭니다. <b>파일에 값이 있는 칸만</b> 바꾸고 빈 칸은 기존 값을 그대로 둡니다. 관심 분야 해시태그(#AI, #보안 …)는 6개 분류로 바꿔 넣습니다.</div>
+  <div class="card flush" style="max-height:340px;overflow:auto"><table class="gtbl sps-t"><thead><tr><th></th><th>업체명</th><th>등급</th><th>상태</th><th>홈페이지</th><th>관심 분야</th><th>채울 칸</th></tr></thead><tbody>${nw.map(row).join('')}${up.map(row).join('')}</tbody></table></div>
+  <div style="margin-top:14px;display:grid;gap:8px">
+   <label class="chk"><input type="checkbox" id="spsOk" checked><span>번호가 매겨진 업체(TBU 위쪽)는 상태를 <b>확정</b>으로 표시 <span class="sub">(이미 ‘취소’인 곳은 그대로)</span></span></label>
+   ${tb?`<label class="chk"><input type="checkbox" id="spsTbu" checked><span>TBU 아래 업체 ${tb}곳도 <b>후보</b>로 추가·갱신</span></label>`:''}
+   ${canBr?`<label class="chk"><input type="checkbox" id="spsBr" checked><span>가져온 뒤 홈페이지에서 <b>로고·브랜드 색상</b>도 가져오기</span></label>`:''}
+  </div>
+  ${mfoot('<button class="btn" data-act="close">취소</button>',`<button class="btn btn-primary" data-act="spsApply">가져오기 (${T.recs.length}곳)</button>`)}`,true);const m=document.querySelector('#mroot .modal');if(m)m.classList.add('modal-xl')}
+Object.assign(A,{spsApply:async()=>{const T=spsTmp;if(!T)return;const ok=($('#spsOk')||{}).checked,tbuOn=$('#spsTbu')?$('#spsTbu').checked:true,br=($('#spsBr')||{}).checked;let add=0,upd=0;const touched=[];
+ T.recs.forEach(o=>{if(o.tbu&&!tbuOn)return;let r=o.m&&rowById(o.m.id);
+  const set={};['tier','hpUrl','hpT','hpD','boothNo','sessInfo','logoRef'].forEach(k=>{if(o[k])set[k]=o[k]});if(o.tags.length)set.tags=o.tags;
+  if(o.sessInfo)set.session='Y';else if(o.sessNA)set.session='N';
+  if(r){const urlCh=set.hpUrl&&set.hpUrl!==r.hpUrl;Object.assign(r,set);if(urlCh){r.brandLogo='';r.brandColor=''}if(ok&&!o.tbu&&r.st!=='취소')r.st='확정';else if(o.tbu&&!r.st)r.st='후보';upd++}
+  else{r=newRow('spn',Object.assign(BLANK.spn?BLANK.spn():{},{name:o.name},set,{st:!o.tbu&&ok?'확정':'후보'}));add++}
+  touched.push(r.id)});
+ addLog('가져오기',`스폰서 소개 시트 · ${T.file} · 추가 ${add} · 갱신 ${upd}`);Store.save('스폰서 시트 가져오기');closeModal();spsTmp=null;
+ if(S.view!=='spn'){S.view='spn';renderApp()}else renderView();toast(`스폰서 ${add}곳 새로 추가 · ${upd}곳 갱신했습니다`,'success',6000);
+ if(br){const ids=touched.filter(id=>{const r=rowById(id);return r&&r.hpUrl&&!r.brandLogo&&!r.brandColor});if(ids.length){toast(`${ids.length}곳 로고·색상 가져오는 중…`);let n=0;for(const id of ids){if(await brandFetch(id,true))n++}refresh();toast(`${n} / ${ids.length}곳 로고·색상을 적용했습니다`,'success')}}}});
+/* 스폰서 표에 '세션 정보' 칸 (시트의 세션 정보를 그대로 보관) */
+{const gT=gridTbl;gridTbl=function(rt,cols,rows,o){if(rt==='spn'&&!cols.some(c=>c.k==='sessInfo')){const i=cols.findIndex(c=>c.k==='agNo');cols=cols.slice();cols.splice(i<0?cols.length:i+1,0,C('sessInfo','세션 정보',240,{ty:'long'}))}return gT(rt,cols,rows,o)}}
 
 document.addEventListener('change',e=>{const a=e.target.closest('[data-chg]');if(!a)return;
  if(a.dataset.chg==='phs')$('#pnewh').style.display=a.value==='__new'?'block':'none';

@@ -827,6 +827,10 @@ a.nav-item.nav-ext{text-decoration:none}.nav-ext>span{flex:1;min-width:0;overflo
 a.ops-v{text-decoration:none;color:var(--marple,#6d28d9)}a.ops-v:hover{text-decoration:underline}
 .msite{display:flex;align-items:center;gap:8px;margin:10px 0 12px;padding:12px 14px;border-radius:12px;background:#fff;border:1px solid var(--border,#e5e7eb);color:var(--text,#0f172a);font-weight:700;font-size:14px;text-decoration:none}.msite>span{flex:1}.msite>svg:last-child{opacity:.5}
 .mlinks a{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid #eef0f4;font-size:13.5px;font-weight:600;color:#0f172a;text-decoration:none}.mlinks a:first-child{border-top:0}
+.side-site{display:flex;align-items:center;gap:9px;margin:-2px 12px 14px;padding:9px 11px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#e5e7eb;text-decoration:none;cursor:pointer;transition:background .15s}
+.side-site:hover{background:rgba(255,255,255,.14);color:#fff}.side-site>svg{flex-shrink:0;opacity:1}.side-site>svg:last-child{opacity:.55!important}
+.side-site>span{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.side-site b{font-size:13px;font-weight:700;overflow-wrap:anywhere}.side-site small{font-size:10.5px;color:#8b95a7;word-break:keep-all;overflow-wrap:break-word}
+.side-site.add{border-style:dashed;opacity:.75}.side-site.add:hover{opacity:1}
 </style>
 </head>
 <body>
@@ -3582,10 +3586,9 @@ Object.assign(A,{
   if(d.clr){p.siteUrl='';p.siteLabel=''}else{const raw=$('#siteU').value.trim(),u=siteNorm(raw);if(raw&&!u)return toast('주소 형식을 확인해 주세요 (예: https://icon2027.com)','error');p.siteUrl=u;p.siteLabel=$('#siteL').value.trim().slice(0,16)}
   addLog('수정',`행사 홈페이지 · ${p.name} · ${p.siteUrl||'해제'}`);Store.save('행사 홈페이지');closeModal();toast(p.siteUrl?'행사 홈페이지를 연결했습니다':'행사 홈페이지 연결을 해제했습니다','success');refresh()}});
 /* PC: 사이드바 메인 메뉴 맨 아래 + 상단 바 버튼 */
-{const rA=renderApp;renderApp=function(){rA.apply(this,arguments);if(MB.on||!S.user)return;const pj=P(),u=siteOf(pj),sec=document.querySelector('aside.sidebar nav .nav-section');
- if(sec&&!sec.querySelector('.nav-ext')){if(u)sec.insertAdjacentHTML('beforeend',`<a class="nav-item nav-ext" href="${esc(u)}" target="_blank" rel="noopener" title="${esc(u)}">${ico('globe')}<span>${esc(siteLbl(pj))}</span>${ico('ext',13)}</a>`);
-  else if(isAdmin()&&pj)sec.insertAdjacentHTML('beforeend',`<div class="nav-item nav-ext add" data-act="siteEdit" data-id="${pj.id}">${ico('plus')}<span>행사 홈페이지 연결</span></div>`)}
- const ta=document.querySelector('.topbar-actions');if(u&&ta&&!ta.querySelector('.site-btn'))ta.insertAdjacentHTML('afterbegin',`<a class="btn btn-sm site-btn" href="${esc(u)}" target="_blank" rel="noopener">${ico('globe',13)}${esc(siteLbl(pj))}${ico('ext',12)}</a>`)}}
+{const rA=renderApp;renderApp=function(){rA.apply(this,arguments);if(MB.on||!S.user)return;const pj=P(),u=siteOf(pj),lg=document.querySelector('aside.sidebar .sidebar-logo');
+ if(lg&&!document.querySelector('.side-site')){if(u)lg.insertAdjacentHTML('afterend',`<a class="side-site" href="${esc(u)}" target="_blank" rel="noopener" title="${esc(u)}">${ico('globe',15)}<span><b>${esc(siteLbl(pj))}</b><small>${esc(siteHost(u)).replace(/\./g,'.<wbr>')}</small></span>${ico('ext',13)}</a>`);
+  else if(isAdmin()&&pj)lg.insertAdjacentHTML('afterend',`<div class="side-site add" data-act="siteEdit" data-id="${pj.id}">${ico('plus',14)}<span><b>행사 홈페이지 연결</b><small>마플만 보이는 버튼</small></span></div>`)}}}
 /* 관리 > 프로젝트 카드 */
 {const vP=vProj;vProj=function(v){vP(v);const cards=v.querySelectorAll('.grid3>.card');DB.projects.forEach((p,i)=>{const c=cards[i];if(!c||c.querySelector('.site-pl'))return;const u=siteOf(p);
  c.insertAdjacentHTML('beforeend',`<div class="ops-pl site-pl"><div><span class="ops-l">${ico('globe',12)}행사 홈페이지</span>${u?`<a class="ops-v" href="${esc(u)}" target="_blank" rel="noopener">${esc(siteHost(u))} ↗</a>`:'<span class="ops-v none">미연결</span>'}</div><button class="btn btn-sm" data-act="siteEdit" data-id="${p.id}">${u?ico('edit',13)+'수정':ico('plus',13)+'주소 연결'}</button></div>`)})}}
